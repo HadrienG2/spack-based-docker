@@ -20,15 +20,15 @@ support for binary mirrors improves, we may even be able to use that.
 Every folder contains a recipe for building a Docker image using Spack. The
 recipes build on top of each other, using the following dependency graph:
 
-    spack 
-      \______________________________
-       \                   \         \
-    root-cxx14           verrou   root-cxx17
-         \____________                 \
-          \           \               gaudi
-          acts   acts-framework
-            \
-         acts-verrou
+     spack
+        \____________________________________________
+         \                    \                      \
+    root (C++14)            verrou              root (C++17)
+           \_____________________________              \
+            \             \              \            gaudi
+       acts (Debug)  acts (RelDeb)  acts-framework
+              \
+           acts-verrou
 
 The `rebuild-docker-spack.sh` shell script shows how these recipes can be
 combined to build the full stack of Spack-based Docker images on my Docker
