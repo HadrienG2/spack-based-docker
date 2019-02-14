@@ -21,14 +21,14 @@ Every folder contains a recipe for building a Docker image using Spack. The
 recipes build on top of each other, using the following dependency graph:
 
      spack
-        \____________________________________________
-         \                    \                      \
-    root (C++14)            verrou              root (C++17)
-           \_____________________________              \
-            \             \              \            gaudi
-       acts (Debug)  acts (RelDeb)  acts-framework
-              \
-           acts-verrou
+        \______________________________
+         \               \             \
+    root (C++17)    root (C++14)      verrou
+           \               \_____________________________
+          gaudi             \             \              \
+                       acts (Debug)  acts (RelDeb)  acts-framework
+                              \
+                           acts-verrou
 
 The `rebuild-docker-spack.sh` shell script shows how these recipes can be
 combined to build the full stack of Spack-based Docker images on my Docker
