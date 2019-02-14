@@ -34,9 +34,7 @@ RUN zypper in -y lua-lmod                                                      \
     && echo "source /usr/share/lmod/lmod/init/bash" >> "$SETUP_ENV"
 
 # Download Spack
-RUN cd /opt                                                                    \
-    && git clone --depth=1 --branch=revert-include-paths                       \
-                 https://github.com/HadrienG2/spack.git
+RUN cd /opt && git clone --depth=1 https://github.com/spack/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "$SETUP_ENV"
