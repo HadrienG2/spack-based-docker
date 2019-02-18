@@ -1,5 +1,5 @@
 # Configure the container's basic properties
-FROM hgrasland/root-tests:latest-cxx14
+FROM hgrasland/root-tests:latest-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
 ARG ACTS_BUILD_TYPE=RelWithDebInfo

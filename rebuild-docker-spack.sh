@@ -6,10 +6,6 @@ IFS=$'\n\t'
 DOCKER_REPO="hgrasland"
 VERROU_VERSION="2.1.0"
 ROOT_VERSION="6.16.00"
-ROOT_CXX_STANDARDS=(
-    "14"
-    "17"
-)
 ACTS_BUILD_TYPES=(
     "Debug"
     "RelWithDebInfo"
@@ -38,15 +34,13 @@ docker tag ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}                       \
            ${DOCKER_REPO}/verrou-tests:latest
 
 cd ../root-docker
-for CXX_STD in ${ROOT_CXX_STANDARDS[@]}; do
-    echo "*** Building ROOT C++${CXX_STD} image ***"
-    docker build --squash                                                      \
-                 --tag ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx${CXX_STD} \
-                 --build-arg ROOT_CXX_STANDARD=${CXX_STD}                      \
-                 --build-arg ROOT_VERSION=${ROOT_VERSION} .
-    docker tag ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx${CXX_STD}         \
-               ${DOCKER_REPO}/root-tests:latest-cxx${CXX_STD}
-done
+echo "*** Building ROOT C++17 image ***"
+docker build --squash                                                          \
+             --tag ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17             \
+             --build-arg ROOT_CXX_STANDARD=17                                  \
+             --build-arg ROOT_VERSION=${ROOT_VERSION} .
+docker tag ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17                     \
+           ${DOCKER_REPO}/root-tests:latest-cxx17
 
 cd ../acts-docker
 for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do

@@ -3,7 +3,7 @@
 # NOTE: We do not build on top of acts-tests because we rely on a different ACTS
 #       versions and use different dependency build settings.
 #
-FROM hgrasland/root-tests:latest-cxx14
+FROM hgrasland/root-tests:latest-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTSFW installed"
 CMD bash
 
