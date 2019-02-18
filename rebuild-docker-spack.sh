@@ -62,4 +62,10 @@ cd ../gaudi-docker
 docker build --squash --tag ${DOCKER_REPO}/gaudi-tests:latest .
 
 echo "*** Pushing images to the Docker Hub ***"
-docker push ${DOCKER_REPO}
+docker push ${DOCKER_REPO}/spack-tests
+docker push ${DOCKER_REPO}/verrou-tests
+docker push ${DOCKER_REPO}/root-tests
+docker push ${DOCKER_REPO}/acts-tests
+docker push ${DOCKER_REPO}/acts-framework-tests
+docker push ${DOCKER_REPO}/acts-verrou-tests
+docker push ${DOCKER_REPO}/gaudi-tests
