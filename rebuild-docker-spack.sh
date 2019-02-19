@@ -50,7 +50,7 @@ for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
 done
 
 # TODO: Fix C++17 build for ACTSFW, see bug acts-framework#129
-#
+echo "*** Skipping ACTS test framework image due to C++17 incompatibility ***"
 # echo "***Building ACTS test framework image ***"
 # cd ../acts-framework-docker
 # docker build --squash --tag ${DOCKER_REPO}/acts-framework-tests:latest .
@@ -68,6 +68,6 @@ docker push ${DOCKER_REPO}/spack-tests
 docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
 docker push ${DOCKER_REPO}/acts-tests
-# docker push ${DOCKER_REPO}/acts-framework-tests
+# TODO: docker push ${DOCKER_REPO}/acts-framework-tests
 docker push ${DOCKER_REPO}/acts-verrou-tests
 docker push ${DOCKER_REPO}/gaudi-tests
