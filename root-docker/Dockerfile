@@ -10,7 +10,7 @@ ARG ROOT_CXX_STANDARD=17
 ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
                      -examples +gdml -memstat -minuit +opengl +root7 -rootfit  \
                      +rpath +sqlite +ssl +tbb +threads -tiff -tmva -unuran     \
-                     -vdt +x -xml"
+                     +vdt +x -xml"
 
 # Install ROOT
 RUN echo "Installing ${ROOT_SPACK_SPEC}..." && spack install ${ROOT_SPACK_SPEC}
