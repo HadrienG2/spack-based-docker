@@ -42,6 +42,10 @@ docker build --squash                                                          \
 docker tag ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17                     \
            ${DOCKER_REPO}/root-tests:latest-cxx17
 
+echo "***Building Gaudi image ***"
+cd ../gaudi-docker
+docker build --squash --tag ${DOCKER_REPO}/gaudi-tests:latest .
+
 cd ../acts-docker
 for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
     echo "***Building ACTS ${BUILD_TYPE} image ***"
@@ -59,15 +63,11 @@ echo "***Building Verrou-enhanced ACTS dev image ***"
 cd ../acts-verrou-docker
 docker build --squash --tag ${DOCKER_REPO}/acts-verrou-tests:latest .
 
-echo "***Building Gaudi image ***"
-cd ../gaudi-docker
-docker build --squash --tag ${DOCKER_REPO}/gaudi-tests:latest .
-
 echo "*** Pushing images to the Docker Hub ***"
 docker push ${DOCKER_REPO}/spack-tests
 docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
+docker push ${DOCKER_REPO}/gaudi-tests
 docker push ${DOCKER_REPO}/acts-tests
 # TODO: docker push ${DOCKER_REPO}/acts-framework-tests
 docker push ${DOCKER_REPO}/acts-verrou-tests
-docker push ${DOCKER_REPO}/gaudi-tests
