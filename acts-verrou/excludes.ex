@@ -1,22 +1,22 @@
 # These libm functions are known to fail under verrou due to range wrapping
-__cos_fma       /lib64/libm-2.27.so
-__dubsin_fma  /lib64/libm-2.27.so
-__ieee754_acos_fma    /lib64/libm-2.27.so
-__ieee754_atan2_fma   /lib64/libm-2.27.so
-__sin_fma       /lib64/libm-2.27.so
-__tan_fma       /lib64/libm-2.27.so
-__atan_fma      /lib64/libm-2.27.so
-sincos  /lib64/libm-2.27.so
+__cos_fma       /lib64/libm-2.29.so
+__dubsin_fma  /lib64/libm-2.29.so
+__ieee754_acos_fma    /lib64/libm-2.29.so
+__ieee754_atan2_fma   /lib64/libm-2.29.so
+__sin_fma       /lib64/libm-2.29.so
+__tan_fma       /lib64/libm-2.29.so
+__atan_fma      /lib64/libm-2.29.so
+sincos  /lib64/libm-2.29.so
 
 # This libm function also fails in double precision. Unclear why.
-__exp1_fma      /lib64/libm-2.27.so
+__exp1_fma      /lib64/libm-2.29.so
 
 # These libm functions also fail in "float" rounding mode for unclear reasons
-__ieee754_exp_fma     /lib64/libm-2.27.so
-__fma_fma3            /lib64/libm-2.27.so
+__ieee754_exp_fma     /lib64/libm-2.29.so
+__fma_fma3            /lib64/libm-2.29.so
 
 # This libm function _segfaults_ under verrou. Bug reported.
-__ieee754_pow_fma       /lib64/libm-2.27.so
+__ieee754_pow_fma       /lib64/libm-2.29.so
 
 # This should fail for the same reasons, but it seems we can get away without excluding it for now
 # _ZN4Acts6detail13wrap_periodicIdEET_S2_S2_S2_   /root/acts-core/spack-build/Core/libActsCore.so
