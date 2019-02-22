@@ -23,17 +23,17 @@ echo "*** Updating base Tumbleweed image ***"
 docker pull opensuse/tumbleweed
 
 echo "*** Building basic Spack image ***"
-cd spack-docker
+cd spack
 docker build --squash --tag ${DOCKER_REPO}/spack-tests:latest .
 
 echo "*** Building Verrou image ***"
-cd ../verrou-docker
+cd ../verrou
 docker build --squash --tag ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}      \
                       --build-arg VERROU_VERSION=${VERROU_VERSION} .
 docker tag ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}                       \
            ${DOCKER_REPO}/verrou-tests:latest
 
-cd ../root-docker
+cd ../root
 echo "*** Building ROOT C++17 image ***"
 docker build --squash                                                          \
              --tag ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17             \
@@ -43,10 +43,10 @@ docker tag ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17                     \
            ${DOCKER_REPO}/root-tests:latest-cxx17
 
 echo "***Building Gaudi image ***"
-cd ../gaudi-docker
+cd ../gaudi
 docker build --squash --tag ${DOCKER_REPO}/gaudi-tests:latest .
 
-cd ../acts-docker
+cd ../acts
 for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
     echo "***Building ACTS ${BUILD_TYPE} image ***"
     docker build --squash --tag ${DOCKER_REPO}/acts-tests:latest-${BUILD_TYPE} \
@@ -56,11 +56,11 @@ done
 # TODO: Fix C++17 build for ACTSFW, see bug acts-framework#129
 echo "*** Skipping ACTS test framework image due to C++17 incompatibility ***"
 # echo "***Building ACTS test framework image ***"
-# cd ../acts-framework-docker
+# cd ../acts-framework
 # docker build --squash --tag ${DOCKER_REPO}/acts-framework-tests:latest .
 
 echo "***Building Verrou-enhanced ACTS dev image ***"
-cd ../acts-verrou-docker
+cd ../acts-verrou
 docker build --squash --tag ${DOCKER_REPO}/acts-verrou-tests:latest .
 
 echo "*** Pushing images to the Docker Hub ***"
