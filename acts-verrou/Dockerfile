@@ -20,8 +20,7 @@ RUN spack activate verrou                                                      \
 # Start working on a development branch of ACTS, uninstalling the system
 # version to shrink Docker image size
 RUN spack uninstall -y ${ACTS_SPACK_SPEC}                                      \
-    && git clone --branch=verrou-fixes --depth=1                               \
-                 https://gitlab.cern.ch/hgraslan/acts-core.git                 \
+    && git clone https://gitlab.cern.ch/hgraslan/acts-core.git                 \
     && spack diy -d acts-core ${ACTS_SPACK_SPEC}
 
 # Keep the location of the ACTS build directory around
