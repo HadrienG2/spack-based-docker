@@ -2,15 +2,6 @@ FROM hgrasland/root-tests:latest-cxx17
 LABEL Description="openSUSE Tumbleweed environment for Gaudi"
 CMD bash
 
-# Use my Gaudi package development branch
-#
-# FIXME: Move back to official Spack repo once everything is upstreamed.
-#
-RUN cd /opt/spack                                                              \
-    && git remote add HadrienG2 https://github.com/HadrienG2/spack.git         \
-    && git fetch HadrienG2                                                     \
-    && git checkout gaudi-package
-
 # The RELAX package's rolling release policy is considered naughty by Spack as
 # it makes builds non-reproducible. To disable checksum verification for this
 # package while keeping it for others, we'll need to jump through some hoops...
