@@ -4,19 +4,10 @@ LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
-# Switch to a development branch of Spack with an updated ACTS package
-#
-# FIXME: Move back to official Spack repo once the ACTS package is upstreamed.
-#
-RUN cd /opt/spack                                                              \
-    && git remote add HadrienG2 https://github.com/HadrienG2/spack.git         \
-    && git fetch HadrienG2                                                     \
-    && git checkout HadrienG2/acts-package
-
 # This is the variant of the ACTS package which we are going to build
 RUN echo "export ACTS_SPACK_SPEC=\"                                            \
                      acts-core@develop build_type=${ACTS_BUILD_TYPE} +dd4hep   \
-                                       +digitization +examples                 \
+                                       +digitization +examples +identification \
                                        +integration_tests +json +legacy        \
                                        +material +tests +tgeo                  \
                      ^ ${ROOT_SPACK_SPEC}\""                                   \
