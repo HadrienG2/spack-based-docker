@@ -48,12 +48,12 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
     && ${VERROU_CMD_BASE} ./PropagationTests                                   \
     && ${VERROU_CMD_BASE} ./SeedingTest
 
-# Delta-debug the ACTS unit tests to find out in which ELF symbols Verrou
+# Delta-debug an ACTS unit tests to find out in which ELF symbols Verrou
 # perturbations will cause a test failure.
 #
 # This is an easy way to locate instabilities, which can then be classified as
 # genuine numerical problems or false-positives and be fixed or excluded
-# accordingly. The provided excludes list was largely generated this way.
+# accordingly. The provided exclude list was largely generated via this process.
 #
 # NOTE: In principle, delta-debugging should go down to the granularity of
 #       individual source lines, but this currently fails. I think that is
@@ -64,8 +64,7 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
 COPY run.sh cmp.sh ${ACTS_BUILD_DIR}/
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && chmod +x run.sh cmp.sh                                                  \
-    && spack load cmake                                                        \
-    && VERROU_DD_NRUNS=1 verrou_dd run.sh cmp.sh
+    && verrou_dd run.sh cmp.sh
 
 
 # === CLEAN UP BEFORE PUSHING ===
