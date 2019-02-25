@@ -29,9 +29,8 @@ ENV ACTS_BUILD_DIR=/root/acts-core/spack-build
 
 # === TEST ACTS USING VERROU'S RANDOM-ROUNDING MODE ===
 
-# Bring in the files needed for verrou-based testing
+# Bring in the Verrou exclusions
 COPY excludes.ex ${ACTS_BUILD_DIR}/
-COPY run.sh cmp.sh ${ACTS_BUILD_DIR}/Tests/Integration/
 
 # Record the part of the verrou command line which we'll use everywhere
 ENV VERROU_CMD_BASE="valgrind --tool=verrou                                    \
@@ -49,8 +48,12 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
     && ${VERROU_CMD_BASE} ./PropagationTests                                   \
     && ${VERROU_CMD_BASE} ./SeedingTest
 
-# Delta-debug the ACTS propagation to find its numerical instability regions.
-# This is how the libm exclusion file was generated.
+# Delta-debug the ACTS unit tests to find out in which ELF symbols Verrou
+# perturbations will cause a test failure.
+#
+# This is an easy way to locate instabilities, which can then be classified as
+# genuine numerical problems or false-positives and be fixed or excluded
+# accordingly. The provided excludes list was largely generated this way.
 #
 # NOTE: In principle, delta-debugging should go down to the granularity of
 #       individual source lines, but this currently fails. I think that is
@@ -58,7 +61,8 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
 #       symbols for that. But since we already know that the libm trigonometric
 #       function instabilities are a false alarm, this is not a big deal.
 #
-RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
+COPY run.sh cmp.sh ${ACTS_BUILD_DIR}
+RUN cd ${ACTS_BUILD_DIR}                                                       \
     && chmod +x run.sh cmp.sh                                                  \
     && verrou_dd run.sh cmp.sh
 
