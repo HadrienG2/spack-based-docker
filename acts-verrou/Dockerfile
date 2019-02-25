@@ -65,7 +65,7 @@ COPY run.sh cmp.sh ${ACTS_BUILD_DIR}/
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && chmod +x run.sh cmp.sh                                                  \
     && spack load cmake                                                        \
-    && verrou_dd run.sh cmp.sh
+    && VERROU_DD_NRUNS=1 verrou_dd run.sh cmp.sh
 
 
 # === CLEAN UP BEFORE PUSHING ===
