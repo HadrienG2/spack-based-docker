@@ -10,5 +10,5 @@ valgrind --tool=verrou                                                         \
          --rounding-mode=farthest                                              \
          --demangle=no                                                         \
          --trace-children=yes                                                  \
-         ctest -j8 -E ${EXCLUDE_REGEX}                                         \
+         ctest -E ${EXCLUDE_REGEX}                                             \
          > ${OUTPUT_DIR}/results.dat
