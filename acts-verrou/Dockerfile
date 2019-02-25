@@ -61,7 +61,7 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
 #       symbols for that. But since we already know that the libm trigonometric
 #       function instabilities are a false alarm, this is not a big deal.
 #
-COPY run.sh cmp.sh ${ACTS_BUILD_DIR}
+COPY run.sh cmp.sh ${ACTS_BUILD_DIR}/
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && chmod +x run.sh cmp.sh                                                  \
     && verrou_dd run.sh cmp.sh
