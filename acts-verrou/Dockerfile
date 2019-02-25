@@ -64,6 +64,7 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
 COPY run.sh cmp.sh ${ACTS_BUILD_DIR}/
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && chmod +x run.sh cmp.sh                                                  \
+    && spack load cmake                                                        \
     && verrou_dd run.sh cmp.sh
 
 
