@@ -64,7 +64,7 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
 COPY run.sh cmp.sh ${ACTS_BUILD_DIR}/
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && chmod +x run.sh cmp.sh                                                  \
-    && VERROU_DD_NRUNS=5 VERROU_DD_ALGO=ddmax verrou_dd run.sh cmp.sh
+    && verrou_dd run.sh cmp.sh
 
 
 # === CLEAN UP BEFORE PUSHING ===
