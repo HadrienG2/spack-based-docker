@@ -1,14 +1,15 @@
 # Recipes for building Docker images using Spack
 
-## What is this?
+## What is this about?
 
 HEP software can be hard to build if you dare deviate from the laptop-hostile
 orthodoxy of RHEL / CentOS. But package management systems are here to help.
 
-This project uses a two-layer packaging structure. Build automation is provided
-by the Spack package manager, which allows you to install HEP software by typing
-a mere `spack install gaudi@develop +optional`, letting Spack take care of
-figuring out the missing dependencies and building everything.
+This project uses a two-layer packaging structure. In the first layer, build
+automation is provided by the Spack package manager, which allows you to install
+HEP software by typing simple commands like
+`spack install gaudi@develop +optional`, letting Spack take care of figuring out
+the missing dependencies and building everything.
 
 Since some HEP software takes a very long time to build, you may want to use
 pre-built packages. For now, these are provided in the form of a stack of Docker
@@ -32,17 +33,17 @@ recipes build on top of each other, using the following dependency graph:
 
 The `rebuild-docker-spack.sh` shell script shows how these recipes can be
 combined to build the full stack of Spack-based Docker images on my Docker
-Hub repository.
+Hub repository ( https://hub.docker.com/r/hgrasland/ ).
 
 Note that this script and the Dockerfiles' FROM statements will need to be
 adjusted to your Docker login if you want to rebuild this stack yourself.
 
-## Why do we need two layers?
+## Why do we need both packages and containers?
 
 In the schematic above, you may notice that the acts-verrou image is unrelated
 to the verrou image. This illustrates the lack of composability of Docker's
-layered image-building model, which is what motivated the introduction of a
-Spack layer initially.
+layered image-building model, which is what motivated the introduction of
+Spack packages initially.
 
 Without using Spack, the Verrou build recipe would need to be duplicated between
 the verrou and acts+verrou images. As a software stack grows more complex, this
@@ -51,9 +52,9 @@ unmaintainable spaghetti code monsters unless a reasoned package management
 approach is adopted inside Dockerfile.
 
 Without Spack, it would also be more difficult to tailor software builds to
-everyone's individual needs, leading to constant build recipes forks and
+everyone's individual needs, leading to constant build recipe forks and
 rewrites. With Spack, the part that must be forked (Dockerfile) is kept minimal,
-as all the build logic is in the Spack engine and package recipes.
+as most of the build logic lies in the Spack engine and Spack package recipes.
 
 Furthermore, Docker's focus on isolation from the host system is an imperfect
 fit for scientific programming, that gets in the way of using development tools
@@ -72,7 +73,7 @@ Therefore, combining a package management system that builds from source code
 (and therefore, adapts to different system compilers, libraries, and build
 option desideratas) with a binary software distribution system is useful.
 
-## Why Spack and Docker?
+## Why Spack and Docker specifically?
 
 Spack is one of the main paths that are being explored for HEP packaging
 studies. Compared to its main competition...
