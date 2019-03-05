@@ -24,7 +24,7 @@ docker pull opensuse/tumbleweed
 
 echo "*** Building basic Spack image ***"
 cd spack
-docker build --squash --tag ${DOCKER_REPO}/spack-tests:latest .
+docker build --no-cache --squash --tag ${DOCKER_REPO}/spack-tests:latest .
 
 echo "*** Building Verrou image ***"
 cd ../verrou
