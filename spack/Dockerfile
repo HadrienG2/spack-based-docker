@@ -27,7 +27,7 @@ RUN zypper ref && zypper dup -y
 
 # Install Spack's dependencies
 RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch python \
-                 python-xml tar unzip xz
+                 python-xml subversion tar unzip xz
 
 # Install an environment module system
 RUN zypper in -y lua-lmod                                                      \
