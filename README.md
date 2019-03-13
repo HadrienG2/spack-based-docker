@@ -6,15 +6,15 @@ HEP software can be hard to build if you dare deviate from the laptop-hostile
 orthodoxy of RHEL / CentOS. But package management systems are here to help.
 
 This project uses a two-layer packaging structure. In the first layer, build
-automation is provided by the Spack package manager, which allows you to install
-HEP software by typing simple commands like
-`spack install gaudi@develop +optional`, letting Spack take care of figuring out
-the missing dependencies and building everything.
+automation is provided by the Spack package manager, which allows you to build
+and install HEP software by typing simple commands like
+`spack install gaudi@develop +optional`. Spack will then take care of figuring
+out the missing dependencies and automatically build everything.
 
-Since some HEP software takes a very long time to build, you may want to use
-pre-built packages. For now, these are provided in the form of a stack of Docker
-images. Later on, other container systems may be tried out, and if Spack's
-support for binary mirrors improves, we may even be able to use that.
+Since some HEP software takes a very long time to build, you may also want to
+use pre-built packages. For now, these are provided in the form of a stack of
+Docker images. In the future, other container systems will be tried out, and if
+Spack's support for binary mirrors improves, we will also consider using them.
 
 ## Repository structure 
 
@@ -60,18 +60,24 @@ as most of the build logic lies in the Spack engine and Spack package recipes.
 Furthermore, Docker's focus on isolation from the host system is an imperfect
 fit for scientific programming, that gets in the way of using development tools
 from the host system and makes some tasks such as interfacing with GPU hardware
-or system-wide performance profiling tools hacky and error-prone. Local build
-are sometimes needed for this reason, and being able to easily take a build
-recipe written on a certain OS to another OS is important.
+or system-wide performance profiling tools needlessly hard. Such tasks may be
+much easier to perform locally, which is why having an OS-independent build
+recipe handy is very useful.
 
-Conversely, using only Spack would cause issues on rolling releases Linux
-distributions (where it is desirable to momentarily "freeze" a system
-configuration for the sake of not constantly rebuilding everything during a
-development study), and frustrate new users who just want to try software out,
-without spending hours staring at a ROOT build.
+Why don't we use only Spack, then? Well, first of all, Spack's strong focus on
+keeping builds consistent can lead it to frequently rebuild the world in
+rapidly-evolving system configurations such as rolling-release Linux
+distributions. The very premise of this project is to free people from the
+tyranny of indefinitely frozen OS configurations, so bad user experience on
+well-updated operating systems would obviously be a major issue.
 
-Therefore, combining a package management system that builds from source code
-(and therefore, adapts to different system compilers, libraries, and build
+Another UX issue with Spack is that building some parts of a HEP stack can take
+a very long time, which is an unwelcome hindrance for newcomers who just want to
+try something out without spending hours staring at a ROOT build. Addressing
+their needs require some form of pre-built binary packaging solution.
+
+This proves that combining a package management system that builds from source
+code (and therefore, adapts to different system compilers, libraries, and build
 option desideratas) with a binary software distribution system is useful.
 
 ## Why Spack and Docker specifically?

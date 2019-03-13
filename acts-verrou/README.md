@@ -1,6 +1,7 @@
-# A dockerfile for Verrou studies on ACTS
+# A Dockerfile for doing Verrou studies on ACTS
 
-This dockerfile is used to perform Verrou-based numerical studies on the ACTS
-codebase. It is based upon my previous work on dockerfiles for Verrou and ACTS.
+This Dockerfile provides a development environment suitable for performing
+[Verrou](https://github.com/edf-hpc/verrou)-assisted numerical studies on the
+[ACTS](https://acts.web.cern.ch/ACTS/) codebase.
 
-You will find it on the docker Hub as hgrasland/acts-verrou-tests.
+You can build a Docker image from it using "docker build .", or you can use the pre-built hgrasland/acts-verrou-tests image on the public Docker Hub.
