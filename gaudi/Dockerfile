@@ -32,8 +32,8 @@ RUN spack cd --build-dir ${GAUDI_SPACK_SPEC}                                   \
     && spack build-env gaudi+tests+optional                                    \
            ctest -j8 -E "(google_auditors\.heapchecker|event_timeout_abort)"
 
-# Drop the build to save space in the final Docker image
+# Clean up Spack caches and temporary files to shrink the Docker image
 #
-# (This will preserve dependencies, therefore reinstalling should be quick)
+# (This will preserve dependencies, therefore rebuilding should be quick)
 #
-RUN spack clean ${GAUDI_SPACK_SPEC}
+RUN spack clean -a

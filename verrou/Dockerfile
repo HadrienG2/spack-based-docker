@@ -10,3 +10,6 @@ RUN spack install verrou@${VERROU_VERSION}
 
 # Schedule a Verrou environment to be loaded during container startup
 RUN echo "spack load verrou" >> "$SETUP_ENV"
+
+# Clean up Spack caches and temporary files to shrink the Docker image
+RUN spack clean -a

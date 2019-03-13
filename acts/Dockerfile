@@ -42,7 +42,7 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Core                                            \
 RUN cd ${ACTS_SOURCE_DIR} && spack diy --quiet ${ACTS_SPACK_SPEC}
 
 # Discard the ACTS build directory and the associated environment setup
-RUN spack clean ${ACTS_SPACK_SPEC}                                             \
+RUN spack clean -a                                                             \
     && mv ${SETUP_ENV} ${SETUP_ENV}.old                                        \
     && grep -E --invert-match "ACTS_(SOURCE|BUILD)_DIR" ${SETUP_ENV}.old       \
             >> ${SETUP_ENV}                                                    \

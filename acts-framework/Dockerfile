@@ -52,9 +52,9 @@ RUN spack load ${ACTSFW_SPACK_SPEC}                                            \
     && echo "---------------"                                                  \
     && ACTFWWhiteBoardExample -n 100
 
-# Clean up Spack caches and temporary file to shrink the Docker image
-RUN spack clean -a
-
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
 RUN spack uninstall -y ${ACTSFW_SPACK_SPEC}
+
+# Clean up Spack caches and temporary file to shrink the Docker image
+RUN spack clean -a

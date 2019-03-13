@@ -21,3 +21,6 @@ RUN echo "spack load ${ROOT_SPACK_SPEC}" >> "$SETUP_ENV"
 
 # Check that the ROOT install works
 RUN root.exe -b -q -e "(6*7)-(6*7)"
+
+# Clean up Spack caches and temporary files to shrink the Docker image
+RUN spack clean -a
