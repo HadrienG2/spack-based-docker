@@ -32,11 +32,12 @@ recipes build on top of each other, using the following dependency graph:
                            acts-verrou
 
 The `rebuild-docker-spack.sh` shell script shows how these recipes can be
-combined to build the full stack of Spack-based Docker images on my Docker
-Hub repository ( https://hub.docker.com/r/hgrasland/ ).
+combined to build the full stack of Spack-based Docker images on the author's
+Docker Hub repository ( https://hub.docker.com/r/hgrasland/ ).
 
-Note that this script and the Dockerfiles' FROM statements will need to be
-adjusted to your Docker login if you want to rebuild this stack yourself.
+Note that this script contains a reference to the target Docker repository, and
+will therefore need to be adjusted if you want to rebuild a variant of this
+stack on your own repository.
 
 ## Why do we need both packages and containers?
 

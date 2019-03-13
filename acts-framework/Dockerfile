@@ -3,7 +3,9 @@
 # NOTE: We do not build on top of acts-tests because we rely on a different ACTS
 #       versions and use different dependency build settings.
 #
-FROM hgrasland/root-tests:latest-cxx17
+ARG DOCKER_REPO=hgrasland
+ARG ROOT_VERSION=6.16.00
+FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTSFW installed"
 CMD bash
 

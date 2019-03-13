@@ -1,5 +1,6 @@
 # Configure the container's basic properties
-FROM hgrasland/acts-tests:latest-Debug
+ARG DOCKER_REPO=hgrasland
+FROM ${DOCKER_REPO}/acts-tests:latest-Debug
 LABEL Description="openSUSE Tumbleweed with ACTS and Verrou"
 CMD bash
 

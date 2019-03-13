@@ -1,5 +1,6 @@
 # Configure the container's basic properties
-FROM hgrasland/spack-tests
+ARG DOCKER_REPO=hgrasland
+FROM ${DOCKER_REPO}/spack-tests
 LABEL Description="openSUSE Tumbleweed with ROOT installed"
 CMD bash
 ARG ROOT_VERSION=6.16.00

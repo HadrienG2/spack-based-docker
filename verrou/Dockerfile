@@ -1,5 +1,6 @@
 # Configure the container's basic properties
-FROM hgrasland/spack-tests
+ARG DOCKER_REPO=hgrasland
+FROM ${DOCKER_REPO}/spack-tests
 LABEL Description="openSUSE Tumbleweed with Verrou installed"
 CMD bash
 ARG VERROU_VERSION=2.1.0
