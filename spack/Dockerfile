@@ -44,4 +44,4 @@ RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "$SETUP_ENV"
 ENV FORCE_UNSAFE_CONFIGURE=1
 
 # Discard the system package cache to save up space
-RUN zypper clean
+RUN zypper clean -a
