@@ -3,12 +3,13 @@ ARG DOCKER_REPO=hgrasland
 FROM ${DOCKER_REPO}/acts-tests:latest-Debug
 LABEL Description="openSUSE Tumbleweed with ACTS and Verrou"
 CMD bash
+ARG VERROU_VERSION=2.1.0
 
 
 # === INSTALL VERROU ===
 
 # Install Verrou
-RUN spack install verrou@2.1.0 ^ python -pythoncmd
+RUN spack install verrou@${VEROU_VERSION} ^ python -pythoncmd
 
 # Bring Python, Verrou, and Verrou's python extensions in global scope
 RUN spack activate verrou                                                      \

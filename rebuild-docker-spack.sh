@@ -65,8 +65,9 @@ echo "*** Skipping ACTS test framework image due to C++17 incompatibility ***"
 
 echo "***Building Verrou-enhanced ACTS dev image ***"
 cd ../acts-verrou
-docker build --squash --tag ${DOCKER_REPO}/acts-verrou-tests:latest \
-                      --build-arg DOCKER_REPO=${DOCKER_REPO} .
+docker build --squash --tag ${DOCKER_REPO}/acts-verrou-tests:latest            \
+                      --build-arg DOCKER_REPO=${DOCKER_REPO}                   \
+                      --build-arg VERROU_VERSION=${VERROU_VERSION} .
 
 echo "*** Pushing images to the Docker Hub ***"
 docker push ${DOCKER_REPO}/spack-tests
