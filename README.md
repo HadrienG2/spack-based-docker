@@ -8,7 +8,7 @@ orthodoxy of RHEL / CentOS. But package management systems are here to help.
 This project uses a two-layer packaging structure. In the first layer, build
 automation is provided by the Spack package manager, which allows you to build
 and install HEP software by typing simple commands like
-`spack install gaudi@develop +optional`. Spack will then take care of figuring
+`spack install acts-core@develop +tgeo`. Spack will then take care of figuring
 out the missing dependencies and automatically build everything.
 
 Since some HEP software takes a very long time to build, you may also want to
@@ -25,11 +25,11 @@ recipes build on top of each other, using the following dependency graph:
         \________________
          \               \
     root (C++17)       verrou
-           \_________________________________________________
-            \               \               \                \
-           gaudi       acts (Debug)    acts (RelDeb)    acts-framework
-                              \
-                           acts-verrou
+           \_________________________________
+            \               \                \
+       acts (Debug)    acts (RelDeb)    acts-framework
+              \
+           acts-verrou
 
 The `rebuild-docker-spack.sh` shell script shows how these recipes can be
 combined to build the full stack of Spack-based Docker images on the author's

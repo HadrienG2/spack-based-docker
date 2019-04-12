@@ -40,12 +40,6 @@ docker build --squash                                                          \
              --build-arg ROOT_VERSION=${ROOT_VERSION}                          \
              --build-arg ROOT_CXX_STANDARD=17 .
 
-echo "***Building Gaudi image ***"
-cd ../gaudi
-docker build --squash --tag ${DOCKER_REPO}/gaudi-tests:latest                  \
-                      --build-arg DOCKER_REPO=${DOCKER_REPO}                   \
-                      --build-arg ROOT_VERSION=${ROOT_VERSION} .
-
 cd ../acts
 for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
     echo "***Building ACTS ${BUILD_TYPE} image ***"
@@ -73,7 +67,6 @@ echo "*** Pushing images to the Docker Hub ***"
 docker push ${DOCKER_REPO}/spack-tests
 docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
-docker push ${DOCKER_REPO}/gaudi-tests
 docker push ${DOCKER_REPO}/acts-tests
 # TODO: docker push ${DOCKER_REPO}/acts-framework-tests
 docker push ${DOCKER_REPO}/acts-verrou-tests
