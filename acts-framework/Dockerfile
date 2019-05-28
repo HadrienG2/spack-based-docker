@@ -19,8 +19,13 @@ RUN cd /opt/spack                                                              \
     && git checkout HadrienG2/acts-framework
 
 # Specify a full-featured build of ACTSFW
+#
+# FIXME: Bring back +dd4hep once either of the following is true:
+#        1. ROOT can be built with +opengl +x
+#        2. DD4hep does not require ROOT to have OpenGL / X11 support anymore
+#
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
-              acts-framework@develop +dd4hep +fatras +geant4 +legacy +tgeo     \
+              acts-framework@develop -dd4hep +fatras +geant4 +legacy +tgeo     \
                   ^ ${ROOT_SPACK_SPEC}\""                                      \
           >> ${SETUP_ENV}
 
@@ -33,13 +38,10 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 #        ACTFWBFieldExample, ACTFWRootGeometryExample (exit code 0),
 #        ACTFWRootPropagationExample (exit code 0)
 #
+# FIXME: Bring back "spack load dd4hep" + DD4hep examples
+#
 RUN spack load ${ACTSFW_SPACK_SPEC}                                            \
-    && spack load dd4hep                                                       \
     && spack cd --build-dir ${ACTSFW_SPACK_SPEC}                               \
-    && ACTFWDD4hepGeometryExample -n 100                                       \
-    && echo "---------------"                                                  \
-    && ACTFWDD4hepPropagationExample -n 100                                    \
-    && echo "---------------"                                                  \
     && ACTFWGenericGeometryExample -n 100                                      \
     && echo "---------------"                                                  \
     && ACTFWGenericPropagationExample -n 100                                   \
