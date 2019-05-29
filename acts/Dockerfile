@@ -28,9 +28,10 @@ RUN echo "export ACTS_SPACK_SPEC=\"                                            \
 RUN spack build ${ACTS_SPACK_SPEC}
 
 # Cache the location of the ACTS build directory (it takes a while to compute)
-RUN export ACTS_SOURCE_DIR=`spack location --build-dir ${ACTS_SPACK_SPEC}`     \
-    && echo "export ACTS_SOURCE_DIR=${ACTS_SOURCE_DIR}" >> ${SETUP_ENV}        \
-    && echo "export ACTS_BUILD_DIR=${ACTS_SOURCE_DIR}/spack-build"             \
+RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
+    && echo "export ACTS_SOURCE_DIR=${ACTS_STAGE_DIR}/acts-core"               \
+            >> ${SETUP_ENV}                                                    \
+    && echo "export ACTS_BUILD_DIR=${ACTS_STAGE_DIR}/spack-build"              \
             >> ${SETUP_ENV}
 
 # Run the unit tests
