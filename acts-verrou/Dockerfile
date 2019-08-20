@@ -46,8 +46,11 @@ RUN cd ${ACTS_BUILD_DIR}                                                       \
     && ${VERROU_CMD_BASE} --trace-children=yes ctest -V
 
 # Run the integration tests inside of Verrou as well
+#
+# FIXME: Disabled the propagation tests as they are currently completely broken,
+#        see ACTS issue acts-core#614
+#
 RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
-    && ${VERROU_CMD_BASE} ./PropagationTests                                   \
     && ${VERROU_CMD_BASE} ./SeedingTest
 
 # Delta-debug an ACTS unit tests to find out in which ELF symbols Verrou
