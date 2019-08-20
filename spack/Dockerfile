@@ -34,7 +34,14 @@ RUN zypper in -y lua-lmod                                                      \
     && echo "source /usr/share/lmod/lmod/init/bash" >> "$SETUP_ENV"
 
 # Download Spack
-RUN cd /opt && git clone --depth=1 https://github.com/spack/spack.git
+#
+# FIXME: Using a spack fork currently because Spack's built-in ROOT recipe is
+#        broken for root+x and I need that variant for DD4hep.
+#
+RUN cd /opt                                                                    \
+    && git clone --depth=1                                                     \
+                 --branch=disable-root-include-hack                            \
+                 https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "$SETUP_ENV"
