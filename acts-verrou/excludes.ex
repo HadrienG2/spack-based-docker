@@ -22,9 +22,9 @@ __ieee754_pow_fma       /lib64/libm-2.29.so
 # _ZN4Acts6detail13wrap_periodicIdEET_S2_S2_S2_   /root/acts-core/spack-build/Core/libActsCore.so
 
 # These exclusions handle a numerical instability in the setup of SurfaceArrayCreatorTests
-_ZN4Acts4Test26SurfaceArrayCreatorFixture17makeBarrelStaggerEiidddd     /root/acts-core/spack-build/Tests/Core/Tools/SurfaceArrayCreatorTests
-_ZN4Acts4Test26SurfaceArrayCreatorFixture22fullPhiTestSurfacesBRLEmddddd        /root/acts-core/spack-build/Tests/Core/Tools/SurfaceArrayCreatorTests
-_ZN4Acts4Test26SurfaceArrayCreatorFixture21fullPhiTestSurfacesECEmddddd /root/acts-core/spack-build/Tests/Core/Tools/SurfaceArrayCreatorTests
+_ZN4Acts4Test26SurfaceArrayCreatorFixture17makeBarrelStaggerEiidddd     /root/acts-core/spack-build/Tests/Core/Geometry/SurfaceArrayCreatorTests
+_ZN4Acts4Test26SurfaceArrayCreatorFixture22fullPhiTestSurfacesBRLEmddddd      /root/acts-core/spack-build/Tests/Core/Geometry/SurfaceArrayCreatorTests
+_ZN4Acts4Test26SurfaceArrayCreatorFixture21fullPhiTestSurfacesECEmddddd       /root/acts-core/spack-build/Tests/Core/Geometry/SurfaceArrayCreatorTests
 
 # These exclusions handle a false positive in the conversion of CylinderLayer to variant_data and back
 _ZNK4Acts13CylinderLayer13toVariantDataB5cxx11Ev        /root/acts-core/spack-build/Core/libActsCore.so
