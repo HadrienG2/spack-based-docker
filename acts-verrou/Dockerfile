@@ -41,9 +41,14 @@ ENV VERROU_CMD_BASE="valgrind --tool=verrou                                    \
                               --exclude=${ACTS_BUILD_DIR}/excludes.ex"
 
 # Run the ACTS test suite inside of Verrou, in verbose and single-thread mode
+#
+# FIXME: The BoundingBoxTest is disabled because the way it operates (grazing
+#        incidence rays, leveraging NaNs in intersection computations...) is
+#        fundamentally hostile to Verrou.
+#
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && spack load cmake                                                        \
-    && ${VERROU_CMD_BASE} --trace-children=yes ctest -V
+    && ${VERROU_CMD_BASE} --trace-children=yes ctest -V -E "^BoundingBoxTest$"
 
 # Run the integration tests inside of Verrou as well
 #
