@@ -42,6 +42,10 @@ RUN cd /opt                                                                    \
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 
+# Setup spack to make a generic x86_64 build instead of one that's tuned for the
+# host CPU (since that would obviously make Docker images nonportable)
+COPY packages.yaml /etc/spack/
+
 # Setup a Spack Environment
 ENV SPACK_ENV_NAME="docker-spack"
 RUN spack env create ${SPACK_ENV_NAME}                                         \
