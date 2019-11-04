@@ -33,9 +33,7 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 #        ACTFWBFieldExample, ACTFWRootGeometryExample (exit code 0),
 #        ACTFWRootPropagationExample (exit code 0)
 #
-RUN spack load ${ACTSFW_SPACK_SPEC}                                            \
-    && spack load dd4hep                                                       \
-    && spack cd --build-dir ${ACTSFW_SPACK_SPEC}                               \
+RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && ACTFWDD4hepGeometryExample -n 100                                       \
     && echo "---------------"                                                  \
     && ACTFWDD4hepPropagationExample -n 100                                    \

@@ -11,10 +11,8 @@ ARG VERROU_VERSION=2.1.0
 # Install Verrou
 RUN spack install verrou@${VERROU_VERSION} ^ python -pythoncmd
 
-# Bring Python, Verrou, and Verrou's python extensions in global scope
-RUN spack activate verrou                                                      \
-    && echo "spack load python@3 -pythoncmd" >> ${SETUP_ENV}                   \
-    && echo "spack load verrou" >> ${SETUP_ENV}
+# Verrou's python extensions in global scope
+RUN spack activate verrou
 
 
 # === SETUP AN ACTS DEVELOPMENT ENVIRONMENT ===
@@ -23,7 +21,7 @@ RUN spack activate verrou                                                      \
 # version to shrink Docker image size
 RUN spack uninstall -y ${ACTS_SPACK_SPEC}                                      \
     && git clone https://gitlab.cern.ch/hgraslan/acts-core.git                 \
-    && spack diy -d acts-core ${ACTS_SPACK_SPEC}
+    && spack dev-build --until build -d acts-core ${ACTS_SPACK_SPEC}
 
 # Keep the location of the ACTS build directory around
 ENV ACTS_BUILD_DIR=/root/acts-core/spack-build
@@ -47,16 +45,12 @@ ENV VERROU_CMD_BASE="valgrind --tool=verrou                                    \
 #        fundamentally hostile to Verrou.
 #
 RUN cd ${ACTS_BUILD_DIR}                                                       \
-    && spack load cmake                                                        \
     && ${VERROU_CMD_BASE} --trace-children=yes ctest -V -E "^BoundingBoxTest$"
 
 # Run the integration tests inside of Verrou as well
-#
-# FIXME: Disabled the propagation tests as they are currently completely broken,
-#        see ACTS issue acts-core#614
-#
-RUN cd ${ACTS_BUILD_DIR}/Tests/Integration                                     \
-    && ${VERROU_CMD_BASE} ./SeedingTest
+RUN cd ${ACTS_BUILD_DIR}                                                       \
+    && ${VERROU_CMD_BASE} --trace-children=yes                                 \
+                          cmake --build build -- integration_tests
 
 # Delta-debug an ACTS unit tests to find out in which ELF symbols Verrou
 # perturbations will cause a test failure.

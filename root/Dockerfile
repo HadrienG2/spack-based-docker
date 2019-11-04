@@ -16,9 +16,6 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
 # Install ROOT
 RUN echo "Installing ${ROOT_SPACK_SPEC}..." && spack install ${ROOT_SPACK_SPEC}
 
-# Prepare the environment for running ROOT
-RUN echo "spack load ${ROOT_SPACK_SPEC}" >> "$SETUP_ENV"
-
 # Check that the ROOT install works
 RUN root.exe -b -q -e "(6*7)-(6*7)"
 

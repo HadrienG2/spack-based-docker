@@ -29,10 +29,6 @@ RUN zypper ref && zypper dup -y
 RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch python \
                  python-xml subversion tar unzip xz
 
-# Install an environment module system
-RUN zypper in -y lua-lmod                                                      \
-    && echo "source /usr/share/lmod/lmod/init/bash" >> "$SETUP_ENV"
-
 # Download Spack
 #
 # FIXME: Using a spack fork currently because Spack's built-in ROOT recipe is
@@ -44,7 +40,12 @@ RUN cd /opt                                                                    \
                  https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack
-RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "$SETUP_ENV"
+RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
+
+# Setup a Spack Environment
+ENV SPACK_ENV_NAME="docker-spack"
+RUN spack env create ${SPACK_ENV_NAME}                                         \
+    && echo "spack env activate ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"
 
 # Some build script such as tar's do not like Docker's habit of running
 # everything as root, and need a little convincing
