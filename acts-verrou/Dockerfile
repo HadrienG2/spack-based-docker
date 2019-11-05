@@ -19,8 +19,13 @@ RUN spack activate verrou
 
 # Start working on a development branch of ACTS, uninstalling the system
 # version to shrink Docker image size
+#
+# NOTE: This is morally equivalent to building acts-core@develop, but it's
+#       easier to switch to a development branch of hgraslan/acts-core when
+#       an issue has been found and must be worked on.
+#
 RUN spack uninstall -y ${ACTS_SPACK_SPEC}                                      \
-    && git clone https://gitlab.cern.ch/hgraslan/acts-core.git                 \
+    && git clone https://gitlab.cern.ch/acts-core/acts-core.git                \
     && spack dev-build --until build -d acts-core ${ACTS_SPACK_SPEC}
 
 # Keep the location of the ACTS build directory around
