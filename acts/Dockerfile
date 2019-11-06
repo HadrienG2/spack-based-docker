@@ -7,8 +7,11 @@ CMD bash
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
+#
+# TODO: Re-enable DD4hep once the PyROOT problem is taken care of.
+#
 RUN echo "export ACTS_SPACK_SPEC=\"                                            \
-                     acts-core@develop build_type=${ACTS_BUILD_TYPE} +dd4hep   \
+                     acts-core@develop build_type=${ACTS_BUILD_TYPE} -dd4hep   \
                                        +digitization +examples +identification \
                                        +integration_tests +json +legacy        \
                                        +tests +tgeo                            \
