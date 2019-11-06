@@ -22,7 +22,8 @@ RUN echo "export ACTS_SPACK_SPEC=\"                                            \
 RUN spack install --until build ${ACTS_SPACK_SPEC}
 
 # Cache the location of the ACTS build directory (it takes a while to compute)
-RUN export ACTS_BUILD_DIR=`spack location --build-dir ${ACTS_SPACK_SPEC}`      \
+RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
+    && export ACTS_BUILD_DIR="${ACTS_STAGE_DIR}/spack-build"                   \
     && echo "export ACTS_BUILD_DIR=${ACTS_BUILD_DIR}" >> ${SETUP_ENV}
 
 # Run the unit tests
@@ -30,7 +31,7 @@ RUN cd ${ACTS_BUILD_DIR} && spack build-env acts-core ctest -j8
 
 # Run the integration tests as well
 RUN cd ${ACTS_BUILD_DIR}                                                       \
-    && spack build-env acts-core cmake --build build -- integration_tests
+    && spack build-env acts-core -- cmake --build . -- integration_tests
 
 # Run the benchmarks as well
 RUN cd ${ACTS_BUILD_DIR}/Tests/Core                                            \
