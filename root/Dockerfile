@@ -15,7 +15,8 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
                      -examples +gdml -minuit +opengl +python +root7 -rootfit   \
                      +sqlite +ssl +tbb +threads -tiff -tmva -unuran +vdt +x    \
                      -xml                                                      \
-                         ^ mesa -llvm"
+                         ^ mesa -llvm                                          \
+                         ^ python -pythoncmd"
 
 # Install ROOT
 RUN echo "Installing ${ROOT_SPACK_SPEC}..." && spack install ${ROOT_SPACK_SPEC}
