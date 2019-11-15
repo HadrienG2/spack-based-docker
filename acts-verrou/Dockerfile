@@ -25,7 +25,7 @@ RUN spack activate verrou
 #       an issue has been found and must be worked on.
 #
 RUN spack uninstall -y ${ACTS_SPACK_SPEC}                                      \
-    && git clone https://gitlab.cern.ch/acts-core/acts-core.git                \
+    && git clone https://gitlab.cern.ch/acts/acts-core.git                     \
     && spack dev-build --until build -d acts-core ${ACTS_SPACK_SPEC}
 
 # Keep the location of the ACTS build directory around
