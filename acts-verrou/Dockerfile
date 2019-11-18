@@ -58,7 +58,7 @@ RUN cd ${ACTS_BUILD_DIR}                                                       \
 # Run the integration tests inside of Verrou as well
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && ${VERROU_CMD_BASE} --trace-children=yes                                 \
-                          cmake --build build -- integration_tests
+                          cmake --build . -- integration_tests
 
 # Delta-debug an ACTS unit tests to find out in which ELF symbols Verrou
 # perturbations will cause a test failure.
