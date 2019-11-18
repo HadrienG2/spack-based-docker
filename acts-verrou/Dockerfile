@@ -43,6 +43,9 @@ ENV VERROU_CMD_BASE="valgrind --tool=verrou                                    \
                               --demangle=no                                    \
                               --exclude=${ACTS_BUILD_DIR}/excludes.ex"
 
+# Make sure that CMake is available in the environment as we need it for testing
+RUN spack install cmake
+
 # Run the ACTS test suite inside of Verrou, in verbose and single-thread mode
 #
 # FIXME: The BoundingBoxTest is disabled because the way it operates (grazing
