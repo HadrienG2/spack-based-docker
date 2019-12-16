@@ -28,7 +28,10 @@ RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
           >> ${SETUP_ENV}
 
 # Install ACTSFW
-RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
+#
+# FIXME: Remove workaround for broken xerces-c C++ standard selection
+#
+RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC} ^ xerces-c cxxstd=11
 
 # Run the framework examples
 #
