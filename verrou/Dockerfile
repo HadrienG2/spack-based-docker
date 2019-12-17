@@ -13,5 +13,10 @@ RUN spack install verrou@${VERROU_VERSION}                                     \
                       ^ python -bz2 -ctypes -dbm -lzma -pyexpat -pythoncmd     \
                                -sqlite3 -ssl -zlib
 
+# Check basic Verrou operation
+RUN spack env view enable                                                      \
+    && valgrind --tool=verrou --rounding-mode=random                           \
+                python -c "sum([0.1*i for i in xrange(1000)])"
+
 # Clean up Spack caches and temporary files to shrink the Docker image
 RUN spack clean -a
