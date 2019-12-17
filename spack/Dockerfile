@@ -4,17 +4,38 @@ LABEL Description="openSUSE Tumbleweed with Spack installed"
 CMD bash
 SHELL ["/bin/bash", "-c"]
 
-# Build an environment setup script that works during docker build
+# Build an environment setup script that is executed both during the Docker
+# image build process (before every RUN command) and when an image is started
+# in interactive mode (via "docker run").
 #
-# NOTE: This trickery is necessary because docker build commands are run in a
-#       shell which is neither a login shell nor an interactive shell, and
-#       cannot be easily turned into either. Which means that there is no clean
-#       entry point for running environment setup scripts in docker build.
+# This is harder than it sounds because...
+#
+# 1. RUN commands are run in a shell that, in bash terminology, is neither
+#    a login shell nor an interactive shell. So our only hook for injecting
+#    environment setup is BASH_ENV, which is queried for an environment setup
+#    file to be sourced whenever a non-interactive shell starts.
+# 2. Interactive docker runs do not use a login shell (and we probably don't
+#    want them to since /etc/profile does too much stuff), only an interactive
+#    shell. So our only hook for injecting environment setup is bashrc files,
+#    which are sourced anytime an interactive shell starts.
+# 3. Some aspects of our environment setup should only run once per run, either
+#    because they're not reentrant or unacceptably costly, and both hooks above
+#    can lead to the environment setup script being sourced multiple times.
+#
+# The way we resolve this is that we point both BASH_ENV and bashrc to a script
+# which checks if BASH_ENV is set, and if so unsets it and runs our environment
+# setup. This works because...
+#
+# - The script is invoked for both interactive and non-interactive shells
+# - Unsetting BASH_ENV after setup cleans up the environment and ensures that
+#   the environment setup script is only run once.
 #
 RUN touch /root/setup_env.sh                                                   \
-    && echo "unset BASH_ENV" > /root/bash_env.sh                               \
-    && echo "source /root/setup_env.sh" >> /root/bash_env.sh                   \
-    && echo "source /root/setup_env.sh" >> /root/.bashrc
+    && echo 'if [ -n "${BASH_ENV}" ]; then                                     \
+                 unset BASH_ENV;                                               \
+                 source /root/setup_env.sh;                                    \
+             fi' > /root/bash_env.sh                                           \
+    && echo "source /root/bash_env.sh" >> /root/.bashrc
 ENV BASH_ENV="/root/bash_env.sh"                                               \
     SETUP_ENV="/root/setup_env.sh"
 
