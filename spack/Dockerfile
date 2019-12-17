@@ -77,11 +77,15 @@ COPY packages.yaml /etc/spack/
 # operating and actually setting all the PATHs accordingly. Here, we're only
 # doing the former, because doing the latter has harmful side-effects on Spack
 # and the shell, so it should only be done as the last step before using a
-# package, with "spack env view enable".
+# package, with the "activate-spack-view" alias.
 #
 ENV SPACK_ENV_NAME="docker-spack"
 RUN spack env create ${SPACK_ENV_NAME}                                         \
-    && echo "spack env activate -V ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"
+    && echo "spack env activate -V ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"        \
+    && SPACK_ENV_LOCATION="`spack location --env ${SPACK_ENV_NAME}`"           \
+       echo 'alias activate-spack-view="                                       \
+                 source \"${SPACK_ENV_LOCATION}/.spack-env/view/env.sh\"       \
+            "' >> "${SETUP_ENV}"
 
 # Some build script such as tar's do not like Docker's habit of running
 # everything as root, and need a little convincing

@@ -20,10 +20,11 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
                          ^ python -bz2 -dbm -lzma -pyexpat -sqlite3 -pythoncmd"
 
 # Install ROOT
-RUN echo "Installing ${ROOT_SPACK_SPEC}..." && spack install ${ROOT_SPACK_SPEC}
+RUN spack install ${ROOT_SPACK_SPEC}
 
 # Check that the ROOT install works
-RUN spack env view enable && root.exe -b -q -e "(6*7)-(6*7)"
+RUN activate-spack-view                                                        \
+    && root.exe -b -q -e "(6*7)-(6*7)"
 
 # Clean up Spack caches and temporary files to shrink the Docker image
 RUN spack clean -a
