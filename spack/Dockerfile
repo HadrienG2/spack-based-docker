@@ -30,13 +30,9 @@ SHELL ["/bin/bash", "-c"]
 # - Unsetting BASH_ENV after setup cleans up the environment and ensures that
 #   the environment setup script is only run once.
 #
-# We also turn on the expand_aliases shell option in order to further increase
-# consistency between RUN statements and docker run.
-#
 RUN touch /root/setup_env.sh                                                   \
     && echo 'if [ -n "${BASH_ENV}" ]; then                                     \
                  unset BASH_ENV;                                               \
-                 shopt -s expand_aliases;                                      \
                  source /root/setup_env.sh;                                    \
              fi' > /root/bash_env.sh                                           \
     && echo "source /root/bash_env.sh" >> /root/.bashrc
@@ -81,15 +77,15 @@ COPY packages.yaml /etc/spack/
 # operating and actually setting all the PATHs accordingly. Here, we're only
 # doing the former, because doing the latter has harmful side-effects on Spack
 # and the shell, so it should only be done as the last step before using a
-# package, with the "activate-spack-view" alias.
+# package, with the "activate-spack-view" shell function.
 #
 ENV SPACK_ENV_NAME="docker-spack"
 RUN spack env create ${SPACK_ENV_NAME}                                         \
     && echo "spack env activate -V ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"        \
     && SPACK_ENV_LOCATION="`spack location --env ${SPACK_ENV_NAME}`"           \
-       echo 'alias activate-spack-view="                                       \
-                 source \"${SPACK_ENV_LOCATION}/.spack-env/view/env.sh\"       \
-            "' >> "${SETUP_ENV}"
+       echo 'activate-spack-view() {                                           \
+                 source "${SPACK_ENV_LOCATION}/.spack-env/view/env.sh";        \
+            }' >> "${SETUP_ENV}"
 
 # Some build script such as tar's do not like Docker's habit of running
 # everything as root, and need a little convincing
