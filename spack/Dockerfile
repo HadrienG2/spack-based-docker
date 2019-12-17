@@ -83,9 +83,9 @@ ENV SPACK_ENV_NAME="docker-spack"
 RUN spack env create ${SPACK_ENV_NAME}                                         \
     && echo "spack env activate -V ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"        \
     && SPACK_ENV_LOCATION="`spack location --env ${SPACK_ENV_NAME}`"           \
-       echo 'activate-spack-view() {                                           \
-                 source "${SPACK_ENV_LOCATION}/.spack-env/view/env.sh";        \
-            }' >> "${SETUP_ENV}"
+       echo "activate-spack-view() {                                           \
+                 source \"${SPACK_ENV_LOCATION}/.spack-env/view/env.sh\";      \
+            }" >> "${SETUP_ENV}"
 
 # Some build script such as tar's do not like Docker's habit of running
 # everything as root, and need a little convincing
