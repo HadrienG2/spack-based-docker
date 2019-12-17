@@ -21,7 +21,7 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
 RUN echo "Installing ${ROOT_SPACK_SPEC}..." && spack install ${ROOT_SPACK_SPEC}
 
 # Check that the ROOT install works
-RUN root.exe -b -q -e "(6*7)-(6*7)"
+RUN spack env view enable && root.exe -b -q -e "(6*7)-(6*7)"
 
 # Clean up Spack caches and temporary files to shrink the Docker image
 RUN spack clean -a
