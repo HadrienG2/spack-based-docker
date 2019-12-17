@@ -52,7 +52,7 @@ RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch python \
 
 # Download Spack
 #
-# FIXME: Using a spack fork currently because Spack's built-in ROOT recipe is
+# FIXME: Using a Spack fork currently because Spack's built-in ROOT recipe is
 #        broken for root+x and I need that variant for DD4hep.
 #
 RUN cd /opt                                                                    \
@@ -67,10 +67,21 @@ RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 # host CPU (since that would obviously make Docker images nonportable)
 COPY packages.yaml /etc/spack/
 
-# Setup a Spack Environment
+# Setup a Spack environment
+#
+# Largely modeled after Python virtual environments, Spack environments provide
+# an easy way to bring Spack-installed packages into shell "scope", eliminating
+# the need for slow and cumbersome environment modules.
+#
+# One can separate the actions of specifying in which environment Spack is
+# operating and actually setting all the PATHs accordingly. Here, we're only
+# doing the former, because doing the latter has harmful side-effects on Spack
+# and the shell, so it should only be done as the last step before using a
+# package, with "spack env view enable".
+#
 ENV SPACK_ENV_NAME="docker-spack"
 RUN spack env create ${SPACK_ENV_NAME}                                         \
-    && echo "spack env activate ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"
+    && echo "spack env activate -V ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"
 
 # Some build script such as tar's do not like Docker's habit of running
 # everything as root, and need a little convincing
