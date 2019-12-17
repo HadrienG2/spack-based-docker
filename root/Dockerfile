@@ -13,8 +13,7 @@ ARG ROOT_CXX_STANDARD=17
 #
 ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
                      -examples +gdml -minuit +opengl +python +root7 -rootfit   \
-                     +sqlite +ssl +tbb +threads -tiff -tmva -unuran +vdt +x    \
-                     -xml                                                      \
+                     +tbb +threads -tiff -tmva -unuran -vdt +x -xml            \
                          ^ mesa -llvm                                          \
                          ^ python -pythoncmd"
 
