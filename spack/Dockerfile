@@ -30,9 +30,13 @@ SHELL ["/bin/bash", "-c"]
 # - Unsetting BASH_ENV after setup cleans up the environment and ensures that
 #   the environment setup script is only run once.
 #
+# We also turn on the expand_aliases shell option in order to further increase
+# consistency between RUN statements and docker run.
+#
 RUN touch /root/setup_env.sh                                                   \
     && echo 'if [ -n "${BASH_ENV}" ]; then                                     \
                  unset BASH_ENV;                                               \
+                 shopt -s expand_aliases;                                      \
                  source /root/setup_env.sh;                                    \
              fi' > /root/bash_env.sh                                           \
     && echo "source /root/bash_env.sh" >> /root/.bashrc
