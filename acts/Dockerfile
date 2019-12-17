@@ -15,8 +15,15 @@ RUN echo "export ACTS_SPACK_SPEC=\"                                            \
                                        +digitization +examples +identification \
                                        +integration_tests +json +legacy        \
                                        +tests +tgeo                            \
-                     ^ ${ROOT_SPACK_SPEC}\""                                   \
-         >> ${SETUP_ENV}
+                         ^ boost@1.70.0 -atomic -chrono cxxstd=17 -date_time   \
+                                        -exception -filesystem -graph          \
+                                        -iostreams -locale -log -math          \
+                                        +multithreaded +program_options        \
+                                        -random -regex -serialization +shared  \
+                                        -signals -system +test -thread -timer  \
+                                        -wave                                  \
+                         ^ ${ROOT_SPACK_SPEC}                                  \
+         \"" >> ${SETUP_ENV}
 
 # Build acts-core, do not install it yet
 RUN spack install --until build ${ACTS_SPACK_SPEC}
