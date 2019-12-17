@@ -83,7 +83,7 @@ ENV SPACK_ENV_NAME="docker-spack"
 RUN spack env create ${SPACK_ENV_NAME}                                         \
     && echo "spack env activate -V ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"        \
     && SPACK_ENV_LOCATION="`spack location --env ${SPACK_ENV_NAME}`"           \
-       echo "activate-spack-view() {                                           \
+    && echo "activate-spack-view() {                                           \
                  source \"${SPACK_ENV_LOCATION}/.spack-env/view/env.sh\";      \
             }" >> "${SETUP_ENV}"
 
