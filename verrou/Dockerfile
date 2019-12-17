@@ -13,6 +13,9 @@ RUN spack install verrou@${VERROU_VERSION}                                     \
                       ^ python -bz2 -ctypes -dbm -lzma -pyexpat -pythoncmd     \
                                -sqlite3 -ssl -zlib
 
+# Enable verrou's python extensions
+RUN spack activate verrou
+
 # Check basic Verrou operation
 RUN spack env view enable                                                      \
     && valgrind --tool=verrou --rounding-mode=random                           \
