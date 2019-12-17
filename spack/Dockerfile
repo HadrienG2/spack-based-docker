@@ -51,8 +51,14 @@ RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch python \
                  python-xml subversion tar unzip xz
 
 # Download Spack
+#
+# FIXME: Using a spack fork currently because Spack's built-in ROOT recipe is
+#        broken for root+x and I need that variant for DD4hep.
+#
 RUN cd /opt                                                                    \
-    && git clone --depth=1 https://github.com/spack/spack.git
+    && git clone --depth=1                                                     \
+                 --branch=disable-root-include-hack                            \
+                 https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
