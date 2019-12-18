@@ -3,7 +3,7 @@ ARG DOCKER_REPO=hgrasland
 FROM ${DOCKER_REPO}/spack-tests
 LABEL Description="openSUSE Tumbleweed with ROOT installed"
 CMD bash
-ARG ROOT_VERSION=6.16.00
+ARG ROOT_VERSION=6.18.04
 ARG ROOT_CXX_STANDARD=17
 
 # This is a reasonably minimal ROOT Spack specification. We record it to an
