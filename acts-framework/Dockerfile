@@ -19,16 +19,17 @@ RUN cd /opt/spack                                                              \
     && git checkout HadrienG2/acts-framework
 
 # Specify a full-featured build of ACTSFW
-RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
-              acts-framework@develop +dd4hep +geant4 +tgeo                     \
-                  ^ ${ROOT_SPACK_SPEC}\""                                      \
-          >> ${SETUP_ENV}
-
-# Install ACTSFW
 #
 # FIXME: Remove workaround for broken xerces-c C++ standard selection
 #
-RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC} ^ xerces-c cxxstd=11
+RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
+              acts-framework@develop +dd4hep +geant4 +tgeo                     \
+                  ^ ${ROOT_SPACK_SPEC}                                         \
+                  ^ xerces-c cxxstd=11                                         \
+         \"">> ${SETUP_ENV}
+
+# Install ACTSFW
+RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 
 # Run the framework examples
 #
