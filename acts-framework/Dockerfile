@@ -19,11 +19,8 @@ RUN cd /opt/spack                                                              \
     && git checkout HadrienG2/acts-framework
 
 # Specify a full-featured build of ACTSFW
-#
-# TODO: Re-enable DD4hep once the PyROOT problem is taken care of.
-#
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
-              acts-framework@develop -dd4hep +geant4 +tgeo                     \
+              acts-framework@develop +dd4hep +geant4 +tgeo                     \
                   ^ ${ROOT_SPACK_SPEC}\""                                      \
           >> ${SETUP_ENV}
 
