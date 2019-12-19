@@ -14,7 +14,8 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
                          ^ binutils -gold -nls                                 \
                          ^ gettext -bzip2 -git -xz                             \
                          ^ mesa -llvm                                          \
-                         ^ python -bz2 -dbm -lzma -pyexpat -sqlite3 -pythoncmd"
+                         ^ python@3: -bz2 -dbm -lzma -pyexpat -sqlite3         \
+                                     -pythoncmd"
 
 # Install ROOT
 RUN spack install ${ROOT_SPACK_SPEC}
