@@ -19,7 +19,7 @@ RUN spack activate verrou
 # Check basic Verrou operation
 RUN activate-spack-view                                                        \
     && valgrind --tool=verrou --rounding-mode=random                           \
-                python3 -c "print(sum([0.1*i-0.1*i for i in xrange(100)]))"
+                python3 -c "print(sum([0.1*i-0.1*i for i in range(100)]))"
 
 # Clean up Spack caches and temporary files to shrink the Docker image
 RUN spack clean -a
