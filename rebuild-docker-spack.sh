@@ -49,15 +49,13 @@ for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
                           --build-arg ACTS_BUILD_TYPE=${BUILD_TYPE} .
 done
 
-# TODO: Fix C++17 build for ACTSFW, see bug acts-framework#129
-echo "*** Skipping ACTS test framework image due to C++17 incompatibility ***"
-# echo "***Building ACTS test framework image ***"
-# cd ../acts-framework
-# docker build --squash --tag ${DOCKER_REPO}/acts-framework-tests:latest       \
-#                       --build-arg DOCKER_REPO=${DOCKER_REPO}                 \
-#                       --build-arg ROOT_VERSION=${ROOT_VERSION} .
+echo "*** Building ACTS test framework image ***"
+cd ../acts-framework
+docker build --squash --tag ${DOCKER_REPO}/acts-framework-tests:latest       \
+                      --build-arg DOCKER_REPO=${DOCKER_REPO}                 \
+                      --build-arg ROOT_VERSION=${ROOT_VERSION} .
 
-echo "***Building Verrou-enhanced ACTS dev image ***"
+echo "*** Building Verrou-enhanced ACTS dev image ***"
 cd ../acts-verrou
 docker build --squash --tag ${DOCKER_REPO}/acts-verrou-tests:latest            \
                       --build-arg DOCKER_REPO=${DOCKER_REPO}                   \
@@ -68,5 +66,5 @@ docker push ${DOCKER_REPO}/spack-tests
 docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
 docker push ${DOCKER_REPO}/acts-tests
-# TODO: docker push ${DOCKER_REPO}/acts-framework-tests
+docker push ${DOCKER_REPO}/acts-framework-tests
 docker push ${DOCKER_REPO}/acts-verrou-tests
