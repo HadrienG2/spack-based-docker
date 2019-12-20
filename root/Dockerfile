@@ -20,9 +20,6 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
 # Install ROOT
 RUN spack install ${ROOT_SPACK_SPEC}
 
-# Enable the PyROOT Python extension
-RUN spack activate root
-
 # Check that the ROOT install works, including PyROOT:
 #
 # - Can we evaluate C++ expressions?
