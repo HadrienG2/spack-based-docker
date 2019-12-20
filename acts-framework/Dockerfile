@@ -44,6 +44,7 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 #        ACTFWRootPropagationExample (exit code 0)
 #
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
+    && activate-spack-view                                                     \
     && ACTFWDD4hepGeometryExample -n 100                                       \
     && echo "---------------"                                                  \
     && ACTFWDD4hepPropagationExample -n 100                                    \

@@ -53,10 +53,12 @@ RUN spack install cmake
 #        fundamentally hostile to Verrou.
 #
 RUN cd ${ACTS_BUILD_DIR}                                                       \
+    && activate-spack-view                                                     \
     && ${VERROU_CMD_BASE} --trace-children=yes ctest -V -E "^BoundingBoxTest$"
 
 # Run the integration tests inside of Verrou as well
 RUN cd ${ACTS_BUILD_DIR}                                                       \
+    && activate-spack-view                                                     \
     && ${VERROU_CMD_BASE} --trace-children=yes                                 \
                           cmake --build . -- integration_tests
 
@@ -75,6 +77,7 @@ RUN cd ${ACTS_BUILD_DIR}                                                       \
 #
 COPY run.sh cmp.sh ${ACTS_BUILD_DIR}/
 RUN cd ${ACTS_BUILD_DIR}                                                       \
+    && activate-spack-view                                                     \
     && chmod +x run.sh cmp.sh                                                  \
     && verrou_dd run.sh cmp.sh
 
