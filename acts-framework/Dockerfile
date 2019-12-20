@@ -22,8 +22,14 @@ RUN cd /opt/spack                                                              \
 #
 # FIXME: Remove workaround for broken xerces-c C++ standard selection
 #
+# FIXME: DDDigi's CMakeLists is broken as of DD4hep v1.11 and
+#        master@5bbbb8c86ff764eb452608b5439db90b5e3d2450. I need to debug this
+#        and submit them a patch, wait for a release, spackage it, and then we
+#        can remove the version constraint.
+#
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
               acts-framework@develop +dd4hep +geant4 +tgeo                     \
+                  ^ dd4hep@:1.10                                               \
                   ^ ${ROOT_SPACK_SPEC}                                         \
                   ^ xerces-c cxxstd=11                                         \
          \"">> ${SETUP_ENV}
