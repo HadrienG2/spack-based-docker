@@ -29,6 +29,11 @@ RUN cd /opt/spack                                                              \
 #
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
               acts-framework@develop +dd4hep +geant4 +tgeo                     \
+                  ^ boost -atomic -chrono cxxstd=17 -date_time -exception      \
+                          +filesystem -graph -iostreams -locale -log -math     \
+                          +multithreaded +program_options -random -regex       \
+                          -serialization +shared -signals -system +test        \
+                          -thread -timer -wave                                 \
                   ^ dd4hep@:1.10                                               \
                   ^ ${ROOT_SPACK_SPEC}                                         \
                   ^ xerces-c cxxstd=11                                         \

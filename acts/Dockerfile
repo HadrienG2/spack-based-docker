@@ -18,13 +18,12 @@ RUN echo "export ACTS_SPACK_SPEC=\"                                            \
                                        +digitization +examples +identification \
                                        +integration_tests +json +legacy        \
                                        +tests +tgeo                            \
-                         ^ boost@1.70.0 -atomic -chrono cxxstd=17 -date_time   \
-                                        -exception -filesystem -graph          \
-                                        -iostreams -locale -log -math          \
-                                        +multithreaded +program_options        \
-                                        -random -regex -serialization +shared  \
-                                        -signals -system +test -thread -timer  \
-                                        -wave                                  \
+                         ^ boost -atomic -chrono cxxstd=17 -date_time          \
+                                 -exception -filesystem -graph -iostreams      \
+                                 -locale -log -math +multithreaded             \
+                                 +program_options -random -regex               \
+                                 -serialization +shared -signals -system +test \
+                                 -thread -timer -wave                          \
                          ^ dd4hep@:1.10                                        \
                          ^ ${ROOT_SPACK_SPEC}                                  \
          \"" >> ${SETUP_ENV}
