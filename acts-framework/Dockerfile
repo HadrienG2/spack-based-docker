@@ -39,27 +39,53 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 
 # Run the framework examples
 #
-# FIXME: Fix currently failing examples ACTFWBFieldAccessExample,
-#        ACTFWBFieldExample, ACTFWRootGeometryExample (exit code 0),
-#        ACTFWRootPropagationExample (exit code 0)
+# TODO: Check for examples which fail in spite of returning 0
 #
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && activate-spack-view                                                     \
+    && ACTFWAlignedGeometryExample -n 100                                      \
+    && echo "---------------"                                                  \
+    && ACTFWAlignedPropagationExample -n 100                                   \
+    && echo "---------------"                                                  \
+    && ACTFWBFieldExample -n 100                                               \
+    && echo "---------------"                                                  \
+    && ACTFWBFieldAccessExample -n 100                                         \
+    && echo "---------------"                                                  \
     && ACTFWDD4hepGeometryExample -n 100                                       \
+    && echo "---------------"                                                  \
+    && ACTFWDD4hepMaterialMappingExample -n 100                                \
+    && echo "---------------"                                                  \
+    && ACTFWDD4hepMaterialValidationExample -n 100                             \
     && echo "---------------"                                                  \
     && ACTFWDD4hepPropagationExample -n 100                                    \
     && echo "---------------"                                                  \
+    && ACTFWEmptyGeometryExample -n 100                                        \
+    && echo "---------------"                                                  \
+    && ACTFWEmptyPropagationExample -n 100                                     \
+    && echo "---------------"                                                  \
+    && ACTFWGeantinoRecordingExample -n 100                                    \
+    && echo "---------------"                                                  \
     && ACTFWGenericGeometryExample -n 100                                      \
+    && echo "---------------"                                                  \
+    && ACTFWGenericMaterialMappingExample -n 100                               \
+    && echo "---------------"                                                  \
+    && ACTFWGenericMaterialValidationExample -n 100                            \
     && echo "---------------"                                                  \
     && ACTFWGenericPropagationExample -n 100                                   \
     && echo "---------------"                                                  \
+    && ACTFWGenericReadCsvExample -n 100                                       \
+    && echo "---------------"                                                  \
     && ACTFWHelloWorldExample -n 100                                           \
     && echo "---------------"                                                  \
-    && ACTFWParticleGunExample -n 100                                          \
+    && ACTFWPayloadGeometryExample -n 100                                      \
     && echo "---------------"                                                  \
-    && ACTFWRandomNumberExample -n 100                                         \
+    && ACTFWPayloadPropagationExample -n 100                                   \
     && echo "---------------"                                                  \
-    && ACTFWWhiteBoardExample -n 100
+    && ACTFWTGeoGeometryExample -n 100                                         \
+    && echo "---------------"                                                  \
+    && ACTFWTGeoPropagationExample -n 100                                      \
+    && echo "---------------"                                                  \
+    && ActsParticleGun -n 100
 
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
