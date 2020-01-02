@@ -52,12 +52,12 @@ RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
 
 # Download Spack
 #
-# FIXME: Using a Spack fork currently because Spack's built-in ROOT recipe is
-#        broken for root+x and I need that variant for DD4hep.
+# FIXME: Switch back to the official master once the ROOT fixes and
+#        acts-framework recipes have been merged in.
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=more-root-hacks                                      \
+                 --branch=acts-framework                                       \
                  https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack

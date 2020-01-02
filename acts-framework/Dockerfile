@@ -9,14 +9,6 @@ FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTSFW installed"
 CMD bash
 
-# Switch to a development branch of Spack with the ACTSFW package
-#
-# FIXME: Switch to upstream once this work is integrated.
-#
-RUN cd /opt/spack                                                              \
-    && git remote add HadrienG2 https://github.com/HadrienG2/spack.git         \
-    && git fetch HadrienG2                                                     \
-    && git checkout HadrienG2/acts-framework
 
 # Specify a full-featured build of ACTSFW
 #
