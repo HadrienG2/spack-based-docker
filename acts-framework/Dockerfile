@@ -36,7 +36,18 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 
 # Run the framework examples
 #
-# TODO: Check for examples which fail in spite of returning 0
+# FIXME: Cannot test ACTFWBFieldExample, ACTFWBFieldAccessExample,
+#        ACTFWDD4hepMaterialMappingExample, ACTFWGenericMaterialMappingExample
+#        ACTFWGenericReadCsvExample and ACTFWPayloadPropagationExample as no
+#        input data file is provided and it's unclear how to get one.
+#
+# FIXME: Cannot reliably test ACTFWTGeoGeometryExample and
+#        ACTFWTGeoPropagationExample as they do not reliably emit a nonzero
+#        status code on exit.
+#
+# FIXME: Cannot test ACTFWGeantinoRecordingExample as it crashes with a double
+#        free due to G4AssemblyStore ownership issues as of Geant4 10.5p1,
+#        should try again with a later Geant4 release.
 #
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && activate-spack-view                                                     \
@@ -44,13 +55,7 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ACTFWAlignedPropagationExample -n 100                                   \
     && echo "---------------"                                                  \
-    && ACTFWBFieldExample -n 100                                               \
-    && echo "---------------"                                                  \
-    && ACTFWBFieldAccessExample -n 100                                         \
-    && echo "---------------"                                                  \
     && ACTFWDD4hepGeometryExample -n 100                                       \
-    && echo "---------------"                                                  \
-    && ACTFWDD4hepMaterialMappingExample -n 100                                \
     && echo "---------------"                                                  \
     && ACTFWDD4hepMaterialValidationExample -n 100                             \
     && echo "---------------"                                                  \
@@ -60,27 +65,15 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ACTFWEmptyPropagationExample -n 100                                     \
     && echo "---------------"                                                  \
-    && ACTFWGeantinoRecordingExample -n 100                                    \
-    && echo "---------------"                                                  \
     && ACTFWGenericGeometryExample -n 100                                      \
-    && echo "---------------"                                                  \
-    && ACTFWGenericMaterialMappingExample -n 100                               \
     && echo "---------------"                                                  \
     && ACTFWGenericMaterialValidationExample -n 100                            \
     && echo "---------------"                                                  \
     && ACTFWGenericPropagationExample -n 100                                   \
     && echo "---------------"                                                  \
-    && ACTFWGenericReadCsvExample -n 100                                       \
-    && echo "---------------"                                                  \
     && ACTFWHelloWorldExample -n 100                                           \
     && echo "---------------"                                                  \
     && ACTFWPayloadGeometryExample -n 100                                      \
-    && echo "---------------"                                                  \
-    && ACTFWPayloadPropagationExample -n 100                                   \
-    && echo "---------------"                                                  \
-    && ACTFWTGeoGeometryExample -n 100                                         \
-    && echo "---------------"                                                  \
-    && ACTFWTGeoPropagationExample -n 100                                      \
     && echo "---------------"                                                  \
     && ActsParticleGun -n 100
 
