@@ -9,7 +9,7 @@ ARG VERROU_VERSION=2.1.0
 # === INSTALL VERROU ===
 
 # Install Verrou
-RUN spack install verrou@${VERROU_VERSION} ^ python@3: -pythoncmd
+RUN spack install verrou@${VERROU_VERSION} ^ ${PYTHON_SPACK_SPEC}
 
 # Verrou's python extensions in global scope
 RUN spack activate verrou
