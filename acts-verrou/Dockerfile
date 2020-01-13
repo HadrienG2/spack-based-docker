@@ -3,7 +3,7 @@ ARG DOCKER_REPO=hgrasland
 FROM ${DOCKER_REPO}/acts-tests:latest-Debug
 LABEL Description="openSUSE Tumbleweed with ACTS and Verrou"
 CMD bash
-ARG VERROU_VERSION=2.1.0
+ARG VERROU_VERSION=2.2.0
 
 
 # === INSTALL VERROU ===
@@ -69,17 +69,11 @@ RUN cd ${ACTS_BUILD_DIR}                                                       \
 # genuine numerical problems or false-positives and be fixed or excluded
 # accordingly. The provided exclude list was largely generated via this process.
 #
-# NOTE: In principle, delta-debugging should go down to the granularity of
-#       individual source lines, but this currently fails. I think that is
-#       because the instabilities are in the libm and I do not have debugging
-#       symbols for that. But since we already know that the libm trigonometric
-#       function instabilities are a false alarm, this is not a big deal.
-#
 COPY run.sh cmp.sh ${ACTS_BUILD_DIR}/
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && activate-spack-view                                                     \
     && chmod +x run.sh cmp.sh                                                  \
-    && verrou_dd run.sh cmp.sh
+    && verrou_dd_sym run.sh cmp.sh
 
 
 # === CLEAN UP BEFORE PUSHING ===
