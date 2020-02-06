@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.18.04
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=0.14.00
+ARG ACTS_VERSION=0.16.00
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -16,7 +16,8 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #
 RUN echo "export ACTS_SPACK_SPEC=\"                                            \
                      acts-core@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}   \
-                                               +dd4hep +digitization +examples \
+                                               +benchmarks +dd4hep             \
+                                               +digitization +examples +fatras \
                                                +identification                 \
                                                +integration_tests +json        \
                                                +legacy +tests +tgeo            \

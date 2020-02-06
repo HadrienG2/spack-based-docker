@@ -20,7 +20,7 @@ CMD bash
 #        can remove the version constraint.
 #
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
-              acts-framework@develop +dd4hep +geant4 +tgeo                     \
+              acts-framework@develop +dd4hep +geant4 +pythia8 +tgeo            \
                   ^ boost -atomic -chrono cxxstd=17 -date_time -exception      \
                           +filesystem -graph -iostreams -locale -log -math     \
                           +multithreaded +pic +program_options -random -regex  \
