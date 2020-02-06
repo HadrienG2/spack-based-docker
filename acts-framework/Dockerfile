@@ -45,6 +45,8 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 #
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && activate-spack-view                                                     \
+    && ACTFWAlignedFatrasExample -n 100                                        \
+    && echo "---------------"                                                  \
     && ACTFWAlignedGeometryExample -n 100                                      \
     && echo "---------------"                                                  \
     && ACTFWAlignedPropagationExample -n 100                                   \
@@ -59,6 +61,8 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ACTFWEmptyPropagationExample -n 100                                     \
     && echo "---------------"                                                  \
+    && ACTFWGenericFatrasExample -n 100                                        \
+    && echo "---------------"                                                  \
     && ACTFWGenericGeometryExample -n 100                                      \
     && echo "---------------"                                                  \
     && ACTFWGenericMaterialValidationExample -n 100                            \
@@ -67,9 +71,21 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ACTFWHelloWorldExample -n 100                                           \
     && echo "---------------"                                                  \
+    && ACTFWPayloadFatrasExample -n 100                                        \
+    && echo "---------------"                                                  \
     && ACTFWPayloadGeometryExample -n 100                                      \
     && echo "---------------"                                                  \
-    && ActsParticleGun -n 100
+    && ActsParticleGun -n 100                                                  \
+    && echo "---------------"                                                  \
+    && ActsPythia8 -n 100                                                      \
+    && echo "---------------"                                                  \
+    && ACTFWVertexFinderExample -n 100                                         \
+    && echo "---------------"                                                  \
+    && ACTFWVertexFitterExample -n 100                                         \
+    && echo "---------------"                                                  \
+    && ACTFWVertexReaderExample -n 100                                         \
+    && echo "---------------"                                                  \
+    && ACTFWVertexWriterExample -n 100
 
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
