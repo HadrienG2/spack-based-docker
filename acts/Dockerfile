@@ -8,12 +8,6 @@ ARG ACTS_VERSION=0.16.00
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
-#
-# FIXME: DDDigi's CMakeLists is broken as of DD4hep v1.11 and
-#        master@5bbbb8c86ff764eb452608b5439db90b5e3d2450. I need to debug this
-#        and submit them a patch, wait for a release, spackage it, and then we
-#        can remove the version constraint.
-#
 RUN echo "export ACTS_SPACK_SPEC=\"                                            \
                      acts-core@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}   \
                                                +benchmarks +dd4hep             \
@@ -27,7 +21,6 @@ RUN echo "export ACTS_SPACK_SPEC=\"                                            \
                                  +program_options -random -regex               \
                                  -serialization +shared -signals -system +test \
                                  -thread -timer -wave                          \
-                         ^ dd4hep@:1.10                                        \
                          ^ ${ROOT_SPACK_SPEC}                                  \
          \"" >> ${SETUP_ENV}
 
