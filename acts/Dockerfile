@@ -40,11 +40,12 @@ RUN cd ${ACTS_BUILD_DIR}                                                       \
     && spack build-env acts-core -- cmake --build . -- integrationtests
 
 # Run the benchmarks as well
-RUN cd ${ACTS_BUILD_DIR}/Tests/Core                                            \
-    && spack build-env acts-core ./MagneticField/SolenoidFieldBenchmark        \
-    && spack build-env acts-core ./Propagator/EigenStepperBenchmark            \
-    && spack build-env acts-core ./Propagator/AtlasStepperBenchmark            \
-    && spack build-env acts-core ./Surfaces/BoundaryCheckBenchmark
+RUN cd ${ACTS_BUILD_DIR}/Tests/Benchmarks                                      \
+    && spack build-env acts-core ./SolenoidFieldBenchmark                      \
+    && spack build-env acts-core ./EigenStepperBenchmark                       \
+    && spack build-env acts-core ./AtlasStepperBenchmark                       \
+    && spack build-env acts-core ./BoundaryCheckBenchmark                      \
+    && spack build-env acts-core ./SurfaceIntersectionBenchmark
 
 # Finish installing ACTS
 RUN spack install ${ACTS_SPACK_SPEC}
