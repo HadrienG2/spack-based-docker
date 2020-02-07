@@ -61,7 +61,7 @@ RUN cd ${ACTS_BUILD_DIR}                                                       \
 RUN cd ${ACTS_BUILD_DIR}                                                       \
     && activate-spack-view                                                     \
     && ${VERROU_CMD_BASE} --trace-children=yes                                 \
-                          cmake --build . -- integration_tests
+                          cmake --build . -- integrationtests
 
 # Delta-debug an ACTS unit tests to find out in which ELF symbols Verrou
 # perturbations will cause a test failure.

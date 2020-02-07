@@ -37,7 +37,7 @@ RUN cd ${ACTS_BUILD_DIR} && spack build-env acts-core ctest -j8
 
 # Run the integration tests as well
 RUN cd ${ACTS_BUILD_DIR}                                                       \
-    && spack build-env acts-core -- cmake --build . -- integration_tests
+    && spack build-env acts-core -- cmake --build . -- integrationtests
 
 # Run the benchmarks as well
 RUN cd ${ACTS_BUILD_DIR}/Tests/Core                                            \
