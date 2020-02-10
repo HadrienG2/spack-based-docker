@@ -41,11 +41,11 @@ RUN cd ${ACTS_BUILD_DIR}                                                       \
 
 # Run the benchmarks as well
 RUN cd ${ACTS_BUILD_DIR}/Tests/Benchmarks                                      \
-    && spack build-env acts-core ./SolenoidFieldBenchmark                      \
-    && spack build-env acts-core ./EigenStepperBenchmark                       \
-    && spack build-env acts-core ./AtlasStepperBenchmark                       \
-    && spack build-env acts-core ./BoundaryCheckBenchmark                      \
-    && spack build-env acts-core ./SurfaceIntersectionBenchmark
+    && spack build-env acts-core ./ActsBenchmarkAtlasStepper                   \
+    && spack build-env acts-core ./ActsBenchmarkBoundaryCheck                  \
+    && spack build-env acts-core ./ActsBenchmarkEigenStepper                   \
+    && spack build-env acts-core ./ActsBenchmarkSolenoidField                  \
+    && spack build-env acts-core ./ActsBenchmarkSurfaceIntersection
 
 # Finish installing ACTS
 RUN spack install ${ACTS_SPACK_SPEC}
