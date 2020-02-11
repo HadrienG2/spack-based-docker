@@ -11,9 +11,6 @@ CMD bash
 
 
 # Specify a full-featured build of ACTSFW
-#
-# FIXME: Remove workaround for broken xerces-c C++ standard selection
-#
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
               acts-framework@develop +dd4hep +geant4 +pythia8 +tgeo            \
                   ^ boost -atomic -chrono cxxstd=17 -date_time -exception      \
@@ -22,7 +19,6 @@ RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
                           -serialization +shared -signals -system +test        \
                           -thread -timer -wave                                 \
                   ^ ${ROOT_SPACK_SPEC}                                         \
-                  ^ xerces-c cxxstd=11                                         \
          \"">> ${SETUP_ENV}
 
 # Install ACTSFW
