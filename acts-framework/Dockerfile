@@ -17,7 +17,7 @@ CMD bash
 #        figure out that these two constraints are not incompatible.
 #
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
-              acts-framework@develop +dd4hep +geant4 +pythia8 +tgeo            \
+              acts-framework@develop +dd4hep +geant4 +hepmc3 +pythia8 +tgeo    \
                   ^ boost -atomic -chrono cxxstd=17 -date_time -exception      \
                           +filesystem -graph -iostreams -locale -log -math     \
                           +multithreaded +pic +program_options -random -regex  \
@@ -72,6 +72,8 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && ACTFWGenericPropagationExample -n 100                                   \
     && echo "---------------"                                                  \
     && ACTFWHelloWorldExample -n 100                                           \
+    && echo "---------------"                                                  \
+    && ACTFWHepMC3Example -n 100                                               \
     && echo "---------------"                                                  \
     && ACTFWPayloadFatrasExample -n 100                                        \
     && echo "---------------"                                                  \
