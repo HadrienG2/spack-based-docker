@@ -12,7 +12,9 @@ CMD bash
 
 # Specify a full-featured build of ACTSFW
 #
-# FIXME: Remove workaround for broken xerces-c C++ standard selection
+# FIXME: xerces-c cxxstd must be forced to "11" because it's "default" by
+#        by default, Geant4 asks for "11", and Spack isn't smart enough to
+#        figure out that these two constraints are not incompatible.
 #
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
               acts-framework@develop +dd4hep +geant4 +pythia8 +tgeo            \
