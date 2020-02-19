@@ -14,7 +14,10 @@ CMD bash
 #
 # FIXME: xerces-c cxxstd must be forced to "11" because it's "default" by
 #        by default, Geant4 asks for "11", and Spack isn't smart enough to
-#        figure out that these two constraints are not incompatible.
+#        figure out that these two constraints are compatible.
+#
+# FIXME: acts-core +dd4hep cmake configuration fails due to not finding boost
+#        (and in particular boost filesystem) with dd4hep 1.11, figure out why.
 #
 RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
               acts-framework@develop +dd4hep +geant4 +hepmc3 +pythia8 +tgeo    \
@@ -23,6 +26,7 @@ RUN echo "export ACTSFW_SPACK_SPEC=\"                                          \
                           +multithreaded +pic +program_options -random -regex  \
                           -serialization +shared -signals -system +test        \
                           -thread -timer -wave                                 \
+                  ^ dd4hep@:1.10.0                                             \
                   ^ ${ROOT_SPACK_SPEC}                                         \
                   ^ xerces-c cxxstd=11                                         \
          \"">> ${SETUP_ENV}
