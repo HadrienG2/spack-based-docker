@@ -22,4 +22,4 @@ RUN activate-spack-view                                                        \
                 python3 -c "assert(sum([0.1*i-0.1*i for i in range(100)]) != 0)"
 
 # Clean up Spack caches and temporary files to shrink the Docker image
-RUN spack clean -a
+RUN spack gc -y && spack clean -a

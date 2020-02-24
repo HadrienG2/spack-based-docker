@@ -34,4 +34,4 @@ RUN activate-spack-view                                                        \
     && python3 -c 'import ROOT'
 
 # Clean up Spack caches and temporary files to shrink the Docker image
-RUN spack clean -a
+RUN spack gc -y && spack clean -a

@@ -51,7 +51,8 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Benchmarks                                      \
 RUN spack install ${ACTS_SPACK_SPEC}
 
 # Discard the ACTS build directory and the associated environment setup
-RUN spack clean -a                                                             \
+RUN spack gc -y                                                                \
+    && spack clean -a                                                          \
     && mv ${SETUP_ENV} ${SETUP_ENV}.old                                        \
     && grep -E --invert-match "ACTS_BUILD_DIR" ${SETUP_ENV}.old                \
             >> ${SETUP_ENV}                                                    \

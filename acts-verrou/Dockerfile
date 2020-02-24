@@ -89,4 +89,4 @@ RUN rm -rf ${ACTS_BUILD_DIR}
 RUN spack uninstall -y ${ACTS_SPACK_SPEC}
 
 # Clean up Spack caches and temporary files to shrink the Docker image
-RUN spack clean -a
+RUN spack gc -y && spack clean -a

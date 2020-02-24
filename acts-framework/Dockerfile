@@ -100,4 +100,4 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
 RUN spack uninstall -y ${ACTSFW_SPACK_SPEC}
 
 # Clean up Spack caches and temporary file to shrink the Docker image
-RUN spack clean -a
+RUN spack gc -y && spack clean -a
