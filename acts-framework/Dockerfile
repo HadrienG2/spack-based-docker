@@ -97,7 +97,7 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
 
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
-RUN spack uninstall -y ${ACTSFW_SPACK_SPEC}
+RUN spack uninstall -y acts-framework
 
 # Clean up Spack caches and temporary file to shrink the Docker image
 RUN spack gc -y && spack clean -a

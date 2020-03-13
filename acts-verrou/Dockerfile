@@ -25,7 +25,7 @@ RUN spack activate verrou
 #       easier to switch to a development branch of hgraslan/acts-core when
 #       an issue has been found and must be worked on.
 #
-RUN spack uninstall -y ${ACTS_SPACK_SPEC}                                      \
+RUN spack uninstall -y acts-core                                               \
     && git clone https://gitlab.cern.ch/acts/acts-core.git                     \
     && spack dev-build --until build -d acts-core ${ACTS_SPACK_SPEC}
 
@@ -86,7 +86,7 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration && rm -rf dd.sym dd.line
 RUN rm -rf ${ACTS_BUILD_DIR}
 
 # Discard the ACTS install, as otherwise user won't be able to rebuild another
-RUN spack uninstall -y ${ACTS_SPACK_SPEC}
+RUN spack uninstall -y acts-core
 
 # Clean up Spack caches and temporary files to shrink the Docker image
 RUN spack gc -y && spack clean -a
