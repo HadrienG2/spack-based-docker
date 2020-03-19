@@ -28,14 +28,17 @@ cd spack
 docker build --no-cache --squash --tag ${DOCKER_REPO}/spack-tests:latest .
 docker system prune -f
 
-echo "*** Building Verrou image ***"
-cd ../verrou
-docker build --squash                                                          \
-             --tag ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}               \
-             --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
-             --build-arg VERROU_VERSION=${VERROU_VERSION}                      \
-             .
-docker system prune -f
+# FIXME: Running verrou on Python currently doesn't work on my home setup,
+#        disabling that build until I have more time to investigate.
+#
+# echo "*** Building Verrou image ***"
+# cd ../verrou
+# docker build --squash                                                          \
+#              --tag ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}               \
+#              --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
+#              --build-arg VERROU_VERSION=${VERROU_VERSION}                      \
+#              .
+# docker system prune -f
 
 cd ../root
 echo "*** Building ROOT C++17 image ***"
@@ -72,7 +75,7 @@ docker system prune -f
 
 echo "*** Pushing images to the Docker Hub ***"
 docker push ${DOCKER_REPO}/spack-tests
-docker push ${DOCKER_REPO}/verrou-tests
+# docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
 docker push ${DOCKER_REPO}/acts-tests
 docker push ${DOCKER_REPO}/acts-verrou-tests
