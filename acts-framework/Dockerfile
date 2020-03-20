@@ -4,7 +4,7 @@
 #       versions and use different dependency build settings.
 #
 ARG DOCKER_REPO=hgrasland
-ARG ROOT_VERSION=6.18.04
+ARG ROOT_VERSION=6.20.02
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTSFW installed"
 CMD bash
