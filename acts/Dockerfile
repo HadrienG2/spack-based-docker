@@ -35,17 +35,21 @@ RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
 # Run the unit tests
 RUN cd ${ACTS_BUILD_DIR} && spack build-env acts-core ctest -j8
 
-# Run the integration tests as well
-RUN cd ${ACTS_BUILD_DIR}                                                       \
-    && spack build-env acts-core -- cmake --build . -- integrationtests
+# Run the integration tests too (skip in Debug builds, as they are too slow)
+RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
+        cd ${ACTS_BUILD_DIR}                                                   \
+        && spack build-env acts-core -- cmake --build . -- integrationtests;   \
+    fi
 
-# Run the benchmarks as well
-RUN cd ${ACTS_BUILD_DIR}/Tests/Benchmarks                                      \
-    && spack build-env acts-core ./ActsBenchmarkAtlasStepper                   \
-    && spack build-env acts-core ./ActsBenchmarkBoundaryCheck                  \
-    && spack build-env acts-core ./ActsBenchmarkEigenStepper                   \
-    && spack build-env acts-core ./ActsBenchmarkSolenoidField                  \
-    && spack build-env acts-core ./ActsBenchmarkSurfaceIntersection
+# Run the benchmarks (skip in Debug builds, as they are too slow)
+RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
+        cd ${ACTS_BUILD_DIR}/Tests/Benchmarks                                  \
+        && spack build-env acts-core ./ActsBenchmarkAtlasStepper               \
+        && spack build-env acts-core ./ActsBenchmarkBoundaryCheck              \
+        && spack build-env acts-core ./ActsBenchmarkEigenStepper               \
+        && spack build-env acts-core ./ActsBenchmarkSolenoidField              \
+        && spack build-env acts-core ./ActsBenchmarkSurfaceIntersection;       \
+    fi
 
 # Finish installing ACTS
 RUN spack install ${ACTS_SPACK_SPEC}
