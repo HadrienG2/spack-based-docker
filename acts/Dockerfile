@@ -8,8 +8,7 @@ ARG ACTS_VERSION=0.18.00
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
-RUN echo "export ACTS_SPACK_SPEC=\"                                            \
-                     acts-core@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}   \
+ENV ACTS_SPACK_SPEC="acts-core@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}   \
                                                +benchmarks +dd4hep             \
                                                +digitization +examples +fatras \
                                                +identification                 \
@@ -21,8 +20,7 @@ RUN echo "export ACTS_SPACK_SPEC=\"                                            \
                                  +program_options -random -regex               \
                                  -serialization +shared -signals -system +test \
                                  -thread -timer -wave                          \
-                         ^ ${ROOT_SPACK_SPEC}                                  \
-         \"" >> ${SETUP_ENV}
+                         ^ ${ROOT_SPACK_SPEC}"
 
 # Build acts-core, do not install it yet
 RUN spack install --until build ${ACTS_SPACK_SPEC}
