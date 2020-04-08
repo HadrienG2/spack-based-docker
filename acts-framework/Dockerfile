@@ -19,8 +19,8 @@ CMD bash
 # FIXME: acts-core +dd4hep cmake configuration fails due to not finding boost
 #        (and in particular boost filesystem) with dd4hep 1.11, figure out why.
 #
-ENV ACTSFW_SPACK_SPEC="acts-framework@develop +dd4hep +geant4 +hepmc3 +pythia8 \
-                                              +tgeo                            \
+ENV ACTSFW_SPACK_SPEC="acts-framework@master +dd4hep +geant4 +hepmc3 +pythia8  \
+                                             +tgeo                             \
                            ^ boost -atomic -chrono cxxstd=17 -date_time        \
                                    -exception +filesystem -graph -iostreams    \
                                    -locale -log -math +multithreaded +pic      \
