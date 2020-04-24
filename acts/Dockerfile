@@ -8,21 +8,24 @@ ARG ACTS_VERSION=0.22.00
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
-ENV ACTS_SPACK_SPEC="acts-core@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}   \
-                                               +benchmarks +dd4hep             \
-                                               +digitization +examples +fatras \
-                                               +identification                 \
-                                               +integration_tests +json        \
-                                               +legacy +tests +tgeo            \
+#
+# TODO: Once "examples" are in a stable release, enable them here and merge the
+#       acts-framework Dockerfile into this one.
+#
+ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
+                                          +benchmarks +dd4hep +digitization    \
+                                          +fatras +identification              \
+                                          +integration_tests +json +legacy     \
+                                          +tgeo +unit_tests                    \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
-                                 -exception -filesystem -graph -iostreams      \
+                                 -exception +filesystem -graph -iostreams      \
                                  -locale -log -math +multithreaded             \
                                  +program_options -random -regex               \
                                  -serialization +shared -signals -system +test \
                                  -thread -timer -wave                          \
                          ^ ${ROOT_SPACK_SPEC}"
 
-# Build acts-core, do not install it yet
+# Build acts, do not install it yet
 RUN spack install --until build ${ACTS_SPACK_SPEC}
 
 # Cache the location of the ACTS build directory (it takes a while to compute)
@@ -31,22 +34,22 @@ RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
     && echo "export ACTS_BUILD_DIR=${ACTS_BUILD_DIR}" >> ${SETUP_ENV}
 
 # Run the unit tests
-RUN cd ${ACTS_BUILD_DIR} && spack build-env acts-core ctest -j8
+RUN cd ${ACTS_BUILD_DIR} && spack build-env acts ctest -j8
 
 # Run the integration tests too (skip in Debug builds, as they are too slow)
 RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         cd ${ACTS_BUILD_DIR}                                                   \
-        && spack build-env acts-core -- cmake --build . -- integrationtests;   \
+        && spack build-env acts -- cmake --build . -- integrationtests;        \
     fi
 
 # Run the benchmarks (skip in Debug builds, as they are too slow)
 RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         cd ${ACTS_BUILD_DIR}/Tests/Benchmarks                                  \
-        && spack build-env acts-core ./ActsBenchmarkAtlasStepper               \
-        && spack build-env acts-core ./ActsBenchmarkBoundaryCheck              \
-        && spack build-env acts-core ./ActsBenchmarkEigenStepper               \
-        && spack build-env acts-core ./ActsBenchmarkSolenoidField              \
-        && spack build-env acts-core ./ActsBenchmarkSurfaceIntersection;       \
+        && spack build-env acts ./ActsBenchmarkAtlasStepper                    \
+        && spack build-env acts ./ActsBenchmarkBoundaryCheck                   \
+        && spack build-env acts ./ActsBenchmarkEigenStepper                    \
+        && spack build-env acts ./ActsBenchmarkSolenoidField                   \
+        && spack build-env acts ./ActsBenchmarkSurfaceIntersection;            \
     fi
 
 # Finish installing ACTS

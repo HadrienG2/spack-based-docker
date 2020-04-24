@@ -21,16 +21,16 @@ RUN spack activate verrou
 # Start working on a development branch of ACTS, uninstalling the system
 # version to shrink Docker image size
 #
-# NOTE: This is morally equivalent to building acts-core@master, but it's
-#       easier to switch to a development branch of hgraslan/acts-core when
+# NOTE: This is morally equivalent to building acts@master, but it's
+#       easier to switch to a development branch of hgraslan/acts when
 #       an issue has been found and must be worked on.
 #
-RUN spack uninstall -y acts-core                                               \
-    && git clone https://gitlab.cern.ch/acts/acts-core.git                     \
-    && spack dev-build --until build -d acts-core ${ACTS_SPACK_SPEC}
+RUN spack uninstall -y acts                                                    \
+    && git clone https://github.com/acts-project/acts.git                      \
+    && spack dev-build --until build -d acts ${ACTS_SPACK_SPEC}
 
 # Keep the location of the ACTS build directory around
-ENV ACTS_BUILD_DIR=/root/acts-core/spack-build
+ENV ACTS_BUILD_DIR=/root/acts/spack-build
 
 
 # === TEST ACTS USING VERROU'S RANDOM-ROUNDING MODE ===
@@ -86,7 +86,7 @@ RUN cd ${ACTS_BUILD_DIR}/Tests/Integration && rm -rf dd.sym dd.line
 RUN rm -rf ${ACTS_BUILD_DIR}
 
 # Discard the ACTS install, as otherwise user won't be able to rebuild another
-RUN spack uninstall -y acts-core
+RUN spack uninstall -y acts
 
 # Clean up Spack caches and temporary files to shrink the Docker image
 RUN spack gc -y && spack clean -a

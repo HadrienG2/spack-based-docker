@@ -56,16 +56,13 @@ for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
                  .
 done
 
-# FIXME: acts-framework builds are disabled for now, due to an nlohmann_json
-#        CMake mess which I do not feel like looking after.
-#
-# echo "*** Building ACTS test framework image ***"
-# cd ../acts-framework
-# docker build --squash                                                          \
-#              --tag ${DOCKER_REPO}/acts-framework-tests:latest                  \
-#              --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
-#              --build-arg ROOT_VERSION=${ROOT_VERSION}                          \
-#              .
+echo "*** Building ACTS test framework image ***"
+cd ../acts-framework
+docker build --squash                                                          \
+             --tag ${DOCKER_REPO}/acts-framework-tests:latest                  \
+             --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
+             --build-arg ROOT_VERSION=${ROOT_VERSION}                          \
+             .
 
 echo "*** Building Verrou-enhanced ACTS dev image ***"
 cd ../acts-verrou
@@ -81,5 +78,5 @@ docker push ${DOCKER_REPO}/spack-tests
 docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
 docker push ${DOCKER_REPO}/acts-tests
-# docker push ${DOCKER_REPO}/acts-framework-tests
+docker push ${DOCKER_REPO}/acts-framework-tests
 docker push ${DOCKER_REPO}/acts-verrou-tests

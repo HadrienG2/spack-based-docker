@@ -16,11 +16,12 @@ CMD bash
 #        by default, Geant4 asks for "11", and Spack isn't smart enough to
 #        figure out that these two constraints are compatible.
 #
-# FIXME: acts-core +dd4hep cmake configuration fails due to not finding boost
-#        (and in particular boost filesystem) with dd4hep 1.11, figure out why.
+# FIXME: acts +dd4hep +examples cmake configuration fails due to not finding
+#        boost (and in particular boost filesystem) with dd4hep 1.11, find why.
 #
-ENV ACTSFW_SPACK_SPEC="acts-framework@master +dd4hep +geant4 +hepmc3 +pythia8  \
-                                             +tgeo                             \
+ENV ACTSFW_SPACK_SPEC="acts@master +dd4hep +digitization +examples +fatras     \
+                                   +geant4 +identification +hepmc3 +json       \
+                                   +pythia8 +tgeo                              \
                            ^ boost -atomic -chrono cxxstd=17 -date_time        \
                                    -exception +filesystem -graph -iostreams    \
                                    -locale -log -math +multithreaded +pic      \
@@ -97,7 +98,7 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
 
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
-RUN spack uninstall -y acts-framework
+RUN spack uninstall -y acts
 
 # Clean up Spack caches and temporary file to shrink the Docker image
 RUN spack gc -y && spack clean -a
