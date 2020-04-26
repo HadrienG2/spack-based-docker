@@ -33,64 +33,71 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 
 # Run the framework examples
 #
-# FIXME: Cannot test ACTFWBFieldExample, ACTFWBFieldAccessExample,
-#        ACTFWDD4hepMaterialMappingExample, ACTFWGenericMaterialMappingExample
-#        ACTFWGenericReadCsvExample and ACTFWPayloadPropagationExample as no
+# FIXME: Cannot test ActsExampleMagneticField, ActsExampleMagneticFieldAccess,
+#        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialMappingGeneric
+#        ActsExamplePropagationPayload and ActsExampleReadCsvGeneric as no
 #        input data file is provided and it's unclear how to get one.
 #
-# FIXME: Cannot reliably test ACTFWTGeoGeometryExample and
-#        ACTFWTGeoPropagationExample as they do not reliably emit a nonzero
+# FIXME: Cannot reliably test ActsExampleGeometryTGeo and
+#        ActsExamplePropagationTGeo as they do not reliably emit a nonzero
 #        status code on exit.
 #
-# FIXME: Cannot test ACTFWGeantinoRecordingExample as it crashes with a double
+# FIXME: Cannot test ActsExampleGeantinoRecording as it crashes with a double
 #        free due to G4AssemblyStore ownership issues as of Geant4 10.5p1,
 #        should try again with a later Geant4 release.
 #
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
+    && cd Examples                                                             \
     && activate-spack-view                                                     \
-    && ACTFWAlignedFatrasExample -n 100                                        \
+    && ActsExampleGeometryAligned -n 100                                       \
     && echo "---------------"                                                  \
-    && ACTFWAlignedGeometryExample -n 100                                      \
+    && ActsExampleGeometryDD4hep -n 100                                        \
     && echo "---------------"                                                  \
-    && ACTFWAlignedPropagationExample -n 100                                   \
+    && ActsExampleGeometryEmpty -n 100                                         \
     && echo "---------------"                                                  \
-    && ACTFWDD4hepGeometryExample -n 100                                       \
+    && ActsExampleGeometryGeneric -n 100                                       \
     && echo "---------------"                                                  \
-    && ACTFWDD4hepMaterialValidationExample -n 100                             \
+    && ActsExampleGeometryPayload -n 100                                       \
     && echo "---------------"                                                  \
-    && ACTFWDD4hepPropagationExample -n 100                                    \
+    && ActsExampleHelloWorld -n 100                                            \
     && echo "---------------"                                                  \
-    && ACTFWEmptyGeometryExample -n 100                                        \
+    && ActsExampleHepMC3 -n 100                                                \
     && echo "---------------"                                                  \
-    && ACTFWEmptyPropagationExample -n 100                                     \
+    && ActsExampleMaterialValidationDD4hep -n 100                              \
     && echo "---------------"                                                  \
-    && ACTFWGenericFatrasExample -n 100                                        \
+    && ActsExampleMaterialValidationGeneric -n 100                             \
     && echo "---------------"                                                  \
-    && ACTFWGenericGeometryExample -n 100                                      \
+    && ActsExamplePropagationAligned -n 100                                    \
     && echo "---------------"                                                  \
-    && ACTFWGenericMaterialValidationExample -n 100                            \
+    && ActsExamplePropagationDD4hep -n 100                                     \
     && echo "---------------"                                                  \
-    && ACTFWGenericPropagationExample -n 100                                   \
+    && ActsExamplePropagationEmpty -n 100                                      \
     && echo "---------------"                                                  \
-    && ACTFWHelloWorldExample -n 100                                           \
+    && ActsExamplePropagationGeneric -n 100                                    \
     && echo "---------------"                                                  \
-    && ACTFWHepMC3Example -n 100                                               \
+    && ActsGenParticleGun -n 100                                               \
     && echo "---------------"                                                  \
-    && ACTFWPayloadFatrasExample -n 100                                        \
+    && ActsGenPythia8 -n 100                                                   \
     && echo "---------------"                                                  \
-    && ACTFWPayloadGeometryExample -n 100                                      \
+    && ActsRecTruthTracks -n 100                                               \
     && echo "---------------"                                                  \
-    && ActsParticleGun -n 100                                                  \
+    && ActsRecVertexFinder -n 100                                              \
     && echo "---------------"                                                  \
-    && ActsPythia8 -n 100                                                      \
+    && ActsRecVertexFitter -n 100                                              \
     && echo "---------------"                                                  \
-    && ACTFWVertexFinderExample -n 100                                         \
+    && ActsRecVertexReader -n 100                                              \
     && echo "---------------"                                                  \
-    && ACTFWVertexFitterExample -n 100                                         \
+    && ActsRecVertexWriter -n 100                                              \
     && echo "---------------"                                                  \
-    && ACTFWVertexReaderExample -n 100                                         \
+    && ActsSimFatrasAligned -n 100                                             \
     && echo "---------------"                                                  \
-    && ACTFWVertexWriterExample -n 100
+    && ActsSimFatrasDD4hep -n 100                                              \
+    && echo "---------------"                                                  \
+    && ActsSimFatrasGeneric -n 100                                             \
+    && echo "---------------"                                                  \
+    && ActsSimFatrasPayload -n 100                                             \
+    && echo "---------------"                                                  \
+    && ActsSimFatrasTGeo -n 100
 
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
