@@ -16,9 +16,6 @@ CMD bash
 #        by default, Geant4 asks for "11", and Spack isn't smart enough to
 #        figure out that these two constraints are compatible.
 #
-# FIXME: acts +dd4hep +examples cmake configuration fails due to not finding
-#        boost (and in particular boost filesystem) with dd4hep 1.11, find why.
-#
 ENV ACTSFW_SPACK_SPEC="acts@master +dd4hep +digitization +examples +fatras     \
                                    +geant4 +identification +hepmc3 +json       \
                                    +pythia8 +tgeo                              \
@@ -28,7 +25,6 @@ ENV ACTSFW_SPACK_SPEC="acts@master +dd4hep +digitization +examples +fatras     \
                                    +program_options -random -regex             \
                                    -serialization +shared -signals -system     \
                                    +test -thread -timer -wave                  \
-                           ^ dd4hep@:1.10.0                                    \
                            ^ ${ROOT_SPACK_SPEC}                                \
                            ^ xerces-c cxxstd=11"
 
