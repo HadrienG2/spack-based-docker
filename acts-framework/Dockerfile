@@ -37,24 +37,26 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 # Run the framework examples
 #
 # FIXME: Cannot test ActsExampleMagneticField, ActsExampleMagneticFieldAccess,
-#        ActsExampleMaterialMappingGeneric ActsExamplePropagationPayload and
-#        ActsExampleReadCsvGeneric as no input data file is provided and it's
+#        ActsExampleMaterialMappingGeneric, ActsExamplePropagationPayload,
+#        ActsExampleReadCsvGeneric, ActsRecTruthTracks, ActsRecVertexReader
+#        and ActsSimFatrasTGeo as no input data file is provided and it's
 #        unclear how to get one.
 #
-# FIXME: Cannot reliably test ActsExampleGeometryTGeo and
+# FIXME: Cannot reliably test ActsExampleGeometryTGeo, ActsExampleHepMC3 and
 #        ActsExamplePropagationTGeo as they do not reliably emit a nonzero
 #        status code on exit.
 #
-# FIXME: Cannot test ActsExampleGeantinoRecording as it crashes with a double
-#        free due to G4AssemblyStore ownership issues as of Geant4 10.5p1,
-#        should try again with a later Geant4 release.
-#
-# FIXME: Cannot test ActsExampleGeometryDD4hep,
+# FIXME: Cannot test ActsExampleGeantinoRecording, ActsExampleGeometryDD4hep,
 #        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialValidationDD4hep,
 #        ActsExamplePropagationDD4hep and ActsSimFatrasDD4hep as the dd4hep
 #        component is currently disabled due to weird build issues (see above).
+#
 #        Even if I got DD4hep to work again, MaterialMapping would still be
 #        problematic due to its lack of clear input file.
+#
+# FIXME: Cannot test ActsSimFatrasAligned and ActsSimFatrasPayload due to
+#        https://github.com/acts-project/acts/pull/161 , bring them back once
+#        master includes that fix.
 #
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && cd Examples                                                             \
@@ -69,8 +71,6 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ActsExampleHelloWorld -n 100                                            \
     && echo "---------------"                                                  \
-    && ActsExampleHepMC3 -n 100                                                \
-    && echo "---------------"                                                  \
     && ActsExampleMaterialValidationGeneric -n 100                             \
     && echo "---------------"                                                  \
     && ActsExamplePropagationAligned -n 100                                    \
@@ -83,23 +83,13 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ActsGenPythia8 -n 100                                                   \
     && echo "---------------"                                                  \
-    && ActsRecTruthTracks -n 100                                               \
-    && echo "---------------"                                                  \
     && ActsRecVertexFinder -n 100                                              \
     && echo "---------------"                                                  \
     && ActsRecVertexFitter -n 100                                              \
     && echo "---------------"                                                  \
-    && ActsRecVertexReader -n 100                                              \
-    && echo "---------------"                                                  \
     && ActsRecVertexWriter -n 100                                              \
     && echo "---------------"                                                  \
-    && ActsSimFatrasAligned -n 100                                             \
-    && echo "---------------"                                                  \
-    && ActsSimFatrasGeneric -n 100                                             \
-    && echo "---------------"                                                  \
-    && ActsSimFatrasPayload -n 100                                             \
-    && echo "---------------"                                                  \
-    && ActsSimFatrasTGeo -n 100
+    && ActsSimFatrasGeneric -n 100
 
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
