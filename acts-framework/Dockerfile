@@ -16,7 +16,10 @@ CMD bash
 #        by default, Geant4 asks for "11", and Spack isn't smart enough to
 #        figure out that these two constraints are compatible.
 #
-ENV ACTSFW_SPACK_SPEC="acts@master +dd4hep +digitization +examples +fatras     \
+# FIXME: dd4hep is disabled because enabling it triggers a link error caused by
+#        what looks like a CMake dependency spaghetti. I'm not touching that.
+#
+ENV ACTSFW_SPACK_SPEC="acts@master -dd4hep +digitization +examples +fatras     \
                                    +geant4 +identification +hepmc3 +json       \
                                    +pythia8 +tgeo                              \
                            ^ boost -atomic -chrono cxxstd=17 -date_time        \
@@ -34,9 +37,9 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 # Run the framework examples
 #
 # FIXME: Cannot test ActsExampleMagneticField, ActsExampleMagneticFieldAccess,
-#        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialMappingGeneric
-#        ActsExamplePropagationPayload and ActsExampleReadCsvGeneric as no
-#        input data file is provided and it's unclear how to get one.
+#        ActsExampleMaterialMappingGeneric ActsExamplePropagationPayload and
+#        ActsExampleReadCsvGeneric as no input data file is provided and it's
+#        unclear how to get one.
 #
 # FIXME: Cannot reliably test ActsExampleGeometryTGeo and
 #        ActsExamplePropagationTGeo as they do not reliably emit a nonzero
@@ -46,12 +49,17 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 #        free due to G4AssemblyStore ownership issues as of Geant4 10.5p1,
 #        should try again with a later Geant4 release.
 #
+# FIXME: Cannot test ActsExampleGeometryDD4hep,
+#        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialValidationDD4hep,
+#        ActsExamplePropagationDD4hep and ActsSimFatrasDD4hep as the dd4hep
+#        component is currently disabled due to weird build issues (see above).
+#        Even if I got DD4hep to work again, MaterialMapping would still be
+#        problematic due to its lack of clear input file.
+#
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && cd Examples                                                             \
     && activate-spack-view                                                     \
     && ActsExampleGeometryAligned -n 100                                       \
-    && echo "---------------"                                                  \
-    && ActsExampleGeometryDD4hep -n 100                                        \
     && echo "---------------"                                                  \
     && ActsExampleGeometryEmpty -n 100                                         \
     && echo "---------------"                                                  \
@@ -63,13 +71,9 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ActsExampleHepMC3 -n 100                                                \
     && echo "---------------"                                                  \
-    && ActsExampleMaterialValidationDD4hep -n 100                              \
-    && echo "---------------"                                                  \
     && ActsExampleMaterialValidationGeneric -n 100                             \
     && echo "---------------"                                                  \
     && ActsExamplePropagationAligned -n 100                                    \
-    && echo "---------------"                                                  \
-    && ActsExamplePropagationDD4hep -n 100                                     \
     && echo "---------------"                                                  \
     && ActsExamplePropagationEmpty -n 100                                      \
     && echo "---------------"                                                  \
@@ -90,8 +94,6 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && ActsRecVertexWriter -n 100                                              \
     && echo "---------------"                                                  \
     && ActsSimFatrasAligned -n 100                                             \
-    && echo "---------------"                                                  \
-    && ActsSimFatrasDD4hep -n 100                                              \
     && echo "---------------"                                                  \
     && ActsSimFatrasGeneric -n 100                                             \
     && echo "---------------"                                                  \
