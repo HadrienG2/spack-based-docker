@@ -54,10 +54,6 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 #        Even if I got DD4hep to work again, MaterialMapping would still be
 #        problematic due to its lack of clear input file.
 #
-# FIXME: Cannot test ActsSimFatrasAligned and ActsSimFatrasPayload due to
-#        https://github.com/acts-project/acts/pull/161 , bring them back once
-#        master includes that fix.
-#
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && cd Examples                                                             \
     && activate-spack-view                                                     \
@@ -89,7 +85,11 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ActsRecVertexWriter -n 100                                              \
     && echo "---------------"                                                  \
-    && ActsSimFatrasGeneric -n 100
+    && ActsSimFatrasAligned -n 100                                             \
+    && echo "---------------"                                                  \
+    && ActsSimFatrasGeneric -n 100                                             \
+    && echo "---------------"                                                  \
+    && ActsSimFatrasPayload -n 100
 
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
