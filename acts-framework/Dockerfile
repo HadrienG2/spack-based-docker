@@ -37,10 +37,9 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 # Run the framework examples
 #
 # FIXME: Cannot test ActsExampleMagneticField, ActsExampleMagneticFieldAccess,
-#        ActsExampleMaterialMappingGeneric, ActsExamplePropagationPayload,
-#        ActsExampleReadCsvGeneric, ActsRecTruthTracks, ActsRecVertexReader
-#        and ActsSimFatrasTGeo as no input data file is provided and it's
-#        unclear how to get one.
+#        ActsExampleMaterialMappingGeneric, ActsExampleReadCsvGeneric,
+#        ActsRecTruthTracks, ActsRecVertexReader and ActsSimFatrasTGeo as no
+#        input data file is provided and it's unclear how to get one.
 #
 # FIXME: Cannot auto-test ActsExampleGeometryTGeo, ActsExampleHepMC3 and
 #        ActsExamplePropagationTGeo as they do not reliably exit a nonzero
@@ -53,6 +52,10 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 #
 #        Even if I got DD4hep to work again, MaterialMapping would still be
 #        problematic due to its lack of clear input file.
+#
+# FIXME: The PayloadDetector-based examples ActsExamplePropagationPayload and
+#        ActsSimFatrasPayload crash with a bad_any_cast, see
+#        https://github.com/acts-project/acts/issues/164 .
 #
 RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && cd Examples                                                             \
@@ -87,9 +90,7 @@ RUN spack cd --build-dir ${ACTSFW_SPACK_SPEC}                                  \
     && echo "---------------"                                                  \
     && ActsSimFatrasAligned -n 100                                             \
     && echo "---------------"                                                  \
-    && ActsSimFatrasGeneric -n 100                                             \
-    && echo "---------------"                                                  \
-    && ActsSimFatrasPayload -n 100
+    && ActsSimFatrasGeneric -n 100
 
 # Discard the framework install: the goal is to provide a known-good framework
 # build environment, but the framework is not terribly useful per se.
