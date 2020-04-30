@@ -43,6 +43,10 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
     fi
 
 # Run the benchmarks (skip in Debug builds, as they are too slow)
+#
+# TODO: Once we move to the next Acts release, acknowledge that benchmarks are
+#       now located in ${ACTS_BUILD_DIR}/bin
+#
 RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         cd ${ACTS_BUILD_DIR}/Tests/Benchmarks                                  \
         && spack build-env acts ./ActsBenchmarkAtlasStepper                    \
