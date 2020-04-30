@@ -42,9 +42,9 @@ RUN spack install --keep-stage ${ACTSFW_SPACK_SPEC}
 #        and ActsSimFatrasTGeo as no input data file is provided and it's
 #        unclear how to get one.
 #
-# FIXME: Cannot reliably test ActsExampleGeometryTGeo, ActsExampleHepMC3 and
-#        ActsExamplePropagationTGeo as they do not reliably emit a nonzero
-#        status code on exit.
+# FIXME: Cannot auto-test ActsExampleGeometryTGeo, ActsExampleHepMC3 and
+#        ActsExamplePropagationTGeo as they do not reliably exit a nonzero
+#        status code upon major failure (e.g. input not found).
 #
 # FIXME: Cannot test ActsExampleGeantinoRecording, ActsExampleGeometryDD4hep,
 #        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialValidationDD4hep,
