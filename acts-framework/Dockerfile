@@ -24,7 +24,7 @@ ENV ACTSFW_SPACK_SPEC="acts@master -dd4hep +digitization +examples +fatras     \
                                    +pythia8 +tgeo                              \
                            ^ boost -atomic -chrono cxxstd=17 -date_time        \
                                    -exception +filesystem -graph -iostreams    \
-                                   -locale -log -math +multithreaded +pic      \
+                                   -locale -log -math +multithreaded           \
                                    +program_options -random -regex             \
                                    -serialization +shared -signals -system     \
                                    +test -thread -timer -wave                  \
