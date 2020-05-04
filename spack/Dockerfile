@@ -57,7 +57,7 @@ RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=acts-monorepo                                        \
+                 --branch=acts-v0.23                                           \
                  https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack

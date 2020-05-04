@@ -6,7 +6,7 @@ IFS=$'\n\t'
 DOCKER_REPO="hgrasland"
 VERROU_VERSION="2.2.0"
 ROOT_VERSION="6.20.04"
-ACTS_VERSION="0.22.00"
+ACTS_VERSION="0.23.00"
 ACTS_BUILD_TYPES=(
     "Debug"
     "RelWithDebInfo"
@@ -56,14 +56,6 @@ for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
                  .
 done
 
-echo "*** Building ACTS test framework image ***"
-cd ../acts-framework
-docker build --squash                                                          \
-             --tag ${DOCKER_REPO}/acts-framework-tests:latest                  \
-             --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
-             --build-arg ROOT_VERSION=${ROOT_VERSION}                          \
-             .
-
 echo "*** Building Verrou-enhanced ACTS dev image ***"
 cd ../acts-verrou
 docker build --squash                                                          \
@@ -78,5 +70,4 @@ docker push ${DOCKER_REPO}/spack-tests
 docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
 docker push ${DOCKER_REPO}/acts-tests
-docker push ${DOCKER_REPO}/acts-framework-tests
 docker push ${DOCKER_REPO}/acts-verrou-tests

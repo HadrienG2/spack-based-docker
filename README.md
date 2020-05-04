@@ -25,9 +25,9 @@ recipes build on top of each other, using the following dependency graph:
         \________________
          \               \
     root (C++17)       verrou
-           \_________________________________
-            \               \                \
-       acts (Debug)    acts (RelDeb)    acts-framework
+           \________________
+            \               \
+       acts (Debug)    acts (RelDeb)
               \
            acts-verrou
 
