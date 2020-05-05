@@ -26,6 +26,7 @@ docker pull opensuse/tumbleweed
 echo "*** Building basic Spack image ***"
 cd spack
 docker build --no-cache --squash --tag ${DOCKER_REPO}/spack-tests:latest .
+docker system prune -f
 
 echo "*** Building Verrou image ***"
 cd ../verrou
@@ -34,6 +35,7 @@ docker build --squash                                                          \
              --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
              --build-arg VERROU_VERSION=${VERROU_VERSION}                      \
              .
+docker system prune -f
 
 cd ../root
 echo "*** Building ROOT C++17 image ***"
@@ -43,6 +45,7 @@ docker build --squash                                                          \
              --build-arg ROOT_VERSION=${ROOT_VERSION}                          \
              --build-arg ROOT_CXX_STANDARD=17                                  \
              .
+docker system prune -f
 
 cd ../acts
 for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
@@ -54,6 +57,7 @@ for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
                  --build-arg ACTS_VERSION=${ACTS_VERSION}                      \
                  --build-arg ACTS_BUILD_TYPE=${BUILD_TYPE}                     \
                  .
+    docker system prune -f
 done
 
 echo "*** Building Verrou-enhanced ACTS dev image ***"
@@ -64,6 +68,7 @@ docker build --squash                                                          \
              --build-arg ACTS_VERSION=${ACTS_VERSION}                          \
              --build-arg VERROU_VERSION=${VERROU_VERSION}                      \
              .
+docker system prune -f
 
 echo "*** Pushing images to the Docker Hub ***"
 docker push ${DOCKER_REPO}/spack-tests
