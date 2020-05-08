@@ -13,11 +13,8 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #        by default, Geant4 asks for "11", and Spack isn't smart enough to
 #        figure out that these two constraints are compatible.
 #
-# FIXME: dd4hep is disabled because enabling it triggers a link error caused by
-#        what looks like a CMake dependency spaghetti. I'm not touching that.
-#
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          +benchmarks -dd4hep +digitization    \
+                                          +benchmarks +dd4hep +digitization    \
                                           +examples +fatras +geant4  +hepmc3   \
                                           +identification +integration_tests   \
                                           +json +legacy +pythia8 +tgeo         \
@@ -68,22 +65,14 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 #       simple examples like the Geometry ones.
 #
 # FIXME: Cannot test ActsExampleMagneticField, ActsExampleMagneticFieldAccess,
-#        ActsExampleMaterialMappingGeneric, ActsExampleReadCsvGeneric,
-#        ActsRecTruthTracks, ActsRecVertexReader and ActsSimFatrasTGeo as no
-#        input data file is provided and it's unclear how to get one.
+#        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialMappingGeneric,
+#        ActsExampleReadCsvGeneric, ActsRecTruthTracks, ActsRecVertexReader and
+#        ActsSimFatrasTGeo as no input data file is provided and it's unclear
+#        how to get one.
 #
 # FIXME: Cannot auto-test ActsExampleGeometryTGeo, ActsExampleHepMC3 and
 #        ActsExamplePropagationTGeo as they do not reliably exit a nonzero
 #        status code upon major failure (e.g. input not found).
-#
-# FIXME: Cannot test ActsExampleGeometryDD4hep,
-#        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialValidationDD4hep,
-#        ActsExamplePropagationDD4hep, ActsSimFatrasDD4hep and
-#        ActsSimGeantinoRecording as the dd4hep component is currently disabled
-#        due to weird build issues (see above).
-#
-#        Even if I got DD4hep to work again, MaterialMapping would still be
-#        problematic due to its lack of clear input file.
 #
 # FIXME: The PayloadDetector-based examples ActsExamplePropagationPayload and
 #        ActsSimFatrasPayload crash with a bad_any_cast, see
@@ -92,6 +81,8 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         cd ${ACTS_BUILD_DIR}/Examples                                          \
         && spack build-env acts ../bin/ActsExampleGeometryAligned -n 100       \
+        && echo "---------------"                                              \
+        && spack build-env acts ../bin/ActsExampleGeometryDD4hep -n 100        \
         && echo "---------------"                                              \
         && spack build-env acts ../bin/ActsExampleGeometryEmpty -n 100         \
         && echo "---------------"                                              \
@@ -102,9 +93,14 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         && spack build-env acts ../bin/ActsExampleHelloWorld -n 100            \
         && echo "---------------"                                              \
         && spack build-env acts                                                \
+                 ../bin/ActsExampleMaterialValidationDD4hep -n 100             \
+        && echo "---------------"                                              \
+        && spack build-env acts                                                \
                  ../bin/ActsExampleMaterialValidationGeneric -n 100            \
         && echo "---------------"                                              \
         && spack build-env acts ../bin/ActsExamplePropagationAligned -n 100    \
+        && echo "---------------"                                              \
+        && spack build-env acts ../bin/ActsExamplePropagationDD4hep -n 100     \
         && echo "---------------"                                              \
         && spack build-env acts ../bin/ActsExamplePropagationEmpty -n 100      \
         && echo "---------------"                                              \
@@ -122,7 +118,11 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         && echo "---------------"                                              \
         && spack build-env acts ../bin/ActsSimFatrasAligned -n 100             \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsSimFatrasGeneric -n 100;            \
+        && spack build-env acts ../bin/ActsSimFatrasDD4hep -n 100              \
+        && echo "---------------"                                              \
+        && spack build-env acts ../bin/ActsSimFatrasGeneric -n 100             \
+        && echo "---------------"                                              \
+        && spack build-env acts ../bin/ActsSimGeantinoRecording -n 100;        \
     fi
 
 # Finish installing ACTS
