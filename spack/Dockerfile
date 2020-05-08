@@ -52,13 +52,13 @@ RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
 
 # Download Spack
 #
-# FIXME: Switch back to the official master once the new "acts" recipe has
-#        been merged in.
+# This extended command allows switching back to my Spack fork when I'm working
+# on some package change that hasn't been submitted upstream yet.
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=acts-monorepo                                        \
-                 https://github.com/HadrienG2/spack.git
+                 --branch=develop                                              \
+                 https://github.com/spack/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
