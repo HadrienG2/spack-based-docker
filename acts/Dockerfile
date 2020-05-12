@@ -76,10 +76,11 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 #        ActsExamplePropagationTGeo as they do not reliably exit a nonzero
 #        status code upon major failure (e.g. input not found).
 #
-# FIXME: Cannot test ActsExampleGeantinoRecording, ActsExampleGeometryDD4hep,
+# FIXME: Cannot test ActsExampleGeometryDD4hep,
 #        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialValidationDD4hep,
-#        ActsExamplePropagationDD4hep and ActsSimFatrasDD4hep as the dd4hep
-#        component is currently disabled due to weird build issues (see above).
+#        ActsExamplePropagationDD4hep, ActsSimFatrasDD4hep and
+#        ActsSimGeantinoRecording as the dd4hep component is currently disabled
+#        due to weird build issues (see above).
 #
 #        Even if I got DD4hep to work again, MaterialMapping would still be
 #        problematic due to its lack of clear input file.
