@@ -50,6 +50,9 @@ RUN zypper ref && zypper dup -y
 RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
                  python3 subversion tar unzip xz
 
+# Install dependencies of our own scripts
+RUN zypper in -y python3-PyYAML
+
 # Download Spack
 #
 # This extended command allows switching back to my Spack fork when I'm working
@@ -66,6 +69,12 @@ RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 # Setup spack to make a generic x86_64 build instead of one that's tuned for the
 # host CPU (since that would obviously make Docker images nonportable)
 COPY packages.yaml /etc/spack/
+
+# Have spack search the system compilers, then make sure that it uses
+# "-O3 -fno-omit-frame-pointer" flags on compilers that are known to support it
+RUN spack compiler find
+COPY set_compiler_flags.py /root
+RUN python3 ~/set_compiler_flags.py
 
 # Setup a Spack environment
 #
