@@ -70,7 +70,7 @@ RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 
 # Setup spack to make a generic x86_64 build instead of one that's tuned for the
 # host CPU (since that would obviously make Docker images nonportable)
-COPY packages.yaml /etc/spack/
+COPY config.yaml packages.yaml /etc/spack/
 
 # Have spack search the system compilers, then make sure that it uses
 # "-O3 -fno-omit-frame-pointer" flags on compilers that are known to support it

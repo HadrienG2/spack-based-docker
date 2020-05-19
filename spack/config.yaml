@@ -1,0 +1,4 @@
+config:
+  # Increase the download timeout to accomodate x.org and freedesktop.org's
+  # general server flakiness without breaking the whole Docker build
+  connect_timeout: 300
