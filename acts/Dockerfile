@@ -34,7 +34,9 @@ RUN spack install --until build ${ACTS_SPACK_SPEC}
 # Cache the location of the ACTS build directory (it takes a while to compute)
 RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
     && export ACTS_BUILD_DIR="${ACTS_STAGE_DIR}/spack-build"                   \
-    && echo "export ACTS_BUILD_DIR=${ACTS_BUILD_DIR}" >> ${SETUP_ENV}
+    && echo "export ACTS_BUILD_DIR=${ACTS_BUILD_DIR}" >> ${SETUP_ENV}          \
+    && export ACTS_SRC_DIR="${ACTS_STAGE_DIR}/spack-src"                       \
+    && echo "export ACTS_SRC_DIR=${ACTS_SRC_DIR}" >> ${SETUP_ENV}
 
 # Run the unit tests
 RUN cd ${ACTS_BUILD_DIR} && spack build-env acts ctest -j8
@@ -78,51 +80,75 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 #        ActsSimFatrasPayload crash with a bad_any_cast, see
 #        https://github.com/acts-project/acts/issues/164 .
 #
+# FIXME: The ActsSimGeantinoRecording example currently crashes due to
+#        https://github.com/acts-project/acts/issues/204 and
+#        https://github.com/acts-project/acts/issues/205 . Once that's fixed, it
+#        can run, but will need to be forced into single-threaded mode with -j1
+#        until https://github.com/acts-project/acts/issues/207 is resolved.
+#
 RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
-        cd ${ACTS_BUILD_DIR}/Examples                                          \
-        && spack build-env acts ../bin/ActsExampleGeometryAligned -n 100       \
-        && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExampleGeometryDD4hep -n 100        \
-        && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExampleGeometryEmpty -n 100         \
-        && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExampleGeometryGeneric -n 100       \
-        && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExampleGeometryPayload -n 100       \
-        && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExampleHelloWorld -n 100            \
+        export DD4HEP_PREFIX=`spack location --install-dir dd4hep`             \
+        && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                           \
+        && cd ${ACTS_SRC_DIR}/Examples                                         \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsExampleGeometryAligned -n 100       \
         && echo "---------------"                                              \
         && spack build-env acts                                                \
-                 ../bin/ActsExampleMaterialValidationDD4hep -n 100             \
+                 ${ACTS_BUILD_DIR}/bin/ActsExampleGeometryDD4hep -n 100        \
         && echo "---------------"                                              \
         && spack build-env acts                                                \
-                 ../bin/ActsExampleMaterialValidationGeneric -n 100            \
+                 ${ACTS_BUILD_DIR}/bin/ActsExampleGeometryEmpty -n 100         \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExamplePropagationAligned -n 100    \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsExampleGeometryGeneric -n 100       \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExamplePropagationDD4hep -n 100     \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsExampleGeometryPayload -n 100       \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExamplePropagationEmpty -n 100      \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsExampleHelloWorld -n 100            \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsExamplePropagationGeneric -n 100    \
+        && spack build-env acts                                                \
+           ${ACTS_BUILD_DIR}/bin/ActsExampleMaterialValidationDD4hep -n 100    \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsGenParticleGun -n 100               \
+        && spack build-env acts                                                \
+           ${ACTS_BUILD_DIR}/bin/ActsExampleMaterialValidationGeneric -n 100   \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsGenPythia8 -n 100                   \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsExamplePropagationAligned -n 100    \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsRecVertexFinder -n 100              \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsExamplePropagationDD4hep -n 100     \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsRecVertexFitter -n 100              \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsExamplePropagationEmpty -n 100      \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsRecVertexWriter -n 100              \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsExamplePropagationGeneric -n 100    \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsSimFatrasAligned -n 100             \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsGenParticleGun -n 100               \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsSimFatrasDD4hep -n 100              \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsGenPythia8 -n 100                   \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsSimFatrasGeneric -n 100             \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsRecVertexFinder -n 100              \
         && echo "---------------"                                              \
-        && spack build-env acts ../bin/ActsSimGeantinoRecording -n 100;        \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsRecVertexFitter -n 100              \
+        && echo "---------------"                                              \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsRecVertexWriter -n 100              \
+        && echo "---------------"                                              \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsSimFatrasAligned -n 100             \
+        && echo "---------------"                                              \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsSimFatrasDD4hep -n 100              \
+        && echo "---------------"                                              \
+        && spack build-env acts                                                \
+                 ${ACTS_BUILD_DIR}/bin/ActsSimFatrasGeneric -n 100;            \
     fi
 
 # Finish installing ACTS
