@@ -50,18 +50,18 @@ docker build --squash                                                          \
              .
 docker system prune -f
 
-cd ../acts
-for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
-    echo "***Building ACTS ${BUILD_TYPE} image ***"
-    docker build --squash                                                      \
-                 --tag ${DOCKER_REPO}/acts-tests:${ACTS_VERSION}-${BUILD_TYPE} \
-                 --build-arg DOCKER_REPO=${DOCKER_REPO}                        \
-                 --build-arg ROOT_VERSION=${ROOT_VERSION}                      \
-                 --build-arg ACTS_VERSION=${ACTS_VERSION}                      \
-                 --build-arg ACTS_BUILD_TYPE=${BUILD_TYPE}                     \
-                 .
-    docker system prune -f
-done
+# cd ../acts
+# for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
+#     echo "***Building ACTS ${BUILD_TYPE} image ***"
+#     docker build --squash                                                      \
+#                  --tag ${DOCKER_REPO}/acts-tests:${ACTS_VERSION}-${BUILD_TYPE} \
+#                  --build-arg DOCKER_REPO=${DOCKER_REPO}                        \
+#                  --build-arg ROOT_VERSION=${ROOT_VERSION}                      \
+#                  --build-arg ACTS_VERSION=${ACTS_VERSION}                      \
+#                  --build-arg ACTS_BUILD_TYPE=${BUILD_TYPE}                     \
+#                  .
+#     docker system prune -f
+# done
 
 
 # FIXME: acts-verrou builds don't work due to some weird issue with uninstalling
@@ -82,5 +82,5 @@ echo "*** Pushing images to the Docker Hub ***"
 docker push ${DOCKER_REPO}/spack-tests
 # docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
-docker push ${DOCKER_REPO}/acts-tests
+# docker push ${DOCKER_REPO}/acts-tests
 # docker push ${DOCKER_REPO}/acts-verrou-tests
