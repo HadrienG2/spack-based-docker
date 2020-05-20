@@ -87,7 +87,7 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
     && cd ${ACTS_SRC_DIR}/Examples                                             \
     && run_example() {                                                         \
-           spack build-env acts ${ACTS_BUILD_DIR}/bin/$* -n 100;               \
+           spack build-env --dirty acts ${ACTS_BUILD_DIR}/bin/$* -n 100;       \
        }                                                                       \
     && run_example ActsExampleGeometryAligned                                  \
     && echo "---------------"                                                  \
@@ -102,8 +102,8 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example ActsExampleHelloWorld                                       \
     && echo "---------------"                                                  \
     && run_example ActsGenParticleGun                                          \
-    && echo "---------------"                                                  \
     && if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                              \
+        echo "---------------"                                                 \
         && run_example ActsExampleMaterialValidationDD4hep                     \
         && echo "---------------"                                              \
         && run_example ActsExampleMaterialValidationGeneric                    \
