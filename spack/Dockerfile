@@ -72,8 +72,12 @@ RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 # host CPU (since that would obviously make Docker images nonportable)
 COPY config.yaml packages.yaml /etc/spack/
 
-# Have spack search the system compilers, then make sure that it uses
-# "-O3 -fno-omit-frame-pointer" flags on compilers that are known to support it
+# Have spack search the system compilers, then make sure that it uses the
+# "-fno-omit-frame-pointer" flag on compilers that are known to support it
+#
+# FIXME: Add back the -O3 flag once Acts build resource consumption has improved
+#        enough that it doesn't OOM on 4 threads + 16 GB of RAM
+#
 RUN spack compiler find
 COPY set_compiler_flags.py /root
 RUN python3 ~/set_compiler_flags.py
