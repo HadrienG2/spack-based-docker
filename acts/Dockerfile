@@ -79,11 +79,8 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 #        ActsSimFatrasPayload crash with a bad_any_cast, see
 #        https://github.com/acts-project/acts/issues/164 .
 #
-# FIXME: The ActsSimGeantinoRecording example currently crashes due to
-#        https://github.com/acts-project/acts/issues/204 and
-#        https://github.com/acts-project/acts/issues/205 . Once that's fixed, it
-#        can run, but will need to be forced into single-threaded mode with -j1
-#        until https://github.com/acts-project/acts/issues/207 is resolved.
+# FIXME: The ActsSimGeantinoRecording example must currently be forced into
+#        single-threaded, see https://github.com/acts-project/acts/issues/207 .
 #
 RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
@@ -130,7 +127,9 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
         && echo "---------------"                                              \
         && run_example ActsSimFatrasDD4hep                                     \
         && echo "---------------"                                              \
-        && run_example ActsSimFatrasGeneric;                                   \
+        && run_example ActsSimFatrasGeneric                                    \
+        && echo "---------------"                                              \
+        && run_example ActsSimGeantinoRecording -j1;                           \
     fi
 
 # Finish installing ACTS
