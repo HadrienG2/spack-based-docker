@@ -117,6 +117,8 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
         && echo "---------------"                                              \
         && run_example ActsGenPythia8                                          \
         && echo "---------------"                                              \
+        && run_example ActsRecCKFTracks                                        \
+        && echo "---------------"                                              \
         && run_example ActsRecVertexFinder                                     \
         && echo "---------------"                                              \
         && run_example ActsRecVertexFitter                                     \
