@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.20.04
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=0.24.00
+ARG ACTS_VERSION=0.25.00
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -13,12 +13,14 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #        by default, Geant4 asks for "11", and Spack isn't smart enough to
 #        figure out that these two constraints are compatible.
 #
+# FIXME: Figure out a way to do automated CUDA testing.
+#
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          +benchmarks +dd4hep +digitization    \
-                                          +examples +fatras +geant4  +hepmc3   \
-                                          +identification +integration_tests   \
-                                          +json +legacy +pythia8 +tgeo         \
-                                          +unit_tests                          \
+                                          +benchmarks -cuda +dd4hep            \
+                                          +digitization +examples +fatras      \
+                                          +geant4 +hepmc3 +identification      \
+                                          +integration_tests +json +legacy     \
+                                          +pythia8 +tgeo +unit_tests           \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
                                  -exception +filesystem -graph -iostreams      \
                                  -locale -log -math +multithreaded             \
