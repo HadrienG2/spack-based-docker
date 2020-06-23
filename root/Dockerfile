@@ -18,7 +18,7 @@ ENV LLVM_SPACK_SPEC="llvm -gold -lldb                                          \
                          ^ gettext -bzip2 -curses -git -tar -xz                \
                          ^ hwloc -libxml2 -pci                                 \
                          ^ perl -cpanm -threads                                \
-                         ^ python -bz2 -dbm -libxml2 -lzma -pyexpat -pythoncmd \
+                         ^ python -bz2 -dbm -libxml2 -lzma -pyexpat +pythoncmd \
                                   -readline -sqlite3 -ssl -tix -zlib"
 RUN spack install ${LLVM_SPACK_SPEC}
 RUN python3 ~/set_compiler_flags.py
