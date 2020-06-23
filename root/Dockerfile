@@ -26,7 +26,7 @@ RUN spack gc -y
 
 # Split out a Python Spack specification, we'll need it for Verrou
 ENV PYTHON_SPACK_SPEC="python@3: -bz2 -dbm -lzma -pyexpat -sqlite3 -pythoncmd  \
-                           ^ gettext -bzip2 -git -xz
+                           ^ gettext -bzip2 -git -xz                           \
                            % ${LLVM_SPACK_SPEC}"
 
 # This is a reasonably minimal ROOT Spack specification. We record it to an
