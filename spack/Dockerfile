@@ -72,9 +72,9 @@ RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 # the x.org and freedesktop.org servers, which may take a _while_ to answer...
 RUN spack config add config:connect_timeout:300
 
-# Setup spack to make a generic x86_64 build instead of one that's tuned for the
-# host CPU (since that would obviously make Docker images nonportable)
-COPY packages.yaml /etc/spack/
+# By default, spack build in -march=native mode, which is good for performance
+# but bad for portability. For Docker images this is not the right choice.
+RUN spack config add packages:all:target:[x86_64]
 
 # Have spack search the system compilers, then make sure that it uses the
 # "-fno-omit-frame-pointer" flag on compilers that are known to support it
