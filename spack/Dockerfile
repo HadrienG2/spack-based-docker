@@ -47,8 +47,11 @@ WORKDIR /root
 RUN zypper ref && zypper dup -y
 
 # Install Spack's dependencies
-RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
-                 python3 subversion tar unzip xz
+#
+# FIXME: Switch back to GCC once ROOT's deps build with GCC 10.
+#
+RUN zypper in -y bzip2 clang curl gcc-fortran git gzip make patch python3      \
+                 subversion tar unzip xz
 
 # Install dependencies of our own scripts
 RUN zypper in -y python3-PyYAML
@@ -83,14 +86,16 @@ RUN spack external find --not-buildable                                        \
     && spack config blame packages
 
 # Have spack search the system compilers, then make sure that it uses the
-# "-fno-omit-frame-pointer" flag on compilers that are known to support it
+# "-fno-omit-frame-pointer" flag on compilers that are known to support it.
+#
+# Also, patch the clang compiler config to use gfortran for Fortran code.
 #
 # FIXME: Add back the -O3 flag once Acts build resource consumption has improved
 #        enough that it doesn't OOM on 4 threads + 16 GB of RAM
 #
 RUN spack compiler find
-COPY set_compiler_flags.py /root
-RUN python3 ~/set_compiler_flags.py
+COPY configure_compilers.py /root
+RUN python3 ~/configure_compilers.py
 
 # Setup a Spack environment
 #

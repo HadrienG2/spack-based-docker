@@ -38,6 +38,13 @@ for compiler_entry in compilers_config['compilers']:
                 flag_config += ' '
             flag_config += '-fno-omit-frame-pointer'
             compiler_flags_config[flag] = flag_config
+        # If the compiler is clang...
+        if compiler_config['spec'][0:5] == 'clang':
+            # ...then teach it how to compile Fortran code if it doesn't know
+            compiler_paths_config = compiler_config['paths']
+            for fc in ['f77', 'fc']:
+                if compiler_paths_config[fc] is None:
+                    compiler_paths_config[fc] = '/usr/bin/gfortran'
 
 # Overwrite the compiler configuration
 compilers_config_file = open(compilers_config_path, mode='w')

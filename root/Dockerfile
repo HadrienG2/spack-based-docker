@@ -8,7 +8,8 @@ ARG ROOT_CXX_STANDARD=17
 
 # Split out a Python Spack specification, we'll need it for Verrou
 ENV PYTHON_SPACK_SPEC="python@3: -bz2 -dbm -lzma -pyexpat -sqlite3 -pythoncmd  \
-                           ^ gettext -bzip2 -git -xz"
+                           ^ gettext -bzip2 -git -xz                           \
+                           % clang"
 
 # This is a reasonably minimal ROOT Spack specification. We record it to an
 # environment variable so that clients can later use the same ROOT build.
