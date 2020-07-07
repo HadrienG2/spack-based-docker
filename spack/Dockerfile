@@ -68,9 +68,13 @@ RUN cd /opt                                                                    \
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 
+# Use a large spack download timeout to accomodate for the general flakiness of
+# the x.org and freedesktop.org servers, which may take a _while_ to answer...
+RUN spack config add config:connect_timeout:300
+
 # Setup spack to make a generic x86_64 build instead of one that's tuned for the
 # host CPU (since that would obviously make Docker images nonportable)
-COPY config.yaml packages.yaml /etc/spack/
+COPY packages.yaml /etc/spack/
 
 # Have spack search the system compilers, then make sure that it uses the
 # "-fno-omit-frame-pointer" flag on compilers that are known to support it
