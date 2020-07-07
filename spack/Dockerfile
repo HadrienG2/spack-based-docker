@@ -97,8 +97,8 @@ RUN spack compiler find
 COPY configure_compilers.py /root
 RUN python3 ~/configure_compilers.py
 
-# FIXME: Use clang as some ROOT deps like libdrm don't build with GCC 10
-RUN spack config add packages:all:compiler:[clang]
+# FIXME: Forbid GCC use as some ROOT deps like libdrm don't build with GCC 10
+RUN spack compiler rm gcc
 
 # Setup a Spack environment
 #
