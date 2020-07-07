@@ -50,8 +50,8 @@ RUN zypper ref && zypper dup -y
 #
 # FIXME: Switch back to GCC once ROOT's deps build with GCC 10.
 #
-RUN zypper in -y bzip2 clang curl gcc-fortran git gzip make patch python3      \
-                 subversion tar unzip xz
+RUN zypper in -y bzip2 clang curl gcc-fortran git gzip libstdc++-devel make    \
+                 patch python3 subversion tar unzip xz
 
 # Install dependencies of our own scripts
 RUN zypper in -y python3-PyYAML
