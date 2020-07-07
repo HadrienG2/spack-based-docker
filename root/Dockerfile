@@ -39,7 +39,7 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
                          ^ ${PYTHON_SPACK_SPEC}"
 
 # Install ROOT
-RUN spack install ${ROOT_SPACK_SPEC}
+RUN spack install --fail-fast ${ROOT_SPACK_SPEC}
 
 # Check that the ROOT install works, including PyROOT:
 #

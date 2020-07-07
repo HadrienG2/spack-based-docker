@@ -10,7 +10,7 @@ ARG VERROU_VERSION=2.2.0
 # === INSTALL VERROU ===
 
 # Install Verrou
-RUN spack install verrou@${VERROU_VERSION} ^ ${PYTHON_SPACK_SPEC}
+RUN spack install --fail-fast verrou@${VERROU_VERSION} ^ ${PYTHON_SPACK_SPEC}
 
 # Verrou's python extensions in global scope
 RUN spack activate verrou
@@ -45,7 +45,7 @@ ENV VERROU_CMD_BASE="valgrind --tool=verrou                                    \
                               --exclude=${ACTS_BUILD_DIR}/excludes.ex"
 
 # Make sure that CMake is available in the environment as we need it for testing
-RUN spack install cmake
+RUN spack install --fail-fast cmake
 
 # Run the ACTS test suite inside of Verrou, in verbose and single-thread mode
 #

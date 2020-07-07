@@ -31,7 +31,7 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                          ^ xerces-c cxxstd=11"
 
 # Build acts, do not install it yet
-RUN spack install --until build ${ACTS_SPACK_SPEC}
+RUN spack install --fail-fast --until build ${ACTS_SPACK_SPEC}
 
 # Cache the location of the ACTS build directory (it takes a while to compute)
 RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
@@ -135,7 +135,7 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     fi
 
 # Finish installing ACTS
-RUN spack install ${ACTS_SPACK_SPEC}
+RUN spack install --fail-fast ${ACTS_SPACK_SPEC}
 
 # Discard the ACTS build directory and the associated environment setup
 RUN spack gc -y                                                                \
