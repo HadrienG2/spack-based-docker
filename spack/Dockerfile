@@ -61,7 +61,7 @@ RUN zypper in -y python3-PyYAML
 # This extended command allows switching back to my Spack fork when I'm working
 # on some package change that hasn't been submitted upstream yet.
 #
-# FIXME: Go back to spack upstream once root@6.22 and acts@0.28 are integrated
+# FIXME: Go back to spack upstream once acts@0.29 is integrated
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
