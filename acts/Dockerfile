@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.22.00
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=0.30.00
+ARG ACTS_VERSION=0.31.00
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -55,11 +55,15 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 # Run the benchmarks (skip in Debug builds, as they are too slow)
 RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         cd ${ACTS_BUILD_DIR}/bin                                               \
+        && spack build-env acts ./ActsBenchmarkAnnulusBoundsBenchmark          \
+        && echo "---------------"                                              \
         && spack build-env acts ./ActsBenchmarkAtlasStepper                    \
         && echo "---------------"                                              \
         && spack build-env acts ./ActsBenchmarkBoundaryCheck                   \
         && echo "---------------"                                              \
         && spack build-env acts ./ActsBenchmarkEigenStepper                    \
+        && echo "---------------"                                              \
+        && spack build-env acts ./ActsBenchmarkRayFrustumBenchmark             \
         && echo "---------------"                                              \
         && spack build-env acts ./ActsBenchmarkSolenoidField                   \
         && echo "---------------"                                              \
