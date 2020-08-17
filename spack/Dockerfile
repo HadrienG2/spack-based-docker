@@ -79,6 +79,9 @@ RUN spack config add config:connect_timeout:300
 # but bad for portability. For Docker images this is not the right choice.
 RUN spack config add packages:all:target:[x86_64]
 
+# FIXME: Use of system packages is disabled for now, as spackages like CMake
+#        cannot find the system version of OpenSSL.
+#
 # Ask spack to look for system-installed packages, so that we can later use them
 # to speed up builds (but note that this spack feature is in a preliminary state
 # and only supports CMake packages for now)
@@ -86,7 +89,7 @@ RUN spack config add packages:all:target:[x86_64]
 # FIXME: Must disable --not-buildable flag for now, as that is incompatible with
 #        the use of a non-system compiler, which we must currently engage in.
 #
-RUN spack external find && spack config blame packages
+# RUN spack external find && spack config blame packages
 
 # Have spack search the system compilers, then make sure that it uses the
 # "-fno-omit-frame-pointer" flag on compilers that are known to support it.
