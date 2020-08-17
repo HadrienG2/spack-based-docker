@@ -74,9 +74,9 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 #
 # FIXME: Cannot test ActsExampleMagneticField, ActsExampleMagneticFieldAccess,
 #        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialMappingGeneric,
-#        ActsExampleReadCsvGeneric, ActsRecTruthTracks, ActsRecVertexReader and
-#        ActsSimFatrasTGeo as no input data file is provided and it's unclear
-#        how to get one.
+#        ActsExampleReadCsvGeneric, ActsRecCKFTracks, ActsRecTruthTracks, 
+#        ActsRecVertexFinder, ActsRecVertexReader and ActsSimFatrasTGeo as no
+#        input data file is provided and it's unclear how to get one.
 #
 # FIXME: Cannot auto-test ActsExampleGeometryTGeo, ActsExampleHepMC3 and
 #        ActsExamplePropagationTGeo as they do not reliably exit a nonzero
@@ -123,10 +123,6 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
         && run_example ActsExamplePropagationGeneric                           \
         && echo "---------------"                                              \
         && run_example ActsGenPythia8                                          \
-        && echo "---------------"                                              \
-        && run_example ActsRecCKFTracks                                        \
-        && echo "---------------"                                              \
-        && run_example ActsRecVertexFinder                                     \
         && echo "---------------"                                              \
         && run_example ActsRecVertexFitter                                     \
         && echo "---------------"                                              \
