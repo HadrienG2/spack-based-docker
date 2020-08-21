@@ -28,16 +28,14 @@ cd spack
 docker build --no-cache --squash --tag ${DOCKER_REPO}/spack-tests:latest .
 docker system prune -f
 
-# FIXME: Verrou can't build with clang because it uses gcc's quadmath.h header
-#
-# echo "*** Building Verrou image ***"
-# cd ../verrou
-# docker build --squash                                                          \
-#              --tag ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}               \
-#              --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
-#              --build-arg VERROU_VERSION=${VERROU_VERSION}                      \
-#              .
-# docker system prune -f
+echo "*** Building Verrou image ***"
+cd ../verrou
+docker build --squash                                                          \
+             --tag ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}               \
+             --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
+             --build-arg VERROU_VERSION=${VERROU_VERSION}                      \
+             .
+docker system prune -f
 
 cd ../root
 echo "*** Building ROOT C++17 image ***"
@@ -62,21 +60,19 @@ for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
     docker system prune -f
 done
 
-# FIXME: Verrou can't build with clang because it uses gcc's quadmath.h header
-#
-# echo "*** Building Verrou-enhanced ACTS dev image ***"
-# cd ../acts-verrou
-# docker build --squash                                                          \
-#              --tag ${DOCKER_REPO}/acts-verrou-tests:latest                     \
-#              --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
-#              --build-arg ACTS_VERSION=${ACTS_VERSION}                          \
-#              --build-arg VERROU_VERSION=${VERROU_VERSION}                      \
-#              .
-# docker system prune -f
+echo "*** Building Verrou-enhanced ACTS dev image ***"
+cd ../acts-verrou
+docker build --squash                                                          \
+             --tag ${DOCKER_REPO}/acts-verrou-tests:latest                     \
+             --build-arg DOCKER_REPO=${DOCKER_REPO}                            \
+             --build-arg ACTS_VERSION=${ACTS_VERSION}                          \
+             --build-arg VERROU_VERSION=${VERROU_VERSION}                      \
+             .
+docker system prune -f
 
 echo "*** Pushing images to the Docker Hub ***"
 docker push ${DOCKER_REPO}/spack-tests
-# docker push ${DOCKER_REPO}/verrou-tests
+docker push ${DOCKER_REPO}/verrou-tests
 docker push ${DOCKER_REPO}/root-tests
 docker push ${DOCKER_REPO}/acts-tests
-# docker push ${DOCKER_REPO}/acts-verrou-tests
+docker push ${DOCKER_REPO}/acts-verrou-tests
