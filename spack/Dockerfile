@@ -47,15 +47,8 @@ WORKDIR /root
 RUN zypper ref && zypper dup -y
 
 # Install Spack's dependencies
-RUN zypper in -y bzip2 curl gcc9 gcc9-c++ gcc9-fortran git gzip make patch     \
+RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
                  python3 subversion tar unzip xz
-
-# FIXME: Using a non-system version of gcc/g++ on Tumbleweed requires a little
-#        bit of hacking around to please x11 packages
-RUN cd /usr/bin                                                                \
-    && ln -s g++-9 c++                                                         \
-    && ln -s gcc-9 cc                                                          \
-    && ln -s cpp-9 cpp
 
 # Install dependencies of our own scripts
 RUN zypper in -y python3-PyYAML
@@ -67,8 +60,8 @@ RUN zypper in -y python3-PyYAML
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=develop                                              \
-                 https://github.com/spack/spack.git
+                 --branch=acts-update                                          \
+                 https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
