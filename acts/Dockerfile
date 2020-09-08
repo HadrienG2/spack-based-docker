@@ -69,21 +69,25 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 
 # Run the examples (skip some in Debug builds, as they are too slow)
 #
-# FIXME: Cannot test ActsExampleMagneticField, ActsExampleMagneticFieldAccess,
-#        ActsExampleMaterialMappingDD4hep, ActsExampleMaterialMappingGeneric,
-#        ActsExampleReadCsvGeneric, ActsRecCKFTracks, ActsRecTruthTracks, 
-#        ActsRecVertexFinder, ActsRecVertexReader and ActsSimFatrasTGeo as no
-#        input data file is provided and it's unclear how to get one.
+# FIXME: Cannot test ActsExampleGeantinoRecordingGdml, ActsExampleMagneticField,
+#        ActsExampleMagneticFieldAccess, ActsExampleMaterialMappingDD4hep,
+#        ActsExampleMaterialMappingGeneric, ActsExampleReadCsvGeneric,
+#        ActsExampleCKFTracks, ActsExampleTruthTracks and
+#        ActsExampleVertexReader as no input data file is provided and it's
+#        unclear how to get one.
 #
-# FIXME: Cannot auto-test ActsExampleGeometryTGeo, ActsExampleHepMC3 and
-#        ActsExamplePropagationTGeo as they do not reliably exit a nonzero
+# FIXME: Cannot auto-test ActsExampleAdaptiveMultiVertexFinder,
+#        ActsExampleFatrasAligned, ActsExampleFatrasDD4hep,
+#        ActsExampleFatrasGeneric, ActsExampleFatrasTGeo,
+#        ActsExampleGeometryTGeo, ActsExampleHepMC3, ActsExamplePropagationTGeo
+#        and ActsExampleVertexFitter as they do not reliably exit a nonzero
 #        status code upon major failure (e.g. input not found).
 #
 # FIXME: The PayloadDetector-based examples ActsExamplePropagationPayload and
-#        ActsSimFatrasPayload crash with a bad_any_cast, see
+#        ActsExampleFatrasPayload crash with a bad_any_cast, see
 #        https://github.com/acts-project/acts/issues/164 .
 #
-# FIXME: The ActsSimGeantinoRecording example must currently be forced into
+# FIXME: The ActsExampleGeantinoRecording example must currently be forced into
 #        single-threaded, see https://github.com/acts-project/acts/issues/207 .
 #
 RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
@@ -92,6 +96,8 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example() {                                                         \
            spack build-env --dirty acts ${ACTS_BUILD_DIR}/bin/$* -n 100;       \
        }                                                                       \
+    && run_example ActsExampleGenParticleGun                                   \
+    && echo "---------------"                                                  \
     && run_example ActsExampleGeometryAligned                                  \
     && echo "---------------"                                                  \
     && run_example ActsExampleGeometryDD4hep                                   \
@@ -103,12 +109,12 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example ActsExampleGeometryPayload                                  \
     && echo "---------------"                                                  \
     && run_example ActsExampleHelloWorld                                       \
-    && echo "---------------"                                                  \
-    && (cd Run/HepMC3 && run_example ActsExampleHepMC3)                        \
-    && echo "---------------"                                                  \
-    && run_example ActsGenParticleGun                                          \
     && if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                              \
         echo "---------------"                                                 \
+        && run_example ActsExampleGeantinoRecordingDD4hep -j1                  \
+        && echo "---------------"                                              \
+        && run_example ActsExampleIterativeVertexFinder                        \
+        && echo "---------------"                                              \
         && run_example ActsExampleMaterialValidationDD4hep                     \
         && echo "---------------"                                              \
         && run_example ActsExampleMaterialValidationGeneric                    \
@@ -121,19 +127,9 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
         && echo "---------------"                                              \
         && run_example ActsExamplePropagationGeneric                           \
         && echo "---------------"                                              \
-        && run_example ActsGenPythia8                                          \
+        && run_example ActsExamplePythia8                                      \
         && echo "---------------"                                              \
-        && run_example ActsRecVertexFitter                                     \
-        && echo "---------------"                                              \
-        && run_example ActsRecVertexWriter                                     \
-        && echo "---------------"                                              \
-        && run_example ActsSimFatrasAligned                                    \
-        && echo "---------------"                                              \
-        && run_example ActsSimFatrasDD4hep                                     \
-        && echo "---------------"                                              \
-        && run_example ActsSimFatrasGeneric                                    \
-        && echo "---------------"                                              \
-        && run_example ActsSimGeantinoRecording -j1;                           \
+        && run_example ActsExampleVertexWriter;                                \
     fi
 
 # Finish installing ACTS
