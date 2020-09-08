@@ -15,13 +15,10 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #
 # FIXME: Figure out a way to do automated CUDA testing.
 #
-# FIXME: Must disable hepmc3 for now because it brings in heppdt, which is
-#        hosted at lcgapp.cern.ch, which is currently down.
-#
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           +benchmarks -cuda +dd4hep            \
                                           +digitization +examples +fatras      \
-                                          +geant4 -hepmc3 +identification      \
+                                          +geant4 +hepmc3 +identification      \
                                           +integration_tests +json +legacy     \
                                           +pythia8 +tgeo +unit_tests           \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
@@ -106,6 +103,8 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example ActsExampleGeometryPayload                                  \
     && echo "---------------"                                                  \
     && run_example ActsExampleHelloWorld                                       \
+    && echo "---------------"                                                  \
+    && (cd Run/HepMC3 && run_example ActsExampleHepMC3)                        \
     && echo "---------------"                                                  \
     && run_example ActsGenParticleGun                                          \
     && if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                              \
