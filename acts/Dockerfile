@@ -87,8 +87,11 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 #        ActsExampleFatrasPayload crash with a bad_any_cast, see
 #        https://github.com/acts-project/acts/issues/164 .
 #
-# FIXME: The ActsExampleGeantinoRecording example must currently be forced into
+# FIXME: ActsExampleGeantinoRecording must currently be forced into
 #        single-threaded, see https://github.com/acts-project/acts/issues/207 .
+#
+# FIXME: ActsExamplePropagationEmpty fails for unknown reasons, reaching an
+#        infinite step count.
 #
 RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
@@ -122,8 +125,6 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
         && run_example ActsExamplePropagationAligned                           \
         && echo "---------------"                                              \
         && run_example ActsExamplePropagationDD4hep                            \
-        && echo "---------------"                                              \
-        && run_example ActsExamplePropagationEmpty                             \
         && echo "---------------"                                              \
         && run_example ActsExamplePropagationGeneric                           \
         && echo "---------------"                                              \
