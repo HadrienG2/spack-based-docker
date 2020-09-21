@@ -60,7 +60,7 @@ RUN zypper in -y python3-PyYAML
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=acts-update                                          \
+                 --branch=acts-v1.0                                            \
                  https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack
