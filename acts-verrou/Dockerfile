@@ -1,6 +1,6 @@
 # Configure the container's basic properties
 ARG DOCKER_REPO=hgrasland
-ARG ACTS_VERSION=1.0.0
+ARG ACTS_VERSION=1.1.0
 FROM ${DOCKER_REPO}/acts-tests:${ACTS_VERSION}-Debug
 LABEL Description="openSUSE Tumbleweed with ACTS and Verrou"
 CMD bash
@@ -63,7 +63,7 @@ RUN cd ${ACTS_BUILD_DIR}                                                       \
     && ${VERROU_CMD_BASE} --trace-children=yes                                 \
                           cmake --build . -- integrationtests
 
-# Delta-debug an ACTS unit tests to find out in which ELF symbols Verrou
+# Delta-debug ACTS unit tests to find out in which ELF symbols Verrou
 # perturbations will cause a test failure.
 #
 # This is an easy way to locate instabilities, which can then be classified as

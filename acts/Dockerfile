@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.22.00
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=1.0.0
+ARG ACTS_VERSION=1.1.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -72,9 +72,8 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 # FIXME: Cannot test ActsExampleGeantinoRecordingGdml, ActsExampleMagneticField,
 #        ActsExampleMagneticFieldAccess, ActsExampleMaterialMappingDD4hep,
 #        ActsExampleMaterialMappingGeneric, ActsExampleReadCsvGeneric,
-#        ActsExampleCKFTracks, ActsExampleTruthTracks and
-#        ActsExampleVertexReader as no input data file is provided and it's
-#        unclear how to get one.
+#        ActsExampleCKFTracks and ActsExampleTruthTracks as no input data file
+#        is provided and it's unclear how to get one.
 #
 # FIXME: Cannot auto-test ActsExampleAdaptiveMultiVertexFinder,
 #        ActsExampleFatrasAligned, ActsExampleFatrasDD4hep,
@@ -92,6 +91,9 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 #
 # FIXME: ActsExamplePropagationEmpty fails for unknown reasons, reaching an
 #        infinite step count.
+#
+# TODO: Test ActsExampleVertexFinderReader, ActsTutorialVertexFinder,
+#       ActsExampleMaterialValidationTGeo, ActsExampleMaterialMappingTGeo
 #
 RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
@@ -128,9 +130,7 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
         && echo "---------------"                                              \
         && run_example ActsExamplePropagationGeneric                           \
         && echo "---------------"                                              \
-        && run_example ActsExamplePythia8                                      \
-        && echo "---------------"                                              \
-        && run_example ActsExampleVertexWriter;                                \
+        && run_example ActsExamplePythia8;                                     \
     fi
 
 # Finish installing ACTS
