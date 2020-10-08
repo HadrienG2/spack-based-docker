@@ -41,7 +41,7 @@ RUN spack install --fail-fast --until build ${ACTS_SPACK_SPEC}
 # `spack-build-out.txt`, but I can reasonably assume that Spack won't put a dot
 # in their hash syntax for the foreseeable future.
 #
-RUN eport ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`       \
+RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
     && export ACTS_BUILD_DIR_NAME=`ls ${ACTS_STAGE_DIR} |                      \
                                    grep -E "^spack-build[^.]*$"`               \
     && export ACTS_BUILD_DIR="${ACTS_STAGE_DIR}/${ACTS_BUILD_DIR_NAME}"        \
