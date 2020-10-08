@@ -30,6 +30,10 @@ RUN spack uninstall -y acts                                                    \
     && spack dev-build --until build -d acts ${ACTS_SPACK_SPEC}
 
 # Keep the location of the ACTS build directory around
+#
+# FIXME: The recent introduction of hashed build dir names to Spack completely
+#        breaks both this pattern and the verrou exclude file. Find a way out.
+#
 ENV ACTS_BUILD_DIR=/root/acts/spack-build
 
 

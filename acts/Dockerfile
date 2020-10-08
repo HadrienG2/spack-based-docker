@@ -34,8 +34,17 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
 RUN spack install --fail-fast --until build ${ACTS_SPACK_SPEC}
 
 # Cache the location of the ACTS build directory (it takes a while to compute)
-RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
-    && export ACTS_BUILD_DIR="${ACTS_STAGE_DIR}/spack-build"                   \
+#
+# The weird regex is needed because spack recently started using hashes in build
+# directory names, e.g. `spack-build-ucfdm6y`. I cannot get away with a simple
+# `spack-build*` wildcard because it would match text files like
+# `spack-build-out.txt`, but I can reasonably assume that Spack won't put a dot
+# in their hash syntax for the foreseeable future.
+#
+RUN eport ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`       \
+    && export ACTS_BUILD_DIR_NAME=`ls ${ACTS_STAGE_DIR} |                      \
+                                   grep -E "^spack-build[^.]*$"`               \
+    && export ACTS_BUILD_DIR="${ACTS_STAGE_DIR}/${ACTS_BUILD_DIR_NAME}"        \
     && echo "export ACTS_BUILD_DIR=${ACTS_BUILD_DIR}" >> ${SETUP_ENV}          \
     && export ACTS_SRC_DIR="${ACTS_STAGE_DIR}/spack-src"                       \
     && echo "export ACTS_SRC_DIR=${ACTS_SRC_DIR}" >> ${SETUP_ENV}
