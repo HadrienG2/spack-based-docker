@@ -81,15 +81,18 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 # FIXME: Cannot test ActsExampleGeantinoRecordingGdml, ActsExampleMagneticField,
 #        ActsExampleMagneticFieldAccess, ActsExampleMaterialMappingDD4hep,
 #        ActsExampleMaterialMappingGeneric, ActsExampleReadCsvGeneric,
-#        ActsExampleCKFTracks and ActsExampleTruthTracks as no input data file
+#        ActsExampleCKFTracks, ActsExampleTruthTracks and
+#        ActsExampleVertexFinderReader as no input data file
 #        is provided and it's unclear how to get one.
 #
 # FIXME: Cannot auto-test ActsExampleAdaptiveMultiVertexFinder,
 #        ActsExampleFatrasAligned, ActsExampleFatrasDD4hep,
 #        ActsExampleFatrasGeneric, ActsExampleFatrasTGeo,
-#        ActsExampleGeometryTGeo, ActsExampleHepMC3, ActsExamplePropagationTGeo
-#        and ActsExampleVertexFitter as they do not reliably exit a nonzero
-#        status code upon major failure (e.g. input not found).
+#        ActsExampleGeometryTGeo, ActsExampleHepMC3,
+#        ActsExampleMaterialMappingTGeo, ActsExampleMaterialValidationTGeo,
+#        ActsExamplePropagationTGeo and ActsExampleVertexFitter as they do not
+#        reliably exit a nonzero status code upon major failure (e.g. input not
+#        found).
 #
 # FIXME: The PayloadDetector-based examples ActsExamplePropagationPayload and
 #        ActsExampleFatrasPayload crash with a bad_any_cast, see
@@ -98,11 +101,8 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 # FIXME: ActsExampleGeantinoRecording must currently be forced into
 #        single-threaded, see https://github.com/acts-project/acts/issues/207 .
 #
-# FIXME: ActsExamplePropagationEmpty fails for unknown reasons, reaching an
-#        infinite step count.
-#
-# TODO: Test ActsExampleVertexFinderReader, ActsTutorialVertexFinder,
-#       ActsExampleMaterialValidationTGeo, ActsExampleMaterialMappingTGeo
+# FIXME: ActsExampleIterativeVertexFinder and ActsExamplePropagationEmpty fail
+#        for unknown reasons, reaching an infinite step count.
 #
 RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
@@ -127,8 +127,6 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
         echo "---------------"                                                 \
         && run_example ActsExampleGeantinoRecordingDD4hep -j1                  \
         && echo "---------------"                                              \
-        && run_example ActsExampleIterativeVertexFinder                        \
-        && echo "---------------"                                              \
         && run_example ActsExampleMaterialValidationDD4hep                     \
         && echo "---------------"                                              \
         && run_example ActsExampleMaterialValidationGeneric                    \
@@ -139,7 +137,9 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
         && echo "---------------"                                              \
         && run_example ActsExamplePropagationGeneric                           \
         && echo "---------------"                                              \
-        && run_example ActsExamplePythia8;                                     \
+        && run_example ActsExamplePythia8                                      \
+        && echo "---------------"                                              \
+        && run_example ActsTutorialVertexFinder;                               \
     fi
 
 # Finish installing ACTS
