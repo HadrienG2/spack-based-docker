@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.22.00
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=1.1.0
+ARG ACTS_VERSION=1.2.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -16,7 +16,7 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 # FIXME: Figure out a way to do automated CUDA testing.
 #
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          +benchmarks -cuda +dd4hep            \
+                                          +autodiff +benchmarks -cuda +dd4hep  \
                                           +digitization +examples +fatras      \
                                           +geant4 +hepmc3 +identification      \
                                           +integration_tests +json +legacy     \
