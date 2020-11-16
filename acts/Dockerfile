@@ -78,7 +78,8 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 
 # Run the examples (skip some in Debug builds, as they are too slow)
 #
-# FIXME: Cannot test ActsExampleGeantinoRecordingGdml, ActsExampleMagneticField,
+# FIXME: Cannot test ActsExampleEventRecording,
+#        ActsExampleGeantinoRecordingGdml, ActsExampleMagneticField,
 #        ActsExampleMagneticFieldAccess, ActsExampleMaterialMappingDD4hep,
 #        ActsExampleMaterialMappingGeneric, ActsExampleReadCsvGeneric,
 #        ActsExampleCKFTracksDD4hep, ActsExampleTruthTracksDD4hep,
@@ -126,8 +127,6 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example ActsExampleParticleGun                                      \
     && if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                              \
         echo "---------------"                                                 \
-        && run_example ActsExampleEventRecording                               \
-        && echo "---------------"                                              \
         && run_example ActsExampleGeantinoRecordingDD4hep -j1                  \
         && echo "---------------"                                              \
         && run_example ActsExampleMaterialValidationDD4hep                     \
