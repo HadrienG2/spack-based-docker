@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.22.00
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=1.2.0
+ARG ACTS_VERSION=2.0.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -81,7 +81,8 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 # FIXME: Cannot test ActsExampleGeantinoRecordingGdml, ActsExampleMagneticField,
 #        ActsExampleMagneticFieldAccess, ActsExampleMaterialMappingDD4hep,
 #        ActsExampleMaterialMappingGeneric, ActsExampleReadCsvGeneric,
-#        ActsExampleCKFTracks, ActsExampleTruthTracks and
+#        ActsExampleCKFTracksDD4hep, ActsExampleTruthTracksDD4hep,
+#        ActsExampleCKFTracksGeneric, ActsExampleTruthTracksGeneric and
 #        ActsExampleVertexFinderReader as no input data file
 #        is provided and it's unclear how to get one.
 #
@@ -110,8 +111,6 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example() {                                                         \
            spack build-env --dirty acts ${ACTS_BUILD_DIR}/bin/$* -n 100;       \
        }                                                                       \
-    && run_example ActsExampleGenParticleGun                                   \
-    && echo "---------------"                                                  \
     && run_example ActsExampleGeometryAligned                                  \
     && echo "---------------"                                                  \
     && run_example ActsExampleGeometryDD4hep                                   \
@@ -123,8 +122,12 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example ActsExampleGeometryPayload                                  \
     && echo "---------------"                                                  \
     && run_example ActsExampleHelloWorld                                       \
+    && echo "---------------"                                                  \
+    && run_example ActsExampleParticleGun                                      \
     && if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                              \
         echo "---------------"                                                 \
+        && run_example ActsExampleEventRecording                               \
+        && echo "---------------"                                              \
         && run_example ActsExampleGeantinoRecordingDD4hep -j1                  \
         && echo "---------------"                                              \
         && run_example ActsExampleMaterialValidationDD4hep                     \
