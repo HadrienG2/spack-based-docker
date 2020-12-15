@@ -1,6 +1,6 @@
 # Configure the container's basic properties
 ARG DOCKER_REPO=hgrasland
-ARG ROOT_VERSION=6.22.00
+ARG ROOT_VERSION=6.22.06
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
