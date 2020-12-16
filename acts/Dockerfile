@@ -27,6 +27,7 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                  +program_options -random -regex               \
                                  -serialization +shared -signals -system +test \
                                  -thread -timer -wave                          \
+                         ^ dd4hep -edm4hep                                     \
                          ^ ${ROOT_SPACK_SPEC}                                  \
                          ^ xerces-c cxxstd=11"
 
