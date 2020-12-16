@@ -15,8 +15,10 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #
 # FIXME: Figure out a way to do automated CUDA testing.
 #
+# FIXME: Bring back autodiff once fixed (should be good in Acts v4?)
+#
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          +autodiff +benchmarks -cuda +dd4hep  \
+                                          -autodiff +benchmarks -cuda +dd4hep  \
                                           +digitization +examples +fatras      \
                                           +geant4 +hepmc3 +identification      \
                                           +integration_tests +json +legacy     \
