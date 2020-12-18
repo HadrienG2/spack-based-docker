@@ -109,7 +109,7 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 # FIXME: ActsExampleIterativeVertexFinder and ActsExamplePropagationEmpty fail
 #        for unknown reasons, reaching an infinite step count.
 #
-# TODO: Add seeding example
+# TODO: Add seeding examples
 #
 RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
