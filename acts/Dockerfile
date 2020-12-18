@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.22.06
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=3.0.0
+ARG ACTS_VERSION=4.0.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -108,6 +108,8 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 #
 # FIXME: ActsExampleIterativeVertexFinder and ActsExamplePropagationEmpty fail
 #        for unknown reasons, reaching an infinite step count.
+#
+# TODO: Add seeding example
 #
 RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
