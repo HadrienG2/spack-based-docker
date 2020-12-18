@@ -20,7 +20,7 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           -autodiff +benchmarks -cuda +dd4hep  \
                                           +digitization +examples +fatras      \
-                                          +geant4 +hepmc3 +identification      \
+                                          +geant4 -hepmc3 +identification      \
                                           +integration_tests +json +legacy     \
                                           +pythia8 +tgeo +unit_tests           \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
@@ -93,11 +93,10 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 # FIXME: Cannot auto-test ActsExampleAdaptiveMultiVertexFinder,
 #        ActsExampleFatrasAligned, ActsExampleFatrasDD4hep,
 #        ActsExampleFatrasGeneric, ActsExampleFatrasTGeo,
-#        ActsExampleGeometryTGeo, ActsExampleHepMC3,
-#        ActsExampleMaterialMappingTGeo, ActsExampleMaterialValidationTGeo,
-#        ActsExamplePropagationTGeo and ActsExampleVertexFitter as they do not
-#        reliably exit a nonzero status code upon major failure (e.g. input not
-#        found).
+#        ActsExampleGeometryTGeo, ActsExampleMaterialMappingTGeo,
+#        ActsExampleMaterialValidationTGeo, ActsExamplePropagationTGeo and
+#        ActsExampleVertexFitter as they do not reliably exit a nonzero status
+#        code upon major failure (e.g. input not found).
 #
 # FIXME: The PayloadDetector-based examples ActsExamplePropagationPayload and
 #        ActsExampleFatrasPayload crash with a bad_any_cast, see
