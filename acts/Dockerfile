@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.22.06
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=4.0.0
+ARG ACTS_VERSION=4.1.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -15,10 +15,8 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #
 # FIXME: Figure out a way to do automated CUDA testing.
 #
-# FIXME: Bring back autodiff once fixed (should be good in Acts v4?)
-#
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          -autodiff +benchmarks -cuda +dd4hep  \
+                                          +autodiff +benchmarks -cuda +dd4hep  \
                                           +digitization +examples +fatras      \
                                           +geant4 -hepmc3 +identification      \
                                           +integration_tests +json +legacy     \
@@ -125,6 +123,8 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example ActsExampleGeometryGeneric                                  \
     && echo "---------------"                                                  \
     && run_example ActsExampleGeometryPayload                                  \
+    && echo "---------------"                                                  \
+    && run_example ActsExampleGeometryTelescope                                \
     && echo "---------------"                                                  \
     && run_example ActsExampleHelloWorld                                       \
     && echo "---------------"                                                  \
