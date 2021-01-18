@@ -109,6 +109,7 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
 # TODO: Add seeding examples
 #
 RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
+    && DD4HEP_INPUT="--dd4hep-input file:${ACTS_SRC_DIR}/Examples/Detectors/DD4hepDetector/compact/OpenDataDetector/OpenDataDetector.xml" \
     && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
     && cd ${ACTS_SRC_DIR}/Examples                                             \
     && run_example() {                                                         \
@@ -116,7 +117,7 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
        }                                                                       \
     && run_example ActsExampleGeometryAligned                                  \
     && echo "---------------"                                                  \
-    && run_example ActsExampleGeometryDD4hep                                   \
+    && run_example ActsExampleGeometryDD4hep ${DD4HEP_INPUT}                   \
     && echo "---------------"                                                  \
     && run_example ActsExampleGeometryEmpty                                    \
     && echo "---------------"                                                  \
@@ -131,15 +132,15 @@ RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
     && run_example ActsExampleParticleGun                                      \
     && if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                              \
         echo "---------------"                                                 \
-        && run_example ActsExampleGeantinoRecordingDD4hep -j1                  \
+        && run_example ActsExampleGeantinoRecordingDD4hep -j1 ${DD4HEP_INPUT}  \
         && echo "---------------"                                              \
-        && run_example ActsExampleMaterialValidationDD4hep                     \
+        && run_example ActsExampleMaterialValidationDD4hep ${DD4HEP_INPUT}     \
         && echo "---------------"                                              \
         && run_example ActsExampleMaterialValidationGeneric                    \
         && echo "---------------"                                              \
         && run_example ActsExamplePropagationAligned                           \
         && echo "---------------"                                              \
-        && run_example ActsExamplePropagationDD4hep                            \
+        && run_example ActsExamplePropagationDD4hep ${DD4HEP_INPUT}            \
         && echo "---------------"                                              \
         && run_example ActsExamplePropagationGeneric                           \
         && echo "---------------"                                              \
