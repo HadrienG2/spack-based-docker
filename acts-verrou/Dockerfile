@@ -1,6 +1,6 @@
 # Configure the container's basic properties
 ARG DOCKER_REPO=hgrasland
-ARG ACTS_VERSION=5.0.0
+ARG ACTS_VERSION=6.0.0
 FROM ${DOCKER_REPO}/acts-tests:${ACTS_VERSION}-Debug
 LABEL Description="openSUSE Tumbleweed with ACTS and Verrou"
 CMD bash

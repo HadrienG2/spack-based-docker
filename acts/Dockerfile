@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.22.06
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=5.0.0
+ARG ACTS_VERSION=6.0.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -18,9 +18,10 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           +autodiff +benchmarks -cuda +dd4hep  \
                                           +digitization +examples +fatras      \
-                                          +geant4 -hepmc3 +identification      \
-                                          +integration_tests +json +legacy     \
-                                          +pythia8 +tgeo +unit_tests           \
+                                          +fatras_geant4 +geant4 -hepmc3       \
+                                          +identification +integration_tests   \
+                                          log_failure_threshold=WARNING +json  \
+                                          +legacy +pythia8 +tgeo +unit_tests   \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
                                  -exception +filesystem -graph -iostreams      \
                                  -locale -log -math +multithreaded             \
@@ -77,76 +78,13 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         && spack build-env acts ./ActsBenchmarkSurfaceIntersection;            \
     fi
 
-# Run the examples (skip some in Debug builds, as they are too slow)
-#
-# FIXME: Cannot test ActsExampleEventRecording,
-#        ActsExampleGeantinoRecordingGdml, ActsExampleMagneticField,
-#        ActsExampleMagneticFieldAccess, ActsExampleMaterialMappingDD4hep,
-#        ActsExampleMaterialMappingGeneric, ActsExampleReadCsvGeneric,
-#        ActsExampleCKFTracksDD4hep, ActsExampleTruthTracksDD4hep,
-#        ActsExampleCKFTracksGeneric, ActsExampleTruthTracksGeneric and
-#        ActsExampleVertexFinderReader as no input data file
-#        is provided and it's unclear how to get one.
-#
-# FIXME: Cannot auto-test ActsExampleAdaptiveMultiVertexFinder,
-#        ActsExampleFatrasAligned, ActsExampleFatrasDD4hep,
-#        ActsExampleFatrasGeneric, ActsExampleFatrasTGeo,
-#        ActsExampleGeometryTGeo, ActsExampleMaterialMappingTGeo,
-#        ActsExampleMaterialValidationTGeo, ActsExamplePropagationTGeo and
-#        ActsExampleVertexFitter as they do not reliably exit a nonzero status
-#        code upon major failure (e.g. input not found).
-#
-# FIXME: The PayloadDetector-based examples ActsExamplePropagationPayload and
-#        ActsExampleFatrasPayload crash with a bad_any_cast, see
-#        https://github.com/acts-project/acts/issues/164 .
-#
-# FIXME: ActsExampleGeantinoRecording must currently be forced into
-#        single-threaded, see https://github.com/acts-project/acts/issues/207 .
-#
-# FIXME: ActsExampleIterativeVertexFinder and ActsExamplePropagationEmpty fail
-#        for unknown reasons, reaching an infinite step count.
-#
-# TODO: Add seeding examples
-#
-RUN DD4HEP_PREFIX=`spack location --install-dir dd4hep`                        \
-    && DD4HEP_INPUT="--dd4hep-input file:${ACTS_SRC_DIR}/Examples/Detectors/DD4hepDetector/compact/OpenDataDetector/OpenDataDetector.xml" \
-    && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                               \
-    && cd ${ACTS_SRC_DIR}/Examples                                             \
-    && run_example() {                                                         \
-           spack build-env --dirty acts ${ACTS_BUILD_DIR}/bin/$* -n 100;       \
-       }                                                                       \
-    && run_example ActsExampleGeometryAligned                                  \
-    && echo "---------------"                                                  \
-    && run_example ActsExampleGeometryDD4hep ${DD4HEP_INPUT}                   \
-    && echo "---------------"                                                  \
-    && run_example ActsExampleGeometryEmpty                                    \
-    && echo "---------------"                                                  \
-    && run_example ActsExampleGeometryGeneric                                  \
-    && echo "---------------"                                                  \
-    && run_example ActsExampleGeometryPayload                                  \
-    && echo "---------------"                                                  \
-    && run_example ActsExampleGeometryTelescope                                \
-    && echo "---------------"                                                  \
-    && run_example ActsExampleHelloWorld                                       \
-    && echo "---------------"                                                  \
-    && run_example ActsExampleParticleGun                                      \
-    && if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                              \
-        echo "---------------"                                                 \
-        && run_example ActsExampleGeantinoRecordingDD4hep -j1 ${DD4HEP_INPUT}  \
-        && echo "---------------"                                              \
-        && run_example ActsExampleMaterialValidationDD4hep ${DD4HEP_INPUT}     \
-        && echo "---------------"                                              \
-        && run_example ActsExampleMaterialValidationGeneric                    \
-        && echo "---------------"                                              \
-        && run_example ActsExamplePropagationAligned                           \
-        && echo "---------------"                                              \
-        && run_example ActsExamplePropagationDD4hep ${DD4HEP_INPUT}            \
-        && echo "---------------"                                              \
-        && run_example ActsExamplePropagationGeneric                           \
-        && echo "---------------"                                              \
-        && run_example ActsExamplePythia8                                      \
-        && echo "---------------"                                              \
-        && run_example ActsTutorialVertexFinder;                               \
+# Run the examples (skip in Debug builds, as most are too slow)
+RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
+      DD4HEP_PREFIX=`spack location --install-dir dd4hep`                      \
+      && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                             \
+      && ln -s ${ACTS_BUILD_DIR} ${ACTS_SRC_DIR}/build;                        \
+      cd ${ACTS_SRC_DIR}                                                       \
+      && ./CI/run_examples.sh;                                                 \
     fi
 
 # Finish installing ACTS
