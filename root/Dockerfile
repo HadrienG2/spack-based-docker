@@ -3,7 +3,7 @@ ARG DOCKER_REPO=hgrasland
 FROM ${DOCKER_REPO}/spack-tests
 LABEL Description="openSUSE Tumbleweed with ROOT installed"
 CMD bash
-ARG ROOT_VERSION=6.22.06
+ARG ROOT_VERSION=6.22.08
 ARG ROOT_CXX_STANDARD=17
 
 # Split out a Python Spack specification, we'll need it for Verrou
