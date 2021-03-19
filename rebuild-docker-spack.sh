@@ -80,7 +80,9 @@ done
 
 echo "*** Pushing images to the Docker Hub ***"
 docker push ${DOCKER_REPO}/spack-tests
-# docker push ${DOCKER_REPO}/verrou-tests
-docker push ${DOCKER_REPO}/root-tests
-docker push ${DOCKER_REPO}/acts-tests
+# docker push ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}
+docker push ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
+for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
+    docker push ${DOCKER_REPO}/acts-tests:${ACTS_VERSION}-${BUILD_TYPE}
+done
 # docker push ${DOCKER_REPO}/acts-verrou-tests
