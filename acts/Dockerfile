@@ -18,7 +18,7 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           +autodiff +benchmarks -cuda +dd4hep  \
                                           +digitization +examples +fatras      \
-                                          +fatras_geant4 +geant4 -hepmc3       \
+                                          +fatras_geant4 +geant4 +hepmc3       \
                                           +identification +integration_tests   \
                                           log_failure_threshold=WARNING +json  \
                                           +legacy +pythia8 +tgeo +unit_tests   \
