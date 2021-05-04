@@ -19,7 +19,6 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
                      -examples +gdml -minuit +opengl +pythia8 +python +root7   \
                      -roofit +tbb +threads -tmva -unuran -vdt +x -xml          \
                          ^ automake@:1.16.2                                    \
-                         ^ binutils -gold -nls                                 \
                          ^ mesa -llvm                                          \
                          ^ ${PYTHON_SPACK_SPEC}"
 
