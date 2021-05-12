@@ -8,7 +8,7 @@ orthodoxy of RHEL / CentOS. But package management systems are here to help.
 This project uses a two-layer packaging structure. In the first layer, build
 automation is provided by the Spack package manager, which allows you to build
 and install HEP software by typing simple commands like
-`spack install acts@master +tgeo`. Spack will then take care of figuring out the
+`spack install acts@main +tgeo`. Spack will then take care of figuring out the
 missing dependencies and automatically build everything.
 
 Since some HEP software takes a very long time to build, you may also want to

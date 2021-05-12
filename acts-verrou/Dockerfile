@@ -21,9 +21,9 @@ RUN spack activate verrou
 # Start working on a development branch of ACTS, uninstalling the system
 # version to shrink Docker image size
 #
-# NOTE: This is morally equivalent to building acts@master, but it's
-#       easier to switch to a development branch of hgraslan/acts when
-#       an issue has been found and must be worked on.
+# NOTE: This is morally equivalent to building acts@main, but makes it easier to
+#       switch to a development branch of acts when an issue has been found by
+#       verrou and must be worked on.
 #
 RUN spack uninstall -y acts                                                    \
     && git clone https://github.com/acts-project/acts.git                      \
