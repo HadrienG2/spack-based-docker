@@ -58,10 +58,12 @@ RUN zypper in -y python3-PyYAML
 # This extended command allows switching back to my Spack fork when I'm working
 # on some package change that hasn't been submitted upstream yet.
 #
+# TODO: Switch back to upstream once ACTS 8.2 is in.
+#
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=develop                                              \
-                 https://github.com/spack/spack.git
+                 --branch=acts-v8.2                                            \
+                 https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
