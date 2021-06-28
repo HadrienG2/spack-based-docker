@@ -6,7 +6,7 @@ IFS=$'\n\t'
 DOCKER_REPO="hgrasland"
 VERROU_VERSION="2.2.0"
 ROOT_VERSION="6.24.00"
-ACTS_VERSION="9.0.1"
+ACTS_VERSION="9.1.0"
 ACTS_BUILD_TYPES=(
     "Debug"
     "RelWithDebInfo"
