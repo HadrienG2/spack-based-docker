@@ -68,22 +68,12 @@ RUN cd /opt                                                                    \
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 
-# Use a large spack download timeout to accomodate for the general flakiness of
-# the x.org and freedesktop.org servers, which may take a _while_ to answer...
-RUN spack config add config:connect_timeout:300
-
 # By default, spack build in -march=native mode, which is good for performance
 # but bad for portability. For Docker images this is not the right choice.
 RUN spack config add packages:all:target:[x86_64]
 
 # Have spack search the system compilers, then make sure that it uses the
-# "-fno-omit-frame-pointer" flag on compilers that are known to support it.
-#
-# Also, patch the clang compiler config to use gfortran for Fortran code.
-#
-# FIXME: Add back the -O3 flag once Acts build resource consumption has improved
-#        enough that it doesn't OOM on 4 threads + 16 GB of RAM
-#
+# "-O3 -fno-omit-frame-pointer" flags on compilers that are known to support it.
 RUN spack compiler find
 COPY configure_compilers.py /root
 RUN python3 ~/configure_compilers.py

@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 #
-# This script adds the "-fno-omit-frame-pointer" flag to the configuration of
+# This script adds "-O3 -fno-omit-frame-pointer" flags to the configuration of
 # every Spack-detected compiler which we know to support it.
-#
-# FIXME: Bring back the -O3 flag once we can handle it
 
 
 # This script requires PyYAML, which on openSUSE can be installed via
@@ -36,15 +34,8 @@ for compiler_entry in compilers_config['compilers']:
             flag_config = compiler_flags_config.get(flag, '')
             if flag_config != '':
                 flag_config += ' '
-            flag_config += '-fno-omit-frame-pointer'
+            flag_config += '-O3 -fno-omit-frame-pointer'
             compiler_flags_config[flag] = flag_config
-        # If the compiler is clang...
-        if compiler_config['spec'][0:5] == 'clang':
-            # ...then teach it how to compile Fortran code if it doesn't know
-            compiler_paths_config = compiler_config['paths']
-            for fc in ['f77', 'fc']:
-                if compiler_paths_config[fc] is None:
-                    compiler_paths_config[fc] = '/usr/bin/gfortran'
 
 # Overwrite the compiler configuration
 compilers_config_file = open(compilers_config_path, mode='w')
