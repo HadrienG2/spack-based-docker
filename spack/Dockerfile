@@ -58,11 +58,11 @@ RUN zypper in -y python3-PyYAML
 # This extended command allows switching back to my Spack fork when I'm working
 # on some package change that hasn't been submitted upstream yet.
 #
-# FIXME: Switch back to upstream once Acts v11 is in
+# FIXME: Switch back to upstream once Acts v12 is in
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=acts-v10-v11                                         \
+                 --branch=acts-v10-v11-v12                                     \
                  https://github.com/HadrienG2/spack.git
 
 # Setup the environment for running Spack
