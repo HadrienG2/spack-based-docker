@@ -50,8 +50,11 @@ RUN zypper ref && zypper dup -y
 RUN zypper in -y bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
                  python3 subversion tar unzip xz
 
-# Install dependencies of our own scripts
-RUN zypper in -y python3-PyYAML
+# Install dependencies of our own scripts/projects
+RUN zypper in -y git-lfs python3-PyYAML
+
+# Setup git LFS, as needed by ACTS
+RUN git lfs install
 
 # Download Spack
 #
