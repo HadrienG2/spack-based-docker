@@ -61,12 +61,10 @@ RUN git lfs install
 # This extended command allows switching back to my Spack fork when I'm working
 # on some package change that hasn't been submitted upstream yet.
 #
-# FIXME: Switch back to upstream once Acts v12 is in
-#
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=acts-v12                                             \
-                 https://github.com/HadrienG2/spack.git
+                 --branch=develop                                              \
+                 https://github.com/spack/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
