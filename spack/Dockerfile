@@ -1,5 +1,5 @@
 # Configure the container's basic properties
-FROM opensuse/tumbleweed
+FROM docker.io/opensuse/tumbleweed
 LABEL Description="openSUSE Tumbleweed with Spack installed"
 CMD bash
 SHELL ["/bin/bash", "-c"]
