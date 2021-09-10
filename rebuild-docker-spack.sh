@@ -5,7 +5,7 @@ IFS=$'\n\t'
 # Build parameters
 DOCKER_REPO="hgrasland"
 VERROU_VERSION="2.2.0"
-ROOT_VERSION="6.24.02"
+ROOT_VERSION="6.24.06"
 ACTS_VERSION="12.0.1"
 ACTS_BUILD_TYPES=(
     "Debug"
