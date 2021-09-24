@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.24.06
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=12.0.1
+ARG ACTS_VERSION=13.0.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -16,12 +16,14 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 # FIXME: Figure out a way to do automated CUDA testing.
 #
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          +autodiff +benchmarks -cuda +dd4hep  \
-                                          +digitization +examples +fatras      \
-                                          +fatras_geant4 +geant4 +hepmc3       \
-                                          +identification +integration_tests   \
+                                          +alignment +autodiff +benchmarks     \
+                                          -cuda +dd4hep +digitization          \
+                                          +examples +fatras +fatras_geant4     \
+                                          +geant4 +hepmc3 +identification      \
+                                          +integration_tests                   \
                                           log_failure_threshold=WARNING +json  \
-                                          +legacy +pythia8 +tgeo +unit_tests   \
+                                          +legacy +pythia8 +sycl +tgeo         \
+                                          +unit_tests                          \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
                                  -exception +filesystem -graph -iostreams      \
                                  -locale -log -math +multithreaded             \
@@ -52,7 +54,7 @@ RUN export ACTS_STAGE_DIR=`spack location --stage-dir ${ACTS_SPACK_SPEC}`      \
     && echo "export ACTS_SRC_DIR=${ACTS_SRC_DIR}" >> ${SETUP_ENV}
 
 # Run the unit tests
-RUN cd ${ACTS_BUILD_DIR} && spack build-env acts ctest -j8
+RUN cd ${ACTS_BUILD_DIR} && spack build-env acts ctest -j$(nproc)
 
 # Run the integration tests too (skip in Debug builds, as they are too slow)
 RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
