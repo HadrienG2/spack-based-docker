@@ -75,6 +75,9 @@ RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 # but bad for portability. For Docker images this is not the right choice.
 RUN spack config add packages:all:target:[x86_64]
 
+# Use all available CPU cores
+RUN spack config add config:build_jobs:$(nproc)
+
 # Have spack search the system compilers, then make sure that it uses the
 # "-O3 -fno-omit-frame-pointer" flags on compilers that are known to support it.
 RUN spack compiler find
