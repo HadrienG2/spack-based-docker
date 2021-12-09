@@ -61,7 +61,7 @@ RUN git lfs install
 # This extended command allows switching back to my Spack fork when I'm working
 # on some package change that hasn't been submitted upstream yet.
 #
-# FIXME: Go back to spack upstream once fixes & acts 15 are integrated to Spack
+# FIXME: Go back to spack upstream once fixes are integrated to Spack
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \

@@ -12,14 +12,9 @@ ENV PYTHON_SPACK_SPEC="python@3: +bz2 -dbm -lzma -pyexpat -sqlite3 -pythoncmd  \
 
 # This is a reasonably minimal ROOT Spack specification. We record it to an
 # environment variable so that clients can later use the same ROOT build.
-#
-# FIXME: Figure out what's wrong with the recently released automake@1.16.3
-#
 ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
-                     -examples +gdml -minuit +opengl +pythia8 +python +root7   \
-                     -roofit +tbb +threads -tmva -unuran -vdt +x -xml          \
-                         ^ automake@:1.16.2                                    \
-                         ^ mesa -llvm                                          \
+                     -examples +gdml -minuit -opengl -pythia8 +python +root7   \
+                     -roofit +tbb +threads -tmva -unuran -vdt -x -xml          \
                          ^ ${PYTHON_SPACK_SPEC}"
 
 # Install ROOT
