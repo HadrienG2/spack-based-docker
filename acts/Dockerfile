@@ -27,11 +27,10 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           +legacy +pythia8 -sycl +tgeo         \
                                           +unit_tests                          \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
-                                 -exception +filesystem -graph -iostreams      \
-                                 -locale -log -math +multithreaded             \
-                                 +program_options -random -regex               \
-                                 -serialization +shared -signals -system +test \
-                                 -thread -timer -wave                          \
+                                 -exception -graph -iostreams -locale -log     \
+                                 -math +multithreaded -random -regex           \
+                                 -serialization +shared -signals               \
+                                 -system -thread -timer -wave                  \
                          ^ dd4hep -ddalign -ddcad -ddcond -dddigi -ddeve       \
                            -edm4hep -utilityapps                               \
                          ^ ${ROOT_SPACK_SPEC}                                  \
