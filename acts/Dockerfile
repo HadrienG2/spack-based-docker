@@ -17,8 +17,10 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #
 # FIXME: Enable SYCL again once ready to debug the build
 #
+# FIXME: Enable autodiff again once releases 0.6.x are supported
+#
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          +alignment +autodiff +benchmarks     \
+                                          +alignment -autodiff +benchmarks     \
                                           -cuda +dd4hep +digitization          \
                                           +examples +fatras +fatras_geant4     \
                                           +geant4 +hepmc3 +identification      \
