@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.24.06
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=16.0.0
+ARG ACTS_VERSION=17.0.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -17,14 +17,11 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #
 # FIXME: Enable SYCL again once ready to debug the build
 #
-# FIXME: Enable autodiff again once releases 0.6.x are supported
-#
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          +alignment -autodiff +benchmarks     \
-                                          -cuda +dd4hep +digitization          \
-                                          +examples +fatras +fatras_geant4     \
-                                          +geant4 +hepmc3 +identification      \
-                                          +integration_tests                   \
+                                          +alignment +autodiff +benchmarks     \
+                                          -cuda +dd4hep +examples +fatras      \
+                                          +fatras_geant4 +geant4 +hepmc3       \
+                                          +identification +integration_tests   \
                                           log_failure_threshold=WARNING +json  \
                                           +legacy +pythia8 -sycl +tgeo         \
                                           +unit_tests                          \
