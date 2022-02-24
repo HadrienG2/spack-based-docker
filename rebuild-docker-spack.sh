@@ -6,7 +6,7 @@ IFS=$'\n\t'
 CONTAINER_REPO="ghcr.io/hadrieng2"
 VERROU_VERSION="2.2.0"
 ROOT_VERSION="6.24.06"
-ACTS_VERSION="17.0.0"
+ACTS_VERSION="17.1.0"
 ACTS_BUILD_TYPES=(
     "Debug"
     "RelWithDebInfo"
