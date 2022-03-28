@@ -11,8 +11,8 @@ RUN spack install --fail-fast                                                  \
                       ^ gettext -bzip2 -git -tar -xz                           \
                       ^ m4 -sigsegv                                            \
                       ^ perl -cpanm -threads                                   \
-                      ^ python@3: -bz2 -ctypes -dbm -lzma -pyexpat -pythoncmd  \
-                                  -sqlite3 -ssl -zlib
+                      ^ python@3: -bz2 -dbm -lzma -pyexpat -pythoncmd -sqlite3 \
+                                  -ssl -zlib
 
 # Enable verrou's python extensions
 RUN spack activate verrou
