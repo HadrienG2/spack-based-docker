@@ -25,8 +25,7 @@ build_tag_prune() {
                   --build-arg VERROU_VERSION=${VERROU_VERSION}                 \
                   --build-arg ROOT_VERSION=${ROOT_VERSION}                     \
                   --build-arg ACTS_VERSION=${ACTS_VERSION}                     \
-                  --tag ${DOCKER_REPO}/$*                                      \
-                  .
+                  --tag ${DOCKER_REPO}/$*
     buildah rm -a
     buildah rmi -p
 }
