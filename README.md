@@ -1,4 +1,4 @@
-# Recipes for building Docker images using Spack
+# Recipes for building Docker/OCI images using Spack
 
 ## What is this about?
 
@@ -13,12 +13,13 @@ missing dependencies and automatically build everything.
 
 Since some HEP software takes a very long time to build, you may also want to
 use pre-built packages. For now, these are provided in the form of a stack of
-Docker images. In the future, other container systems will be tried out, and if
-Spack's support for binary mirrors improves, we will also consider using them.
+Docker/OCI images, which we have tested to build using buildah just as well as
+they do using Docker. In the future, other container systems may be tried out,
+and if Spack's support for binary mirrors improves, we'll also try them.
 
 ## Repository structure 
 
-Every folder contains a recipe for building a Docker image using Spack. The
+Every folder contains a recipe for building a Docker/OCI image using Spack. The
 recipes build on top of each other, using the following dependency graph:
 
      spack
@@ -80,7 +81,7 @@ This proves that combining a package management system that builds from source
 code (and therefore, adapts to different system compilers, libraries, and build
 option desideratas) with a binary software distribution system is useful.
 
-## Why Spack and Docker specifically?
+## Why Spack and Docker/OCI specifically?
 
 Spack is one of the main paths that are being explored for HEP packaging
 studies. Compared to its main competition...
@@ -97,7 +98,7 @@ studies. Compared to its main competition...
 - It takes a pragmatic approach to build reproducibility, where reproducibility
   is aimed for by default, but switching to system libraries is not difficult.
 
-Docker is used here as a pragmatic way to work around the Linux distribution
+Docker/OCI is used here as a pragmatic way to work around the Linux distribution
 proliferation problem and easily share binary packages from one development
 system to another without risking software incompatibilities between different
 libc versions, different compiler ABIs, etc.
@@ -106,4 +107,5 @@ Arguably, however, Docker does too much isolation for this project, making
 use of local system resources unergonomic. So different binary packaging
 technologies which focus more on the "ignoring the host libraries" problem and
 less on irrelevant concerns such as hiding the host system processes may be
-tried in the future.
+tried in the future. We already validated that the images build fine using
+buildah, which inspires confidence regarding rootless container compatibility.

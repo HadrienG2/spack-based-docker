@@ -1,5 +1,5 @@
 # Configure the container's basic properties
-ARG DOCKER_REPO=hgrasland
+ARG DOCKER_REPO=docker.io/hgrasland
 ARG ROOT_VERSION=6.24.06
 FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"

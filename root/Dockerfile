@@ -1,5 +1,5 @@
 # Configure the container's basic properties
-ARG DOCKER_REPO=hgrasland
+ARG DOCKER_REPO=docker.io/hgrasland
 FROM ${DOCKER_REPO}/spack-tests
 LABEL Description="openSUSE Tumbleweed with ROOT installed"
 CMD bash
