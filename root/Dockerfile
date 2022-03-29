@@ -1,6 +1,6 @@
 # Configure the container's basic properties
-ARG DOCKER_REPO=docker.io/hgrasland
-FROM ${DOCKER_REPO}/spack-tests
+ARG CONTAINER_REPO=ghcr.io/hadrieng2
+FROM ${CONTAINER_REPO}/spack-tests
 LABEL Description="openSUSE Tumbleweed with ROOT installed"
 CMD bash
 ARG ROOT_VERSION=6.24.06
@@ -31,5 +31,5 @@ RUN activate-spack-view                                                        \
     && root.exe -b -q -e 'TPython::Exec( "print(1 + 1)" ) ? 0 : 42'            \
     && python3 -c 'import ROOT'
 
-# Clean up Spack caches and temporary files to shrink the Docker image
+# Clean up Spack caches and temporary files to shrink the container image
 RUN spack gc -y && spack clean -a

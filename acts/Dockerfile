@@ -1,7 +1,7 @@
 # Configure the container's basic properties
-ARG DOCKER_REPO=docker.io/hgrasland
+ARG CONTAINER_REPO=ghcr.io/hadrieng2
 ARG ROOT_VERSION=6.24.06
-FROM ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
+FROM ${CONTAINER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
 ARG ACTS_VERSION=17.0.0

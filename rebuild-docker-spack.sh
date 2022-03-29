@@ -3,7 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # Build parameters
-DOCKER_REPO="docker.io/hgrasland"
+CONTAINER_REPO="ghcr.io/hadrieng2"
 VERROU_VERSION="2.2.0"
 ROOT_VERSION="6.24.06"
 ACTS_VERSION="17.0.0"
@@ -21,11 +21,11 @@ build_tag_prune() {
     buildah build --layers                                                     \
                   --squash                                                     \
                   --format=docker                                              \
-                  --build-arg DOCKER_REPO=${DOCKER_REPO}                       \
+                  --build-arg CONTAINER_REPO=${CONTAINER_REPO}                 \
                   --build-arg VERROU_VERSION=${VERROU_VERSION}                 \
                   --build-arg ROOT_VERSION=${ROOT_VERSION}                     \
                   --build-arg ACTS_VERSION=${ACTS_VERSION}                     \
-                  --tag ${DOCKER_REPO}/$*
+                  --tag ${CONTAINER_REPO}/$*
     buildah rm -a
     buildah rmi -p
 }
@@ -62,11 +62,11 @@ done
 # cd ../acts-verrou
 # build_tag_prune acts-verrou-tests:latest
 
-echo "*** Pushing images to the Docker Hub ***"
-buildah push ${DOCKER_REPO}/spack-tests
-# buildah push ${DOCKER_REPO}/verrou-tests:${VERROU_VERSION}
-buildah push ${DOCKER_REPO}/root-tests:${ROOT_VERSION}-cxx17
+echo "*** Pushing images to ${CONTAINER_REPO} ***"
+buildah push ${CONTAINER_REPO}/spack-tests
+# buildah push ${CONTAINER_REPO}/verrou-tests:${VERROU_VERSION}
+buildah push ${CONTAINER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 for BUILD_TYPE in ${ACTS_BUILD_TYPES[@]}; do
-    buildah push ${DOCKER_REPO}/acts-tests:${ACTS_VERSION}-${BUILD_TYPE}
+    buildah push ${CONTAINER_REPO}/acts-tests:${ACTS_VERSION}-${BUILD_TYPE}
 done
-# buildah push ${DOCKER_REPO}/acts-verrou-tests
+# buildah push ${CONTAINER_REPO}/acts-verrou-tests

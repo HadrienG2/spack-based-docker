@@ -1,7 +1,7 @@
 # Configure the container's basic properties
-ARG DOCKER_REPO=docker.io/hgrasland
+ARG CONTAINER_REPO=ghcr.io/hadrieng2
 ARG ACTS_VERSION=17.0.0
-FROM ${DOCKER_REPO}/acts-tests:${ACTS_VERSION}-Debug
+FROM ${CONTAINER_REPO}/acts-tests:${ACTS_VERSION}-Debug
 LABEL Description="openSUSE Tumbleweed with ACTS and Verrou"
 CMD bash
 ARG VERROU_VERSION=2.2.0
@@ -19,7 +19,7 @@ RUN spack activate verrou
 # === SETUP AN ACTS DEVELOPMENT ENVIRONMENT ===
 
 # Start working on a development branch of ACTS, uninstalling the system
-# version to shrink Docker image size
+# version to shrink container image size
 #
 # NOTE: This is morally equivalent to building acts@main, but makes it easier to
 #       switch to a development branch of acts when an issue has been found by
@@ -92,5 +92,5 @@ RUN rm -rf ${ACTS_BUILD_DIR}
 # Discard the ACTS install, as otherwise user won't be able to rebuild another
 RUN spack uninstall -y acts
 
-# Clean up Spack caches and temporary files to shrink the Docker image
+# Clean up Spack caches and temporary files to shrink the container image
 RUN spack gc -y && spack clean -a

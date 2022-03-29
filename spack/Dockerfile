@@ -4,8 +4,8 @@ LABEL Description="openSUSE Tumbleweed with Spack installed"
 CMD bash
 SHELL ["/bin/bash", "-c"]
 
-# Build an environment setup script that is executed both during the Docker
-# image build process (before every RUN command) and when an image is started
+# Build an environment setup script that is executed both during the container
+# image building process (before every RUN command) and when an image is started
 # in interactive mode (via "docker run").
 #
 # This is harder than it sounds because...
@@ -14,7 +14,7 @@ SHELL ["/bin/bash", "-c"]
 #    a login shell nor an interactive shell. So our only hook for injecting
 #    environment setup is BASH_ENV, which is queried for an environment setup
 #    file to be sourced whenever a non-interactive shell starts.
-# 2. Interactive docker runs do not use a login shell (and we probably don't
+# 2. Interactive container runs do not use a login shell (and we probably don't
 #    want them to since /etc/profile does too much stuff), only an interactive
 #    shell. So our only hook for injecting environment setup is bashrc files,
 #    which are sourced anytime an interactive shell starts.
@@ -30,6 +30,11 @@ SHELL ["/bin/bash", "-c"]
 # - Unsetting BASH_ENV after setup cleans up the environment and ensures that
 #   the environment setup script is only run once.
 #
+# However, it only works with containers that use Docker-style layering where
+# new environment is sourced between one RUN statement and the following one.
+# For containers systems that do not follow this model like Singularity, another
+# approach will need to be found.
+#
 RUN touch /root/setup_env.sh                                                   \
     && echo 'if [ -n "${BASH_ENV}" ]; then                                     \
                  unset BASH_ENV;                                               \
@@ -39,8 +44,8 @@ RUN touch /root/setup_env.sh                                                   \
 ENV BASH_ENV="/root/bash_env.sh"                                               \
     SETUP_ENV="/root/setup_env.sh"
 
-# By default, Docker runs commands at the filesystem root (/). It is cleaner and
-# more idiomatic to run them in our home directory (which is /root) instead.
+# By default, containers runs commands at the filesystem root (/). It is cleaner
+# and more idiomatic to run them in our home directory (which is /root) instead.
 WORKDIR /root
 
 # Update the host system
@@ -80,7 +85,7 @@ RUN cd /opt                                                                    \
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"
 
 # By default, spack build in -march=native mode, which is good for performance
-# but bad for portability. For Docker images this is not the right choice.
+# but bad for portability. For container images this is not the right choice.
 RUN spack config add packages:all:target:[x86_64]
 
 # Use all available CPU cores
@@ -104,7 +109,7 @@ RUN python3 ~/configure_compilers.py
 # and the shell, so it should only be done as the last step before using a
 # package, with the "activate-spack-view" shell function.
 #
-ENV SPACK_ENV_NAME="docker-spack"
+ENV SPACK_ENV_NAME="spack-based-docker"
 RUN spack env create ${SPACK_ENV_NAME}                                         \
     && echo "spack env activate -V ${SPACK_ENV_NAME}" >> "${SETUP_ENV}"        \
     && echo "activate-spack-view() {                                           \
@@ -113,7 +118,7 @@ RUN spack env create ${SPACK_ENV_NAME}                                         \
             }" >> "${SETUP_ENV}"                                               \
     && echo "export -f activate-spack-view" >> "${SETUP_ENV}"
 
-# Some build script such as tar's do not like Docker's habit of running
+# Some build script such as tar's do not like containers' habit of running
 # everything as root, and need a little convincing
 ENV FORCE_UNSAFE_CONFIGURE=1
 
