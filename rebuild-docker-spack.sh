@@ -13,7 +13,7 @@ ACTS_BUILD_TYPES=(
 )
 
 echo "*** Updating base Tumbleweed image ***"
-buildah pull opensuse/tumbleweed
+buildah pull registry.opensuse.org/opensuse/tumbleweed
 
 # Build an OCI image, then prune builder state
 build_tag_prune() {
