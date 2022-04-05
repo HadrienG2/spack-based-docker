@@ -26,7 +26,7 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           +legacy +pythia8 -sycl +tgeo         \
                                           +unit_tests                          \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
-                                 -exception -graph -iostreams -locale -log     \
+                                 -exception -graph +iostreams -locale -log     \
                                  -math +multithreaded -random -regex           \
                                  -serialization +shared -signals               \
                                  -system -thread -timer -wave                  \
