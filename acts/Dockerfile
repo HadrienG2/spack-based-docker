@@ -4,7 +4,7 @@ ARG ROOT_VERSION=6.24.06
 FROM ${CONTAINER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=17.1.0
+ARG ACTS_VERSION=18.0.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -23,7 +23,7 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           +fatras_geant4 +geant4 +hepmc3       \
                                           +identification +integration_tests   \
                                           log_failure_threshold=WARNING +json  \
-                                          +legacy +pythia8 -sycl +tgeo         \
+                                          +legacy +onnx +pythia8 -sycl +tgeo   \
                                           +unit_tests                          \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
                                  -exception -graph +iostreams -locale -log     \
