@@ -23,7 +23,7 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           +fatras_geant4 +geant4 +hepmc3       \
                                           +identification +integration_tests   \
                                           log_failure_threshold=WARNING +json  \
-                                          +legacy +onnx +pythia8 -sycl +tgeo   \
+                                          +legacy -onnx +pythia8 -sycl +tgeo   \
                                           +unit_tests                          \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
                                  -exception -graph +iostreams -locale -log     \
