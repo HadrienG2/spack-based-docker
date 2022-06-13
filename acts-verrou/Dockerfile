@@ -1,6 +1,6 @@
 # Configure the container's basic properties
 ARG CONTAINER_REPO=ghcr.io/hadrieng2
-ARG ACTS_VERSION=19.0.0
+ARG ACTS_VERSION=19.2.0
 FROM ${CONTAINER_REPO}/acts-tests:${ACTS_VERSION}-Debug
 LABEL Description="openSUSE Tumbleweed with ACTS and Verrou"
 CMD bash
