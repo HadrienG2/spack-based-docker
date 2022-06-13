@@ -12,7 +12,7 @@ ARG ROOT_CXX_STANDARD=17
 #        Configure script are wrong, preventing installation.
 #
 ENV PYTHON_SPACK_SPEC="python@3: +bz2 -dbm -lzma -pyexpat -sqlite3 -pythoncmd  \
-                           ^ gettext -bzip2 -git -xz
+                           ^ gettext -bzip2 -git -xz                           \
                            ^ perl@:5.34.0"
 
 # This is a reasonably minimal ROOT Spack specification. We record it to an
