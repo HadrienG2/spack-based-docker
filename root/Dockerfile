@@ -23,12 +23,10 @@ RUN spack install --fail-fast ${ROOT_SPACK_SPEC}
 # Check that the ROOT install works, including PyROOT:
 #
 # - Can we evaluate C++ expressions?
-# - Can we call Python from ROOT?
 # - Can we see ROOT from Python?
 #
 RUN activate-spack-view                                                        \
     && root.exe -b -q -e '(6*7)-(6*7)'                                         \
-    && root.exe -b -q -e 'TPython::Exec( "print(1 + 1)" ) ? 0 : 42'            \
     && python3 -c 'import ROOT'
 
 # Clean up Spack caches and temporary files to shrink the container image
