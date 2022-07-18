@@ -58,9 +58,6 @@ RUN zypper -n in bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
 # Install dependencies of our own scripts/projects
 RUN zypper -n in git-lfs python3-PyYAML
 
-# Check that the environment was set up correctly
-RUN dpcpp --version
-
 # Download Spack
 #
 # This extended command allows switching back to my Spack fork when I'm working
