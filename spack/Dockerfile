@@ -58,14 +58,6 @@ RUN zypper -n in bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
 # Install dependencies of our own scripts/projects
 RUN zypper -n in git-lfs python3-PyYAML
 
-# Set up an Intel oneAPI dev environment
-RUN zypper addrepo https://yum.repos.intel.com/oneapi oneAPI                   \
-    && zypper --gpg-auto-import-keys ref                                       \
-    && zypper -n in coreutils pattern:devel_C_C++ findutils grep kmod          \
-                    pkg-config procps sed util-linux which                     \
-    && zypper -n in cmake intel-basekit libstdc++-devel                        \
-    && echo "source /opt/intel/oneapi/setvars.sh >/dev/null" >> "${SETUP_ENV}"
-
 # Check that the environment was set up correctly
 RUN dpcpp --version
 
