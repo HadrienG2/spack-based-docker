@@ -15,15 +15,13 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 #
 # FIXME: Figure out a way to do automated CUDA testing.
 #
-# FIXME: Enable SYCL again once ready to debug the build
-#
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                           +alignment +autodiff +benchmarks     \
                                           -cuda +dd4hep +examples +fatras      \
                                           +fatras_geant4 +geant4 +hepmc3       \
                                           +identification +integration_tests   \
                                           log_failure_threshold=WARNING +json  \
-                                          +legacy -onnx +pythia8 -sycl +tgeo   \
+                                          +legacy -onnx +pythia8 +tgeo         \
                                           +unit_tests                          \
                          ^ boost -atomic -chrono cxxstd=17 -date_time          \
                                  -exception -graph +iostreams -locale -log     \
