@@ -52,7 +52,7 @@ WORKDIR /root
 RUN zypper ref && zypper -n dup
 
 # Install Spack's dependencies
-RUN zypper -n in bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
+RUN zypper -n in awk bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch    \
                  python3 subversion tar unzip xz
 
 # Install dependencies of our own scripts/projects
