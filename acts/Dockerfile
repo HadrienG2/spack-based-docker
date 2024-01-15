@@ -9,10 +9,6 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
 #
-# FIXME: xerces-c cxxstd must be forced to "11" because it's "default" by
-#        by default, Geant4 asks for "11", and Spack isn't smart enough to
-#        figure out that these two constraints are compatible.
-#
 # FIXME: Figure out a way to do automated CUDA testing.
 #
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
@@ -30,8 +26,7 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                                  -system -thread -timer -wave                  \
                          ^ dd4hep -ddalign -ddcad -ddcond -dddigi -ddeve       \
                            -edm4hep -utilityapps                               \
-                         ^ ${ROOT_SPACK_SPEC}                                  \
-                         ^ xerces-c cxxstd=11"
+                         ^ ${ROOT_SPACK_SPEC}"
 
 # Build acts, do not install it yet
 RUN spack install --add --fail-fast --until build ${ACTS_SPACK_SPEC}
