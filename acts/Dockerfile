@@ -12,7 +12,7 @@ ARG ACTS_BUILD_TYPE=RelWithDebInfo
 # FIXME: Figure out a way to do automated CUDA testing.
 #
 ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
-                                          +alignment +autodiff +benchmarks     \
+                                          +alignment -autodiff +benchmarks     \
                                           -cuda +dd4hep +examples +fatras      \
                                           +fatras_geant4 +geant4 +hepmc3       \
                                           +identification +integration_tests   \
