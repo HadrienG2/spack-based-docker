@@ -65,8 +65,8 @@ RUN zypper -n in git-lfs python3-PyYAML
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=root-fixes                                           \
-                 https://github.com/HadrienG2/spack.git
+                 --branch=develop                                              \
+                 https://github.com/spack/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"

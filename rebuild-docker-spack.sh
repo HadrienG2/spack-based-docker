@@ -5,8 +5,8 @@ IFS=$'\n\t'
 # Build parameters
 CONTAINER_REPO="ghcr.io/hadrieng2"
 VERROU_VERSION="2.2.0"
-ROOT_VERSION="6.26.04"
-ACTS_VERSION="19.3.0"
+ROOT_VERSION="6.30.02"
+ACTS_VERSION="31.2.0"
 ACTS_BUILD_TYPES=(
     "Debug"
     "RelWithDebInfo"

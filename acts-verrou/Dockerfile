@@ -1,6 +1,6 @@
 # Configure the container's basic properties
 ARG CONTAINER_REPO=ghcr.io/hadrieng2
-ARG ACTS_VERSION=19.3.0
+ARG ACTS_VERSION=31.2.0
 FROM ${CONTAINER_REPO}/acts-tests:${ACTS_VERSION}-Debug
 LABEL Description="openSUSE Tumbleweed with ACTS and Verrou"
 CMD bash
@@ -10,7 +10,7 @@ ARG VERROU_VERSION=2.2.0
 # === INSTALL VERROU ===
 
 # Install Verrou
-RUN spack install --fail-fast verrou@${VERROU_VERSION} ^ ${PYTHON_SPACK_SPEC}
+RUN spack install --add --fail-fast verrou@${VERROU_VERSION} ^ ${PYTHON_SPACK_SPEC}
 
 # Verrou's python extensions in global scope
 RUN spack activate verrou
@@ -49,7 +49,7 @@ ENV VERROU_CMD_BASE="valgrind --tool=verrou                                    \
                               --exclude=${ACTS_BUILD_DIR}/excludes.ex"
 
 # Make sure that CMake is available in the environment as we need it for testing
-RUN spack install --fail-fast cmake
+RUN spack install --add --fail-fast cmake
 
 # Run the ACTS test suite inside of Verrou, in verbose and single-thread mode
 #

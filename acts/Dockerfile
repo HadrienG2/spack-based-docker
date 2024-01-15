@@ -1,10 +1,10 @@
 # Configure the container's basic properties
 ARG CONTAINER_REPO=ghcr.io/hadrieng2
-ARG ROOT_VERSION=6.26.04
+ARG ROOT_VERSION=6.30.02
 FROM ${CONTAINER_REPO}/root-tests:${ROOT_VERSION}-cxx17
 LABEL Description="openSUSE Tumbleweed with ACTS installed"
 CMD bash
-ARG ACTS_VERSION=19.3.0
+ARG ACTS_VERSION=31.2.0
 ARG ACTS_BUILD_TYPE=RelWithDebInfo
 
 # This is the variant of the ACTS package which we are going to build
@@ -34,7 +34,7 @@ ENV ACTS_SPACK_SPEC="acts@${ACTS_VERSION} build_type=${ACTS_BUILD_TYPE}        \
                          ^ xerces-c cxxstd=11"
 
 # Build acts, do not install it yet
-RUN spack install --fail-fast --until build ${ACTS_SPACK_SPEC}
+RUN spack install --add --fail-fast --until build ${ACTS_SPACK_SPEC}
 
 # Cache the location of the ACTS build directory (it takes a while to compute)
 #
@@ -89,7 +89,7 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
     fi
 
 # Finish installing ACTS
-RUN spack install --fail-fast ${ACTS_SPACK_SPEC}
+RUN spack install --add --fail-fast ${ACTS_SPACK_SPEC}
 
 # Discard the ACTS build directory and the associated environment setup
 RUN spack gc -y                                                                \
