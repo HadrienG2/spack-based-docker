@@ -52,8 +52,8 @@ WORKDIR /root
 RUN zypper ref && zypper -n dup
 
 # Install Spack's dependencies
-RUN zypper -n in bzip2 curl gcc gcc-c++ gcc-fortran git gzip make patch        \
-                 python3 subversion tar unzip xz
+RUN zypper -n in pattern:devel_basis awk bzip2 curl gcc-c++ gzip python3 \
+                 subversion tar unzip xz
 
 # Install dependencies of our own scripts/projects
 RUN zypper -n in git-lfs python3-PyYAML
@@ -65,8 +65,8 @@ RUN zypper -n in git-lfs python3-PyYAML
 #
 RUN cd /opt                                                                    \
     && git clone --depth=1                                                     \
-                 --branch=root-fixes                                           \
-                 https://github.com/HadrienG2/spack.git
+                 --branch=develop                                              \
+                 https://github.com/spack/spack.git
 
 # Setup the environment for running Spack
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> "${SETUP_ENV}"

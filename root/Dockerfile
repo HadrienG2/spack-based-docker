@@ -3,7 +3,7 @@ ARG CONTAINER_REPO=ghcr.io/hadrieng2
 FROM ${CONTAINER_REPO}/spack-tests
 LABEL Description="openSUSE Tumbleweed with ROOT installed"
 CMD bash
-ARG ROOT_VERSION=6.26.04
+ARG ROOT_VERSION=6.30.02
 ARG ROOT_CXX_STANDARD=17
 
 # Split out a Python Spack specification, we'll need it for Verrou
@@ -18,7 +18,7 @@ ENV ROOT_SPACK_SPEC="root@${ROOT_VERSION} cxxstd=${ROOT_CXX_STANDARD} -davix   \
                          ^ ${PYTHON_SPACK_SPEC}"
 
 # Install ROOT
-RUN spack install --fail-fast ${ROOT_SPACK_SPEC}
+RUN spack install --add --fail-fast ${ROOT_SPACK_SPEC}
 
 # Check that the ROOT install works, including PyROOT:
 #

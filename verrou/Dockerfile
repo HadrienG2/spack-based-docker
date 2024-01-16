@@ -6,7 +6,7 @@ CMD bash
 ARG VERROU_VERSION=2.2.0
 
 # Install verrou, golfing the dependencies a bit to speed up the build
-RUN spack install --fail-fast                                                  \
+RUN spack install --add --fail-fast                                            \
                   verrou@${VERROU_VERSION}                                     \
                       ^ gettext -bzip2 -git -tar -xz                           \
                       ^ m4 -sigsegv                                            \
