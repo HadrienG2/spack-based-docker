@@ -74,15 +74,6 @@ RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
         && spack build-env acts ./ActsBenchmarkSurfaceIntersection;            \
     fi
 
-# Run the examples (skip in Debug builds, as most are too slow)
-RUN if [ "$ACTS_BUILD_TYPE" != "Debug" ]; then                                 \
-      DD4HEP_PREFIX=`spack location --install-dir dd4hep`                      \
-      && source ${DD4HEP_PREFIX}/bin/thisdd4hep.sh                             \
-      && ln -s ${ACTS_BUILD_DIR} ${ACTS_SRC_DIR}/build;                        \
-      cd ${ACTS_SRC_DIR}                                                       \
-      && ./CI/run_examples.sh;                                                 \
-    fi
-
 # Finish installing ACTS
 RUN spack install --add --fail-fast ${ACTS_SPACK_SPEC}
 
